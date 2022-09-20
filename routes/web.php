@@ -13,11 +13,20 @@ Route::get('/contact-us', function (){
     return view('ContactUs/contact');
 });
 
-Auth::routes();
+Route::get('/upload', function (){
+    return view('Profile/UploadFile');
+});
+Route::get('/recent-uploads', function (){
+    return view('Profile/AllMyFiles');
+});
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/blog', function (){
+    return view('Blog/blog');
+});
 
-Auth::routes();
+Route::get('/information', function (){
+    return view('Information/information');
+});
 
 
 
@@ -27,10 +36,11 @@ Route::prefix('contact-us')->group(function () {
 
     Route::get('/', [ContactController::class, 'index'])->name('contact.index');
     Route::post('/store', [ContactController::class, 'store'])->name('contact.store');
+  
     Route::get('/all', [ContactController::class, 'show'])->name('contact.show');
 });
 
-
+Auth::routes();
 Route::prefix('profile')->group(
     function () {
         Route::get('/', [User::class, 'index'])->name('user.index');
@@ -39,3 +49,4 @@ Route::prefix('profile')->group(
         Route::post('/update-password/', [User::class, 'update_password'])->name('user.updatePassword');
     }
 );
+Auth::routes();

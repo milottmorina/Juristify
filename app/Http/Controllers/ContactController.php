@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\contact;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 
 class ContactController extends Controller
@@ -14,8 +15,12 @@ class ContactController extends Controller
     }
 
     public function show(){
+       if(Auth::user() && Auth::user()->role==='admin'){
         $contacts = contact::orderBy('id', 'asc')->paginate(5);
         return view('ContactUs/allContacts')->with(['contacts'=>$contacts]);
+        }else{
+            return redirect('/home');
+        }
     }
 
 
