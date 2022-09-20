@@ -23,7 +23,7 @@
             </svg>
             <span class="truncate"> Password </span>
         </a>
-        <a href="/upload"
+        <a href="{{route('user.upload')}}"
             class="border-transparent text-gray-900 hover:bg-gray-50 hover:text-gray-900 group border-l-4 px-3 py-2 flex items-center text-sm font-medium">
           
             <svg class="text-gray-400 group-hover:text-teal-500 flex-shrink-0 -ml-1 mr-3 h-6 w-6"
@@ -34,7 +34,7 @@
             </svg>
             <span class="truncate"> Upload File </span>
         </a>
-        <a href="/recent-uploads"
+        <a href="{{route('user.uploads')}}"
         class="border-transparent text-gray-900 hover:bg-gray-50 hover:text-gray-900 group border-l-4 px-3 py-2 flex items-center text-sm font-medium">
       
         <svg class="text-gray-400 group-hover:text-teal-500 flex-shrink-0 -ml-1 mr-3 h-6 w-6"
