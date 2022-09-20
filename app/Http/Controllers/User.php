@@ -21,6 +21,12 @@ class User extends Controller
     public function changePas(){
         return view('Profile/password');
     }
+    public function recentUploads(){
+        return view('Profile/AllMyFiles');
+    }
+    public function upload(){
+        return view('Profile/UploadFile');
+    }
     public function updateProfile(Request $request, $id)
     {
         $img =  $request->hasFile('img');

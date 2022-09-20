@@ -5,7 +5,7 @@
 <!-- component -->
 <div class="text-center mt-24">
     <div class="flex items-center justify-center">
-      <img src="{{asset('logo/logo.png')}}" width="150px">
+      <img src="{{asset('logo/juristify.png')}}" width="150px">
     </div>
     <h2 class="text-4xl tracking-tight">
        Sign in into your account

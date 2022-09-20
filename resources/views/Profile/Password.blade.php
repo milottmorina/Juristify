@@ -1,7 +1,7 @@
 @include('layouts.app')
 
-<div class="relative flex justify-center bg-teal-600">
-  <div class="bg-teal-600 h-80">
+<div class="relative flex justify-center bg-[#d8b64b]">
+  <div class="bg-[#d8b64b] h-80">
       <h1 class="relative top-[45px] text-6xl text-white text-center">Juristify</h1>
 <p class="relative top-[50px] text-2xl text-white text-center">Change Password</p>
 </div>
