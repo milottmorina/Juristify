@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\FilesController;
+use App\Http\Controllers\InformationController;
 use App\Http\Controllers\User;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
@@ -49,6 +50,7 @@ Route::prefix('profile')->group(
         Route::post('/store-file', [FilesController::class, 'store'])->name('file.store');
         Route::post('/update-password/', [User::class, 'update_password'])->name('user.updatePassword');
         Route::get('/destroy-file/{id}', [FilesController::class, 'destroy'])->name('file.destroy');
+        Route::get('/create-info', [InformationController::class, 'create'])->name('info.create');
     }
 );
 
@@ -56,4 +58,10 @@ Route::prefix('library')->group(
     function (){
         Route::get('/', [FilesController::class, 'show'])->name('all.uploads');
     });
+
+    Route::prefix('infromation')->group(
+        function (){
+            Route::get('/', [InformationController::class, 'index'])->name('infos.view');
+            Route::post('/store-info', [InformationController::class, 'store'])->name('info.store');
+        });
 Auth::routes();

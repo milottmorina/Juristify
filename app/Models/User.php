@@ -10,6 +10,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use App\Models\files;
+use App\Models\information;
 
 class User extends Authenticatable 
 {
@@ -36,6 +37,11 @@ class User extends Authenticatable
     public function files()
     {
         return $this->hasMany(files::class);
+    }
+
+    public function informations()
+    {
+        return $this->hasMany(information::class);
     }
 
     /**
