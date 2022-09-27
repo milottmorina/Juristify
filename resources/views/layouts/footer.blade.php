@@ -69,7 +69,7 @@
     </div>
     <hr class="border-white">
     <div class="py-6 px-4 bg-gray-800 dark:bg-gray-700 md:flex md:items-center md:justify-between">
-        <span class="text-sm text-white dark:text-white-300 sm:text-center">© 2022 <a href="https://flowbite.com/">Flowbite™</a>. All Rights Reserved.
+        <span class="text-sm text-white dark:text-white-300 sm:text-center">© {{date("Y")}} <a href="##">Juristify™</a>. All Rights Reserved.
         </span>
         <div class="flex mt-4 space-x-6 sm:justify-center md:mt-0">
             <a href="#" class="text-white hover:text-white-900 dark:hover:text-white">

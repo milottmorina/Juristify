@@ -2,27 +2,33 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\information;
+use App\Models\News;
+use App\Http\Requests\StoreNewsRequest;
+use App\Http\Requests\UpdateNewsRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class InformationController extends Controller
-{
 
- 
+class NewsController extends Controller
+{
+    
     public function index()
     {
-        $infos = information::with('user')->orderBy('id', 'asc')->paginate(5);
-        return view('Information/information')->with(['infos'=>$infos]);
+        $news = news::with('user')->orderBy('id', 'desc')->paginate(9);
+        return view('News/news')->with(['news'=>$news]);
     }
 
- 
+    public function showAll()
+    {
+        $news = news::with('user')->orderBy('id', 'desc')->paginate(9);
+        return view('dashboard/all-news')->with(['news'=>$news]);
+    }
+
     public function create()
     {
-        return view('Profile/StoreInformation');
+        return view('Profile/StoreNews');
     }
 
-  
  
     public function store(Request $request)
     {
@@ -30,29 +36,28 @@ class InformationController extends Controller
         if ($file) {
 
             $newFile = $request->file('img');
-            $file_path = $newFile->store('/public/info');
-            information::create([
+            $file_path = $newFile->store('/public/news');
+            news::create([
                 'titulli' => $request['titulli'],
                 'pershkrimi' => $request['pershkrimi'],
                 'img' => $file_path,
-                'vende'=>$request['vende'],
-                'dataSkadimit'=>$request['dataSkadimit'],
-                'lokacioni'=>$request['lokacioni'],
                 'kategoria'=>$request['kategoria'],
-                'emriKompanis'=>$request['emriKompanis'],
                 'user_id' => Auth::user()->id,
             ]);
        
         }
-        return back()->with('msg','Shpallja juaj u shtua me sukses!');
+        return back()->with('msg','Lajmi juaj u shtua me sukses!');
     }
 
-
+  
     public function show($id)
     {
-        //
+        $news = news::with('user')->findOrFail($id);
+        return view('News/Single')->with(['news'=>$news]);
     }
+  
 
+   
     public function edit($id)
     {
         //
@@ -64,7 +69,7 @@ class InformationController extends Controller
         //
     }
 
- 
+   
     public function destroy($id)
     {
         //
