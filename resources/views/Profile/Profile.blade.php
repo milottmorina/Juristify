@@ -60,8 +60,6 @@
                   </div>
                   @php
                   $link = explode('/', Auth::user()->img);
-                 
-                   
                   @endphp
                   <div class="hidden relative rounded-full overflow-hidden lg:block">
                     @if (Auth::user()->img==="public/noProfilePhoto/nofoto.jpg")  

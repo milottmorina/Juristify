@@ -17,7 +17,7 @@ class ContactController extends Controller
     public function show(){
        if(Auth::user() && Auth::user()->role==='admin'){
         $contacts = contact::orderBy('id', 'asc')->paginate(5);
-        return view('ContactUs/allContacts')->with(['contacts'=>$contacts]);
+        return view('Dashboard/all-contacts')->with(['contacts'=>$contacts]);
         }else{
             return redirect('/home');
         }
@@ -42,6 +42,13 @@ class ContactController extends Controller
             'mesazhi'=>$request['mesazhi'],
         ]);
         return back()->with('msg','Mesazhi juaj u dergua me sukses!');
+    }
+
+    public function destroy($id)
+    {
+        $file = contact::findOrFail($id);
+        $file->delete();
+        return back()->with('msg','Kontakti u fshi me sukses!');
     }
 
   
