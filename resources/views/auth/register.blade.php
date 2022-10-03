@@ -130,9 +130,8 @@
                 <select name="gjinia"
                     class=" @error('gjinia') is-invalid @enderror appearance-none block w-full bg-white text-gray-900 font-medium border border-gray-400 rounded-lg py-3 px-3 leading-tight focus:outline-none"
                     id="grid-state">
-                    <option>New Mexico</option>
-                    <option>Missouri</option>
-                    <option>Texas</option>
+                    <option>Mashkull</option>
+                    <option>Femer</option>
                 </select>
                 @error('gjinia')
                     <span class="invalid-feedback" role="alert">

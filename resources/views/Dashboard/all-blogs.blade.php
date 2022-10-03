@@ -80,7 +80,9 @@
                                     {{$b->titulli}}
                                  </th>
                                  <td class="py-4 px-6">
-                                     {{$b->pershkrimi}}
+                                    <p id="dots{{$b->id}}"> {{substr($b->pershkrimi,0,20)}}... <button class="text-red-400" id="myBtn{{$b->id}}" onclick="myFunction({{$b->id}})">read more</button></p>
+                                    <p style="display:none" id="more{{$b->id}}"> {{$b->pershkrimi}} <button class="text-red-400" id="myBtn{{$b->id}}" onclick="myFunction({{$b->id}})">read less</button></p>
+
                                  </td>
                                  <td class="py-4 px-6 capitalize">
                                      {{$b->kategoria}}
@@ -188,6 +190,24 @@
               </p>
            </div>
         </div>
-        <script async defer src="https://buttons.github.io/buttons.js"></script>
-        <script src="https://demo.themesberg.com/windster/app.bundle.js"></script>
+  
      </div>
+     <script async defer src="https://buttons.github.io/buttons.js"></script>
+     <script src="https://demo.themesberg.com/windster/app.bundle.js"></script>
+     <script>
+        function myFunction(id) {
+          var dots = document.getElementById("dots"+id);
+          var moreText = document.getElementById("more"+id);
+          var btnText = document.getElementById("myBtn"+id);
+        
+          if (dots.style.display === "none") {
+            dots.style.display = "inline";
+            btnText.innerHTML = "Read more"; 
+            moreText.style.display = "none";
+          } else {
+            dots.style.display = "none";
+            btnText.innerHTML = "Read less"; 
+            moreText.style.display = "inline";
+          }
+        }
+        </script>

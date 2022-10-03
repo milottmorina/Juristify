@@ -1,7 +1,7 @@
 @include('layouts.app')
 
 <div class="relative flex justify-center bg-[#d8b64b]">
-    <div class="bg-[#d8b64b] h-80">
+    <div class="bg-[#d8b64b] h-44">
         <h1 class="relative top-[45px] text-6xl text-white text-center">Juristify</h1>
         <p class="relative top-[50px] text-2xl text-white text-center">Upload File</p>
     </div>
@@ -27,7 +27,6 @@
                     <div class="py-6 px-4 sm:p-6 lg:pb-8">
                         <div>
                             <h2 class="text-lg leading-6 font-medium text-gray-900">Upload File</h2>
-                            {{-- <p class="mt-1 text-sm text-gray-500">This information will be not displayed publicly so be careful what you share.</p> --}}
                         </div>
                         @if (Session::has('msg'))
                             <div class=" text-center text-green-600 ">
@@ -37,6 +36,14 @@
                                 </div>
                             </div>
                         @endif
+                        @if (Session::has('error'))
+                        <div class=" text-center text-green-600 ">
+                            <div class="p-4 mb-4 text-sm text-green-700 bg-green-100 rounded-lg dark:bg-green-200 dark:text-green-800"
+                                role="alert">
+                                <span class="font-medium">{!! \Session::get('error') !!}</span>
+                            </div>
+                        </div>
+                    @endif
 
 
                         <div class="flex justify-center items-center w-full">
@@ -51,27 +58,44 @@
                                     </svg>
                                     <p class="mb-2 text-sm text-gray-500 dark:text-gray-400"><span
                                             class="font-semibold">Click to upload</span> or drag and drop</p>
-                                    <p class="text-xs text-gray-500 dark:text-gray-400">SVG, PNG, JPG or GIF (MAX.
-                                        800x400px)</p>
+                                    <p class="text-xs text-gray-500 dark:text-gray-400">PDF OR DOCX (MAX.
+                                        2MB)</p>
                                 </div>
-                                <input id="dropzone-file" type="file" class="hidden" name="dokumenti">
-                            </label>
+                                <input id="dropzone-file" type="file" class="@error('dokumenti') is-invalid @enderror hidden " name="dokumenti">
+                              @error('dokumenti')
+                            <span class="invalid-feedback " role="alert">
+                                <p class="text-xs text-red-600 ml-2">{{ $message }}</p>
+                            </span>
+                            @enderror </label> 
+                         
                         </div>
 
                         <div class="mt-6 grid grid-cols-12 gap-6">
                             <div class="col-span-12 sm:col-span-6">
                                 <label for="first-name" class="block text-sm font-medium text-gray-700">Title</label>
                                 <input type="text" name="titulli" id="titulli" autocomplete="given-name"
-                                    class="capitalize mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-sky-500 focus:border-sky-500 sm:text-sm">
-                            </div>
+                                    class="@error('titulli') is-invalid @enderror capitalize mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-sky-500 focus:border-sky-500 sm:text-sm">
+                                    
+                                    @error('titulli')
+                                    <span class="invalid-feedback " role="alert">
+                                        <p class="text-xs text-red-600 ml-2">{{ $message }}</p>
+                                    </span>
+                                @enderror
+                                </div>
                         </div>
                         <div class="mt-6 grid grid-cols-12 gap-6">
                             <div class="col-span-12 sm:col-span-6 ">
                                 <label for="first-name"
                                     class="block text-sm font-medium text-gray-700">Description</label>
                                 <textarea type="text" rows="4" name="pershkrimi" id="first-name" autocomplete="given-name"
-                                    class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-sky-500 focus:border-sky-500 sm:text-sm">
+                                    class=" @error('pershkrimi') is-invalid @enderror mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-sky-500 focus:border-sky-500 sm:text-sm">
                   </textarea>
+                 
+                  @error('pershkrimi')
+                  <span class="invalid-feedback " role="alert">
+                      <p class="text-xs text-red-600 ml-2">{{ $message }}</p>
+                  </span>
+              @enderror
                             </div>
                         </div>
                     </div>

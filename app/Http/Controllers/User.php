@@ -97,6 +97,11 @@ class User extends Controller
     }
     public function updateProfile(Request $request, $id)
     {
+        $request->validate([
+                'email' => 'required','unique',
+                'numriTel' => 'required','unique',
+                'rruga' => 'required',
+            ]);
         $img =  $request->hasFile('img');
         $user = ModelsUser::findOrFail($id);
 
@@ -130,10 +135,11 @@ class User extends Controller
 
     public function update_password(Request $request)
     {
-        // $request->validate([
-        //     'old_password' => 'required',
-        //     'new_password' => ['required','regex:/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$.%^&*-]).{8,}$/ '],
-        // ]);
+        $request->validate([
+            'old_password' => ['required'],
+            'new_password' => ['required','regex:/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$.%^&*-]).{8,}$/','different:old_password'],
+            'new_password_confirmation' => ['required'],
+        ]);
         if (!Hash::check($request->old_password, Auth::user()->password)) {
             return back()->with("error", "Old Password Doesn't match!");
         }

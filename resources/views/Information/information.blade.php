@@ -89,149 +89,81 @@
     <div class="pt-6 pb-12 flex">
         <div id="card" class="md:w-3/4">
  @foreach ($infos as $i)
-            <!-- container for all cards -->
-            {{-- <div class="container w-100 md:w-4/5 mx-auto flex flex-col mb-4">
-                <!-- card -->
-               
-                    @php
-                        $link = explode('/', $i->img);
-                        
-                    @endphp
-
-
-
-                    <a data-modal-toggle="defaultModal{{ $i->id }}"
-                        class="flex flex-col items-center bg-white rounded-lg border shadow-md md:flex-row  hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700">
-                        <img class="object-cover h-48 w-48 rounded-l"
-                            src="{{ asset('storage/info/' . $link[2]) }}" alt="" width="200px" height="200px">
-                        <div class="flex flex-col justify-between p-4 leading-normal w-full">
-                            <div class="flex justify-between">
-                                <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-                                    {{ $i->titulli }}</h5>
-                                <p class="justify-end bg-gray-200 rounded h-50 p-1"><i
-                                        class="fa-solid fa-clock"></i>{{ ' ' . $i->dataSkadimit }} dite te mbetura</p>
-                            </div>
-                            <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">
-                                {{ substr($i->pershkrimi, 0, 237) }}...</p>
-                            <div class="flex justify-start">
-                                <p class="mr-5 bg-gray-200 rounded h-50 p-1"><i
-                                        class="fa-solid fa-briefcase"></i>{{ ' ' . $i->emriKompanis }}</p>
-                                <p class="mr-5 bg-gray-200 rounded h-50 p-1"><i
-                                        class="fa-solid fa-tag"></i>{{ ' ' . $i->kategoria }}</p>
-                                <p class="mr-5 bg-gray-200 rounded h-50 p-1"><i
-                                        class="fa-solid fa-location-dot"></i>{{ ' ' . $i->lokacioni }}</p>
-                            </div>
-                        </div>
-
-                    </a>
-
-
-
-
-
-                    <!-- Main modal -->
-                    <div id="defaultModal{{ $i->id }}" tabindex="-1" aria-hidden="true"
-                        class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 w-full md:inset-0 h-modal md:h-full justify-center items-center">
-                        <div class="relative p-4 w-full max-w-2xl h-full md:h-auto">
-                            <!-- Modal content -->
-                            <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
-                                <!-- Modal header -->
-                                <div
-                                    class="flex justify-between items-start p-4 rounded-t border-b dark:border-gray-600">
-                                    <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
-                                        More Information
-                                    </h3>
-                                    <button type="button"
-                                        class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white"
-                                        data-modal-toggle="defaultModal{{ $i->id }}">
-                                        <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
-                                            xmlns="http://www.w3.org/2000/svg">
-                                            <path fill-rule="evenodd"
-                                                d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
-                                                clip-rule="evenodd"></path>
-                                        </svg>
-                                        <span class="sr-only">Close modal</span>
-                                    </button>
-                                </div>
-                                <!-- Modal body -->
-                                <div class="p-6 space-y-6">
-                                    <div class="lg:flex justify-between">
-                                        <div class="lg:flex justify-start">
-                                            <img class="object-cover w-full h-72 rounded-t-lg md:h-auto md:w-36 md:rounded-none md:rounded-l-lg"
-                                                src="{{ asset('storage/info/' . $link[2]) }}" alt="">
-                                            <h1 class="font-bold text-2xl relative lg:top-10 ml-3">{{ $i->titulli }}</h1>
-                                        </div>
-                                        <div class="">
-                                            <p class="lg:justify-end bg-gray-200 rounded p-1  "><i
-                                                    class="fa-solid fa-clock"></i>{{ ' ' . $i->dataSkadimit }} dite te
-                                                mbetura</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="flex justify-start ml-6">
-                                    <p class="mr-5 bg-gray-200 rounded h-50 p-1"><i
-                                            class="fa-solid fa-person-circle-plus"></i>{{ ' ' . $i->vende }} vende te
-                                        lira</p>
-
-                                    <p class="mr-5 bg-gray-200 rounded h-50 p-1"><i
-                                            class="fa-solid fa-briefcase"></i>{{ ' ' . $i->emriKompanis }}</p>
-                                    <p class="mr-5 bg-gray-200 rounded h-50 p-1"><i
-                                            class="fa-solid fa-tag"></i>{{ ' ' . $i->kategoria }}</p>
-                                    <p class="mr-5 bg-gray-200 rounded h-50 p-1"><i
-                                            class="fa-solid fa-location-dot"></i>{{ ' ' . $i->lokacioni }}</p>
-                                </div>
-                                <p class="font-bold text-base leading-relaxed ml-6 mt-3">{{ $i->titulli }}</p>
-                                <p class="text-base leading-relaxed text-gray-500 dark:text-gray-400 p-4">
-                                    {{ $i->pershkrimi }}</p>
-
-                                    <h1 class="p-4">
-                                      <button type="button" data-modal-toggle="defaultModal{{ $i->id }}" class="w-full inline-block   p-3 bg-yellow-500 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-yellow-600 hover:shadow-lg focus:bg-yellow-600 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-yellow-700 active:shadow-lg transition duration-150 ease-in-out">Back to information</button>
-
-                                    </h1>
-
-                            </div>
-                            
-                            <!-- Modal footer -->
-
-                        </div>
-                    </div>
-            </div> --}}
+      
             @php
             $link = explode('/', $i->img);
             
         @endphp
-            <div class="container mx-auto px-20 mb-3">
-                <div class="flex bg-white border border-gray-500 rounded-xl overflow-hidden items-center justify-start" style="cursor: auto;">
-                                            
-                  <div class="relative w-32 h-32 flex-shrink-0">
-                                                
-                    <div class="absolute left-0 top-0 w-full h-full flex items-center justify-center">
+      
+                <a data-modal-toggle="defaultModal{{$i->id}}" class="flex flex-col items-center bg-white mb-4 rounded-lg border shadow-md md:flex-row hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700">
+                    <img class="object-cover w-full h-96 rounded-t-lg md:h-auto md:w-48 md:rounded-none md:rounded-l-lg" src="{{ asset('storage/info/' . $link[2]) }}" alt="">
+                    <div class="flex flex-col justify-between p-4 leading-normal">
+                        <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{{$i->titulli}}</h5>
+                        <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">{{ substr($i->pershkrimi, 0, 237) }}... </p>
+                        <span class="flex items-center justify-start text-gray-500 mt-3">
                                                     
-                      <img alt="Placeholder Photo" class="absolute left-0 top-0 w-full h-full object-cover object-center transition duration-50" loading="lazy" src="{{ asset('storage/info/' . $link[2]) }}">
-                                                
+                            <i class="fa-solid fa-briefcase mr-1"></i>{{' ' . $i->emriKompanis }}
+                            <i class="fa-solid fa-tag mr-1 ml-5"></i>{{ ' ' . $i->kategoria }}
+                            <i class="fa-solid fa-location-pin ml-5"></i>{{ ' ' . $i->lokacioni }}
+                   
+                        </span>
                     </div>
-                                            
-                  </div>
-                                            
-                  <div class="p-4">
-                                                
-                    <p class="text-sm line-clamp-1 font-bold">{{$i->titulli}}</p>
-                                                
-                    <p class="text-sm text-gray-500 mt-1 line-clamp-2"> {{ substr($i->pershkrimi, 0, 237) }}...</p>
-                                                
-                    <span class="flex items-center justify-start text-gray-500 mt-3">
+                </a>
+
+
+                
+<!-- Modal toggle -->
+
+  
+  <!-- Main modal -->
+  <div id="defaultModal{{$i->id}}" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 w-full md:inset-0 h-modal md:h-full justify-center items-center">
+      <div class="relative p-4 w-full max-w-2xl h-full md:h-auto">
+          <!-- Modal content -->
+          <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+              <!-- Modal header -->
+              <div class="flex justify-between items-start p-4 rounded-t border-b dark:border-gray-600">
+                  <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
+                      {{$i->titulli}}
+                  </h3>
+                  <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-toggle="defaultModal{{$i->id}}">
+                      <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+                      <span class="sr-only">Close modal</span>
+                  </button>
+              </div>
+              <!-- Modal body -->
+              <div class="p-6 space-y-6">
+                <div class="flex justify-center">
+                <img class="object-cover justify-center w-96 rounded-t-lg " src="{{ asset('storage/info/' . $link[2]) }}" alt="">
+               
+            </div>
+             <h1 class="font-bold text-2xl ml-3 text-center">{{$i->titulli}}</h1>
+             <hr>
+             <span class="flex items-center justify-center text-gray-500  ">
                                                     
-                        <i class="fa-solid fa-briefcase mr-1"></i>{{' ' . $i->emriKompanis }}
-                        <i class="fa-solid fa-tag mr-1 ml-5"></i>{{ ' ' . $i->kategoria }}
-                                                
-                    </span>
-                                            
-                  </div>
-                                        
-                </div>
-                </div>
+                <i class="fa-solid fa-briefcase mr-1"></i>{{' ' . $i->emriKompanis }}
+                <i class="fa-solid fa-tag mr-1 ml-5"></i>{{ ' ' . $i->kategoria }}
+                <i class="fa-solid fa-location-pin ml-5"></i>{{ ' ' . $i->lokacioni }}
+       
+            </span>
+             <hr>
+                  <p class="text-base leading-relaxed text-gray-500 dark:text-gray-400">
+                    {{$i->pershkrimi}}
+                </p>
+                
+              </div>
+              <!-- Modal footer -->
+              <div class="flex items-center p-6 space-x-2 rounded-b border-t border-gray-200 dark:border-gray-600">
+                  <button data-modal-toggle="defaultModal{{$i->id}}" type="button" class="text-white bg-[#374151] hover:bg-[#374159] focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center w-full">Mbyll</button>
+              </div>
+          </div>
+      </div>
+  </div>
+  
             @endforeach
             <!--/ card-->
+            
+
+
         </div>
         <!--/ flex-->
     </div>

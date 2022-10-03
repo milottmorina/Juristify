@@ -26,9 +26,15 @@ class FilesController extends Controller
 
     public function store(Request $request)
     {
+      
         $file = $request->hasFile('dokumenti');
         if ($file) {
-
+        
+        $request->validate([
+            'titulli' => ['required','max:40','min:4'],
+            'pershkrimi' => ['required','max:250','min:10'],
+            'dokumenti' => ['required','mimes:pdf,docx','max:2048'],
+        ]);
             $newFile = $request->file('dokumenti');
             $file_path = $newFile->store('/public/dokumentet');
             files::create([
@@ -37,9 +43,11 @@ class FilesController extends Controller
                 'dokumenti' => $file_path,
                 'user_id' => Auth::user()->id,
             ]);
-       
-        }
         return back()->with('msg','Dokumenti juaj u shtua me sukses!');
+        }else{
+            return back()->with('error','Plotesoni hapesirate e kerkuara!');
+        }
+       
     }
 
 
@@ -59,7 +67,39 @@ class FilesController extends Controller
 
     public function update(Request $request, $id)
     {
-        //
+        
+     
+        $file = $request->hasFile('dokumenti');
+   
+        if ($file) { 
+            $request->validate([
+            'titulli' => ['required','max:40','min:4'],
+            'pershkrimi' => ['required','max:250','min:10'],
+            'dokumenti' => ['required','mimes:pdf,docx','max:2048'],
+        ]);
+            $newFile = $request->file('dokumenti');
+            $file_path = $newFile->store('/public/dokumentet');
+     
+        $file = files::findOrFail($id);
+        $file->user_id = Auth::user()->id;
+        $file->titulli = $request->titulli;
+        $file->pershkrimi = $request->pershkrimi;
+        $file->dokumenti=$file_path;
+        $file->save();
+        return back();
+    }else{
+        $request->validate([
+            'titulli' => ['required','max:40','min:4'],
+            'pershkrimi' => ['required','max:250','min:10'],
+        ]);
+        $file = files::findOrFail($id);
+        $file->user_id = Auth::user()->id;
+        $file->titulli = $request->titulli;
+        $file->pershkrimi = $request->pershkrimi;
+        $file->dokumenti=$file->dokumenti;
+        $file->save();
+        return back();
+    }
     }
 
   

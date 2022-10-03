@@ -54,7 +54,12 @@ class CommentController extends Controller
    
     public function update(Request $request, $id)
     {
-        //
+        $comment = Comment::findOrFail($id);
+        $comment->user_id = Auth::user()->id;
+        $comment->blog_id = $request->blog_id;
+        $comment->pershkrimi = $request->pershkrimi;
+        $comment->save();
+        return back();
     }
 
    
