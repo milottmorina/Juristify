@@ -92,24 +92,27 @@
                   ease-in-out mx-3.5 flex justify-center items-center">
                   
            <a href="/storage/dokumentet/{{ $cv[2] }}" download>
-                                            <img class="ml-9" src="{{ asset('/noProfilePhoto/docs.png') }}"
+                                            <img class="" src="{{ asset('/noProfilePhoto/docs.png') }}"
                                                 width="100px" />
-                                                <p class="block text-center">{{$f->titulli}}</p>
-                                                <div class="flex">
-                                                    <div>   @if ($f->user->img==="public/noProfilePhoto/nofoto.jpg")  
-                                                        <img class="relative rounded-full w-10 h-10 bottom-[7px]" src="{{asset('/noProfilePhoto/'.$link[2])}}" alt="">
-                                                        @else
-                                                        <img class="relative rounded-full w-10 h-10 bottom-[7px]"  src="/storage/img/{{$link[2]}}" alt="Rounded avatar">
-                                                        @endif</div>
-                                                        <div>
-                                                <p class="block text-center capitalize">Author: 
-                                                 
-                                                    <span class="font-bold">{{$f->user->emri." ".$f->user->mbiemri}}</span></p></div>
-                                                </div>
+                                              
                                                 </a>
                                                 
                                         </div>  
-                                        <p class="block text-center p-5 text-justify">{{$f->pershkrimi}}</p>
+                                        <p class="block text-center font-bold">{{$f->titulli}}</p>
+
+                                        <div class="flex">
+                                            
+                                            <div class="ml-3">   @if ($f->user->img==="public/noProfilePhoto/nofoto.jpg")  
+                                                <img class="relative rounded-full w-10 h-10 bottom-[-7px] object-cover" src="{{asset('/noProfilePhoto/'.$link[2])}}" alt="">
+                                                @else
+                                                <img class="relative rounded-full w-10 h-10 bottom-[-7px] object-cover"  src="/storage/img/{{$link[2]}}" alt="Rounded avatar">
+                                                @endif</div>
+                                                <div>
+                                        <p class="relative block text-center capitalize bottom-[-15px]">Author: 
+                                         
+                                            <span class="font-bold">{{$f->user->emri." ".$f->user->mbiemri}}</span></p></div>
+                                        </div>
+                                        <p class="block text-center p-5 text-justify max-w-[280px]">{{$f->pershkrimi}}</p>
                                     </div>
                                     <div id="popup-modal{{$f->id}}" tabindex="-1" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 md:inset-0 h-modal md:h-full">
                                         <div class="relative p-4 w-full max-w-md h-full md:h-auto">
@@ -147,6 +150,7 @@
               </p>
            </div>
         </div>
-        <script async defer src="https://buttons.github.io/buttons.js"></script>
-        <script src="https://demo.themesberg.com/windster/app.bundle.js"></script>
+  
      </div>
+     <script async defer src="https://buttons.github.io/buttons.js"></script>
+     <script src="https://demo.themesberg.com/windster/app.bundle.js"></script>

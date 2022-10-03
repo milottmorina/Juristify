@@ -1,7 +1,7 @@
 @include('layouts.app')
 
 <div class="relative flex justify-center bg-[#d8b64b]">
-  <div class="bg-[#d8b64b] h-80">
+  <div class="bg-[#d8b64b] h-44">
       <h1 class="relative top-[45px] text-6xl text-white text-center">Juristify</h1>
 <p class="relative top-[50px] text-2xl text-white text-center">My Profile</p>
 </div>
@@ -63,9 +63,9 @@
                   @endphp
                   <div class="hidden relative rounded-full overflow-hidden lg:block">
                     @if (Auth::user()->img==="public/noProfilePhoto/nofoto.jpg")  
-                    <img class="relative rounded-full w-40 h-40" src="{{asset('/noProfilePhoto/'.$link[2])}}" alt="">
+                    <img class="relative rounded-full w-40 h-40 object-cover" src="{{asset('/noProfilePhoto/'.$link[2])}}" alt="">
                     @else
-                    <img class="relative rounded-full w-40 h-40"  src="/storage/img/{{$link[2]}}" alt="Rounded avatar">
+                    <img class="relative rounded-full w-40 h-40 object-cover"  src="/storage/img/{{$link[2]}}" alt="Rounded avatar">
                     @endif
                     <label for="desktop-user-photo" class="absolute inset-0 w-full h-full bg-black bg-opacity-75 flex items-center justify-center text-sm font-medium text-white opacity-0 hover:opacity-100 focus-within:opacity-100">
                       <span>Change</span>
@@ -88,19 +88,36 @@
                 </div>
                 <div class="col-span-12 sm:col-span-6">
                   <label for="first-name" class="block text-sm font-medium text-gray-700">Email</label>
-                  <input type="text" name="email" value="{{Auth::user()->email}}" id="first-name" autocomplete="given-name" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-sky-500 focus:border-sky-500 sm:text-sm">
+                  <input type="text" name="email" value="{{Auth::user()->email}}" id="first-name" autocomplete="given-name" class=" @error('email') is-invalid @enderror mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-sky-500 focus:border-sky-500 sm:text-sm">
+                 
+                  @error('email')
+                  <span class="invalid-feedback " role="alert">
+                      <p class="text-xs text-red-600 ml-2">{{ $message }}</p>
+                  </span>
+              @enderror
                 </div>
 
                 <div class="col-span-12 sm:col-span-6">
                   <label for="last-name" class="block text-sm font-medium text-gray-700">Nr. Telefonit</label>
-                  <input type="text" name="numriTel" value="{{Auth::user()->numriTel}}" id="last-name" autocomplete="family-name" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-sky-500 focus:border-sky-500 sm:text-sm">
+                  <input type="text" name="numriTel" value="{{Auth::user()->numriTel ? Auth::user()->numriTel : 'ska'}}" id="last-name" autocomplete="family-name" class=" @error('numriTel') is-invalid @enderror mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-sky-500 focus:border-sky-500 sm:text-sm">
+                  @error('numriTel')
+                  <span class="invalid-feedback " role="alert">
+                      <p class="text-xs text-red-600 ml-2">{{ $message }}</p>
+                  </span>
+              @enderror
                 </div>
 
               
 
                 <div class="col-span-12 sm:col-span-6">
                   <label for="company" class="block text-sm font-medium text-gray-700">Rruga</label>
-                  <input type="text" name="rruga" value="{{Auth::user()->rruga}}" id="company" autocomplete="organization" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-sky-500 focus:border-sky-500 sm:text-sm">
+                  <input type="text" name="rruga" value="{{Auth::user()->rruga ? Auth::user()->rruga : 'ska'}}" id="company" autocomplete="organization" class="@error('rruga') is-invalid @enderror mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-sky-500 focus:border-sky-500 sm:text-sm">
+                 
+                  @error('rruga')
+                  <span class="invalid-feedback " role="alert">
+                      <p class="text-xs text-red-600 ml-2">{{ $message }}</p>
+                  </span>
+              @enderror
                 </div>
               </div>
             </div>

@@ -187,9 +187,9 @@
                                 </td>
                   <td class="py-4 px-6 overflow-clip">
                                     @if ($u->img!="public/noProfilePhoto/nofoto.jpg")  
-                                    <img class="w-10 h-10 rounded-full"  src="/storage/img/{{$link[2]}}" alt="Rounded avatar">
+                                    <img class="w-10 h-10 rounded-full object-cover"  src="/storage/img/{{$link[2]}}" alt="Rounded avatar">
                                     @else
-                                    <img class="w-10 h-10 rounded-full" src="{{asset('/noProfilePhoto/'.$link[2])}}" alt="Rounded avatar">
+                                    <img class="w-10 h-10 rounded-full object-cover" src="{{asset('/noProfilePhoto/'.$link[2])}}" alt="Rounded avatar">
                                   
                                     @endif
                                   
@@ -310,6 +310,7 @@
           </p>
        </div>
     </div>
-    <script async defer src="https://buttons.github.io/buttons.js"></script>
-    <script src="https://demo.themesberg.com/windster/app.bundle.js"></script>
+
  </div>
+ <script async defer src="https://buttons.github.io/buttons.js"></script>
+ <script src="https://demo.themesberg.com/windster/app.bundle.js"></script>

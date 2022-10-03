@@ -15,7 +15,7 @@ Route::get('/', function () {
     if(Auth::user()){
         return redirect('/home');
     }else{
-    return view('auth.login');
+    return view('home');
 }
 });
 
@@ -33,14 +33,24 @@ Route::prefix('contact-us')->group(function () {
 });
 
 
+
+
+
 Route::prefix('dashboard')->group(function(){
+   
+   
     Route::get('/', [User::class, 'dashboard'])->name('dashboard.view');
     Route::get('/library', [FilesController::class, 'showAll'])->name('library.all');
     Route::get('/blogs', [BlogController::class, 'showAll'])->name('blog.all');
     Route::get('/news', [NewsController::class, 'showAll'])->name('news.all');
  
+    
+    
     Route::get('contact-us/all', [ContactController::class, 'show'])->name('contact.show');
-Route::prefix('/users')->group(function(){
+
+
+
+    Route::prefix('/users')->group(function(){
     Route::get('/', [User::class, 'allUsers'])->name('user.all');
     Route::get('/find', [User::class, 'findUser'])->name('user.find');
     Route::get('/verified', [User::class, 'getVerifiedUsers'])->name('user.verified');
@@ -55,6 +65,9 @@ Route::prefix('/users')->group(function(){
 });
 });
 
+
+
+
 Route::prefix('profile')->group(
     function () {
         Route::get('/', [User::class, 'index'])->name('user.index');
@@ -68,14 +81,24 @@ Route::prefix('profile')->group(
         Route::get('/create-info', [InformationController::class, 'create'])->name('info.create');
         Route::get('/create-news', [NewsController::class, 'create'])->name('news.create');
         Route::get('/create-blog', [BlogController::class, 'create'])->name('blog.create');
+        Route::post('/update-file/{id}', [FilesController::class, 'update'])->name('file.update');
+        Route::get('/my-blogs', [BlogController::class, 'myBlogs'])->name('blog.myBlogs');
+        Route::post('/update-blog/{id}', [BlogController::class, 'update'])->name('blog.update');
+
 
     }
 );
+
+
+
 
 Route::prefix('library')->group(
     function (){
         Route::get('/', [FilesController::class, 'show'])->name('all.uploads');
     });
+
+
+
 
 Route::prefix('infromation')->group(
         function (){
@@ -83,12 +106,19 @@ Route::prefix('infromation')->group(
             Route::post('/store-info', [InformationController::class, 'store'])->name('info.store');
         });
 
+
+
 Route::prefix('news')->group(
             function (){
                 Route::get('/', [NewsController::class, 'index'])->name('news.view');
                 Route::get('/single/{id}', [NewsController::class, 'show'])->name('news.show');
                 Route::post('/store-news', [NewsController::class, 'store'])->name('news.store');
+                Route::get('/destroy/{id}', [NewsController::class, 'destroy'])->name('news.delete');
+                Route::post('/update-news/{id}', [NewsController::class, 'update'])->name('news.update');
             });
+
+
+
 Route::prefix('blog')->group(
 function (){
 Route::get('/', [BlogController::class, 'index'])->name('blog.view');
@@ -99,10 +129,15 @@ Route::post('/cverifiko/{id}', [BlogController::class, 'cverifiko'])->name('blog
 Route::get('/destroy/{id}', [BlogController::class, 'destroy'])->name('blog.delete');
 // Route::get('/', [CommentController::class, 'index'])->name('comment.view');
 });
+
+
+
+
 Route::prefix('comment')->group(
     function (){
         
         Route::post('/store-comment', [CommentController::class, 'store'])->name('comment.store');
+        Route::post('/update-comment/{id}', [CommentController::class, 'update'])->name('comment.update');
         Route::get('/destroy/{id}', [CommentController::class, 'destroy'])->name('comment.delete');
     });
 Auth::routes();

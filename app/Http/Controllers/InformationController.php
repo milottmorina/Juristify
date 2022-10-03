@@ -28,7 +28,17 @@ class InformationController extends Controller
     {
         $file = $request->hasFile('img');
         if ($file) {
-
+  
+            $request->validate([
+                'titulli' => ['required','max:40','min:5'],
+                'pershkrimi' => ['required','max:450','min:10'],
+                'img' => ['required','mimes:jpeg,png','max:2048'],
+                'vende' => ['required'],
+                'dataSkadimit'=>['required'],
+                'lokacioni' => ['required','max:40','min:4'],
+                'kategoria' => ['required','max:20','min:2'],
+                'emriKompanis' => ['required','max:40','min:3']
+            ]);
             $newFile = $request->file('img');
             $file_path = $newFile->store('/public/info');
             information::create([

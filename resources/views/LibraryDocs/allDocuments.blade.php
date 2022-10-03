@@ -29,6 +29,7 @@
             @foreach ($files as $f)
                 @php
                     $cv = explode('/', $f->dokumenti);
+                    $photo=explode('/',$f->user->img);
                 @endphp
                 <div>
                     <a href="/storage/dokumentet/{{ $cv[2] }}" download>
@@ -39,9 +40,23 @@ ease-in-out mx-3.5 flex justify-center items-center">
                             <img class="ml-2" src="{{ asset('/noProfilePhoto/docs.png') }}" width="100px" />
                         </div>
                     </a>
-                    <h3 class="block text-center text-lg">{{ $f->titulli }}</h3>
-                    <p class="block text-justify mx-4">{{$f->pershkrimi}}</p>
+                    <h3 class="block text-center text-lg  font-bold capitalize">{{ $f->titulli }}</h3>
+                    <p class="block text-justify mx-4 max-w-[230px]">{{$f->pershkrimi}}</p>
+                    
+                    @if ($f->user->img!="public/noProfilePhoto/nofoto.jpg")  
+                    <div class="flex p-2 ml-3">
+                    <img class="w-10 h-10 rounded-full object-cover"  src="/storage/img/{{$photo[2]}}" alt="Rounded avatar">
+                    <p class="capitalize mt-2 ml-1">{{$f->user->emri." ".$f->user->mbiemri}}</p>
+                    </div>
+                    @else
+                    <div class="flex p-2 ml-3">
+                    <img class="w-10 h-10 rounded-full object-cover" src="{{asset('/noProfilePhoto/'.$photo[2])}}" alt="Rounded avatar">
+                    <p class="capitalize mt-2 ml-1">{{$f->user->emri." ".$f->user->mbiemri}}</p>
+                 </div>
+                    @endif
+               
                 </div>
+
             @endforeach
         </div>
     </div>

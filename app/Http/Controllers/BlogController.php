@@ -21,6 +21,10 @@ class BlogController extends Controller
         return view('Blog/blog')->with(['blogs'=>$blogs]);
     }
 
+    public function myBlogs(){
+        $blogs = blog::with('user')->where('user_id',Auth::user()->id)->orderBy('id', 'desc')->paginate(9);
+        return view('Profile/AllMyBlogs')->with(['blogs'=>$blogs]);
+    }
     
     public function create()
     {
@@ -46,27 +50,39 @@ class BlogController extends Controller
    
     public function store(Request $request)
     {
-        $file = $request->hasFile('img');
-        if ($file && Auth::user()->role==="user") {
-
-            $newFile = $request->file('img');
-            $file_path = $newFile->store('/public/blog');
+        $blog = $request->hasblog('img');
+        if ($blog && Auth::user()->role==="user") {
+            $request->validate([
+                'titulli' => ['required','max:40','min:4'],
+                'pershkrimi' => ['required','max:1500','min:10'],
+                'img' => ['required','mimes:jpeg,png','max:2048'],
+                'kategoria' => ['required','max:20'],
+            ]);
+            $newblog = $request->blog('img');
+            $blog_path = $newblog->store('/public/blog');
             blog::create([
                 'titulli' => $request['titulli'],
                 'pershkrimi' => $request['pershkrimi'],
-                'img' => $file_path,
+                'img' => $blog_path,
                 'kategoria'=>$request['kategoria'],
                 'user_id' => Auth::user()->id,
                 'aktive'=>'jo'
             ]);
        return back()->with('msg','Blog juaj u shtua me sukses, por ju duhet te prisni per aprovimin nga admini!');
         }else{
-            $newFile = $request->file('img');
-            $file_path = $newFile->store('/public/blog');
+            $newblog = $request->blog('img');
+            $blog_path = $newblog->store('/public/blog');
+            $request->validate([
+                'titulli' => ['required','max:40','min:4'],
+                'pershkrimi' => ['required','max:1500','min:10'],
+                'img' => ['required','mimes:jpeg,png','max:2048'],
+                'kategoria' => ['required','max:20'],
+
+            ]);
             blog::create([
                 'titulli' => $request['titulli'],
                 'pershkrimi' => $request['pershkrimi'],
-                'img' => $file_path,
+                'img' => $blog_path,
                 'kategoria'=>$request['kategoria'],
                 'user_id' => Auth::user()->id,
                 'aktive'=>'po'
@@ -97,9 +113,41 @@ class BlogController extends Controller
     }
 
   
-    public function update(Request $request, $id)
+     public function update(Request $request, $id)
     {
-        //
+        $blog = $request->hasfile('img');
+        if ($blog) {
+             $blog = blog::findOrFail($id);
+            $request->validate([
+            'titulli' => ['required','max:40','min:4'],
+            'pershkrimi' => ['required','max:250','min:10'],
+            'img' => ['required','mimes:jpeg,png','max:2048'],
+        ]);
+            $newblog = $request->file('img');
+            $blog_path = $newblog->store('/public/blog');
+     
+        
+        $blog->user_id = Auth::user()->id;
+        $blog->titulli = $request->titulli;
+        $blog->pershkrimi = $request->pershkrimi;
+        $blog->img=$blog_path;
+        $blog->aktive=$blog->aktive;
+        $blog->save();
+        return back();
+    }else{
+        $request->validate([
+            'titulli' => ['required','max:40','min:4'],
+            'pershkrimi' => ['required','max:250','min:10'],
+        ]);
+        $blog = blog::findOrFail($id);
+        $blog->user_id = Auth::user()->id;
+        $blog->titulli = $request->titulli;
+        $blog->pershkrimi = $request->pershkrimi;
+        $blog->img=$blog->img;
+        $blog->aktive=$blog->aktive;
+        $blog->save();
+        return back();
+    }
     }
 
   

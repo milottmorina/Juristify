@@ -39,9 +39,9 @@
           
           @endphp
           @if (Auth::user()->img!="public/noProfilePhoto/nofoto.jpg")  
-          <img class="w-10 h-10 rounded-full"  src="/storage/img/{{$link[2]}}" alt="Rounded avatar">
+          <img class="w-10 h-10 rounded-full object-cover"  src="/storage/img/{{$link[2]}}" alt="Rounded avatar">
           @else
-          <img class="w-10 h-10 rounded-full" src="{{asset('/noProfilePhoto/'.$link[2])}}" alt="Rounded avatar">
+          <img class="w-10 h-10 rounded-full object-cover" src="{{asset('/noProfilePhoto/'.$link[2])}}" alt="Rounded avatar">
         
           @endif
         </button>
@@ -118,7 +118,12 @@
       <span class="sr-only">Search</span>
   </button>
 </form>
-
+@if(!Auth::user())
+<a href="{{route('login')}}">
+  <button class="bg-blue-500 hover:bg-blue-700 ml-20 text-white font-bold py-2 px-4 rounded">
+   Login
+  </button></a>
+  @endif
     </div>
     </div>
   </nav>
