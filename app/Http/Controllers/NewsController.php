@@ -22,6 +22,16 @@ class NewsController extends Controller
         $news = news::with('user')->orderBy('id', 'desc')->paginate(9);
         return view('dashboard/all-news')->with(['news'=>$news]);
     }
+    public function findNews(Request $request){
+        $news=news::orderBy('id', 'asc')->where([
+            ['titulli', '!=' , Null],
+            [function ($query) use ($request){
+                if(($term=$request->term)){
+                    $query->where('titulli', 'LIKE', '%'.$term.'%');
+                }   
+    }]])->paginate(5);
+    return view('News/news')->with(['news'=>$news]);
+    }
 
     public function create()
     {

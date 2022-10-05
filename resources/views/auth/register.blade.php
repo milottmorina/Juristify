@@ -83,13 +83,13 @@
            
             <div class="w-full md:w-full px-7 mb-6">
                 <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-                    for='Password'>Universiteti</label>
+                    for='Password'>Zgjidh Universitetin</label>
                 <select name="universiteti"
                     class="@error('universiteti') is-invalid @enderror appearance-none block w-full bg-white text-gray-900 font-medium border border-gray-400 rounded-lg py-3 px-3 leading-tight focus:outline-none"
                     id="grid-state">
-                    <option>New Mexico</option>
-                    <option>Missouri</option>
-                    <option>Texas</option>
+                    <option>Universiteti i Prishtines</option>
+                    <option>Universiteti i Londres</option>
+                    <option>Universiteti i Parisit</option>
                 </select>
                 @error('universiteti')
                     <span class="invalid-feedback" role="alert">

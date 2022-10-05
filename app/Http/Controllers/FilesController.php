@@ -64,7 +64,16 @@ class FilesController extends Controller
         //
     }
 
-
+    public function findFile(Request $request){
+        $files=files::orderBy('id', 'asc')->where([
+            ['titulli', '!=' , Null],
+            [function ($query) use ($request){
+                if(($term=$request->term)){
+                    $query->where('titulli', 'LIKE', '%'.$term.'%');
+                }   
+    }]])->paginate(5);
+    return view('LibraryDocs/allDocuments')->with(['files'=>$files]);
+    }
     public function update(Request $request, $id)
     {
         

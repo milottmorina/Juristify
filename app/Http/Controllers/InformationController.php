@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\information;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class InformationController extends Controller
 {
@@ -14,6 +15,12 @@ class InformationController extends Controller
     {
         $infos = information::with('user')->orderBy('id', 'asc')->paginate(5);
         return view('Information/information')->with(['infos'=>$infos]);
+    }
+
+    public function allInfos()
+    {
+        $infos = information::with('user')->orderBy('id', 'asc')->paginate(5);
+        return view('dashboard/all-informations')->with(['infos'=>$infos]);
     }
 
  
@@ -71,12 +78,45 @@ class InformationController extends Controller
 
     public function update(Request $request, $id)
     {
-        //
+        $file = $request->hasFile('img');
+        if ($file) {
+            $newFile = $request->file('img');
+            $file_path = $newFile->store('/public/info');
+        $file = information::findOrFail($id);
+        $file->user_id = Auth::user()->id;
+        $file->img = $file_path;
+        $file->titulli = $request->titulli;
+        $file->pershkrimi = $request->pershkrimi;
+        $file->kategoria = $request->kategoria;
+        $file->lokacioni = $request->lokacioni;
+        $file->dataSkadimit = $request->dataSkadimit;
+        $file->vende = $request->vende;
+        $file->emriKompanis = $request->emriKompanis;
+        $file->save();
+        return back();
+        }else{
+            $file = information::findOrFail($id);
+            $file->user_id = Auth::user()->id;
+            $file->img = $file->img;
+            $file->titulli = $request->titulli;
+            $file->pershkrimi = $request->pershkrimi;
+            $file->kategoria = $request->kategoria;
+            $file->lokacioni = $request->lokacioni;
+            $file->dataSkadimit = $request->dataSkadimit;
+            $file->vende = $request->vende;
+            $file->emriKompanis = $request->emriKompanis;
+            $file->save();
+            return back();
+        }
     }
 
  
     public function destroy($id)
     {
-        //
+        $infos = information::findOrFail($id);
+        Storage::delete($infos->img);
+        Storage::delete("storage/app/".$infos->img);
+        $infos->delete();
+        return back();
     }
 }
