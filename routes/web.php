@@ -43,7 +43,7 @@ Route::prefix('dashboard')->group(function(){
     Route::get('/library', [FilesController::class, 'showAll'])->name('library.all');
     Route::get('/blogs', [BlogController::class, 'showAll'])->name('blog.all');
     Route::get('/news', [NewsController::class, 'showAll'])->name('news.all');
- 
+    Route::get('/informations', [InformationController::class, 'allInfos'])->name('informations.view');
     
     
     Route::get('contact-us/all', [ContactController::class, 'show'])->name('contact.show');
@@ -95,6 +95,7 @@ Route::prefix('profile')->group(
 Route::prefix('library')->group(
     function (){
         Route::get('/', [FilesController::class, 'show'])->name('all.uploads');
+        Route::get('/find', [FilesController::class, 'findFile'])->name('file.find');
     });
 
 
@@ -104,6 +105,8 @@ Route::prefix('infromation')->group(
         function (){
             Route::get('/', [InformationController::class, 'index'])->name('infos.view');
             Route::post('/store-info', [InformationController::class, 'store'])->name('info.store');
+            Route::get('/destroy/{id}', [InformationController::class, 'destroy'])->name('info.delete');
+            Route::post('/update-info/{id}', [InformationController::class, 'update'])->name('info.update');
         });
 
 
@@ -115,6 +118,7 @@ Route::prefix('news')->group(
                 Route::post('/store-news', [NewsController::class, 'store'])->name('news.store');
                 Route::get('/destroy/{id}', [NewsController::class, 'destroy'])->name('news.delete');
                 Route::post('/update-news/{id}', [NewsController::class, 'update'])->name('news.update');
+                Route::get('/find', [NewsController::class, 'findNews'])->name('news.find');
             });
 
 
@@ -127,6 +131,7 @@ Route::post('/store-news', [BlogController::class, 'store'])->name('blog.store')
 Route::post('/verifiko/{id}', [BlogController::class, 'verifiko'])->name('blog.verifiko');
 Route::post('/cverifiko/{id}', [BlogController::class, 'cverifiko'])->name('blog.cverifiko');
 Route::get('/destroy/{id}', [BlogController::class, 'destroy'])->name('blog.delete');
+Route::get('/find', [BlogController::class, 'findBlog'])->name('blog.find');
 // Route::get('/', [CommentController::class, 'index'])->name('comment.view');
 });
 

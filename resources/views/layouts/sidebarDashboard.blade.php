@@ -49,7 +49,7 @@
                    </a>
                 </li>
                 <li>
-                   <a href="#" class="text-base text-gray-900 font-normal rounded-lg hover:bg-gray-100 flex items-center p-2 group ">
+                   <a href="{{route('informations.view')}}" class="text-base text-gray-900 font-normal rounded-lg hover:bg-gray-100 flex items-center p-2 group ">
                      <i class="fa-solid fa-circle-info text-gray-500 group-hover:text-gray-900"></i>
                       <span class="ml-3 flex-1 whitespace-nowrap">Information</span>
                    </a>

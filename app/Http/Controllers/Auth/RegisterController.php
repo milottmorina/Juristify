@@ -33,7 +33,7 @@ class RegisterController extends Controller
             'emri' => ['required', 'regex:/^[a-zA-Z]+$/u', 'string', 'max:25'],
             'mbiemri' => ['required', 'regex:/^[a-zA-Z]+$/u', 'string', 'max:25'],
             'dataLindjes'=>['required'],
-            'universiteti' => ['required', 'regex:/^[a-zA-Z]+$/u', 'string', 'max:25'],
+            'universiteti' => ['required', 'string', 'max:80'],
             'gjinia' => ['required'],
             'email' => ['required', 'string', 'email', 'max:50', 'unique:users'],
             'password' => ['required', 'regex:/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/ ', 'confirmed', Rules\Password::defaults()]

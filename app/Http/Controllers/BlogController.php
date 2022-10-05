@@ -50,7 +50,7 @@ class BlogController extends Controller
    
     public function store(Request $request)
     {
-        $blog = $request->hasblog('img');
+        $blog = $request->hasFile('img');
         if ($blog && Auth::user()->role==="user") {
             $request->validate([
                 'titulli' => ['required','max:40','min:4'],
@@ -58,7 +58,7 @@ class BlogController extends Controller
                 'img' => ['required','mimes:jpeg,png','max:2048'],
                 'kategoria' => ['required','max:20'],
             ]);
-            $newblog = $request->blog('img');
+            $newblog = $request->file('img');
             $blog_path = $newblog->store('/public/blog');
             blog::create([
                 'titulli' => $request['titulli'],
@@ -70,7 +70,7 @@ class BlogController extends Controller
             ]);
        return back()->with('msg','Blog juaj u shtua me sukses, por ju duhet te prisni per aprovimin nga admini!');
         }else{
-            $newblog = $request->blog('img');
+            $newblog = $request->file('img');
             $blog_path = $newblog->store('/public/blog');
             $request->validate([
                 'titulli' => ['required','max:40','min:4'],
@@ -112,6 +112,16 @@ class BlogController extends Controller
         
     }
 
+    public function findBlog(Request $request){
+        $blogs=blog::orderBy('id', 'asc')->where([
+            ['titulli', '!=' , Null],
+            [function ($query) use ($request){
+                if(($term=$request->term)){
+                    $query->where('titulli', 'LIKE', '%'.$term.'%');
+                }   
+    }]])->paginate(5);
+    return view('Blog/blog')->with(['blogs'=>$blogs]);
+    }
   
      public function update(Request $request, $id)
     {
