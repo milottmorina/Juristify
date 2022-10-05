@@ -88,7 +88,7 @@
                     class="@error('universiteti') is-invalid @enderror appearance-none block w-full bg-white text-gray-900 font-medium border border-gray-400 rounded-lg py-3 px-3 leading-tight focus:outline-none"
                     id="grid-state">
                     <option>Zgjidh Universitetin</option>
-                    <option>UniversitetiiLondres</option>
+                    <option>Universiteti i Londres</option>
                     <option>Universiteti i Texas</option>
                 </select>
                 @error('universiteti')

@@ -11,7 +11,7 @@
         Register a new account
     </h2>
     <span class="text-sm">or <a href="{{ route('login') }}" class="text-blue-500">
-            Sign in your account
+            Sign in into your account
         </a>
     </span>
 </div>
@@ -88,8 +88,9 @@
                     class="@error('universiteti') is-invalid @enderror appearance-none block w-full bg-white text-gray-900 font-medium border border-gray-400 rounded-lg py-3 px-3 leading-tight focus:outline-none"
                     id="grid-state">
                     <option>Zgjidh Universitetin</option>
-                    <option>UniversitetiiLondres</option>
-                    <option>Universiteti i Texas</option>
+                    <option>Universiteti i Prishtines</option>
+                    <option>Universiteti i Tiranes</option>
+                    <option>Universiteti i Londres</option>
                 </select>
                 @error('universiteti')
                     <span class="invalid-feedback" role="alert">

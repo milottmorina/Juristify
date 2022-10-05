@@ -50,7 +50,7 @@
        <div class="w-full flex items-center justify-between px-3 mb-3 ">
          
           <div class="w-1/2">
-             <a href="#" class="text-blue-500 text-sm tracking-tight">Forgt your password?</a>
+             <a href="#" class="text-blue-500 text-sm tracking-tight">Forgot your password?</a>
           </div>
        </div>
        <div class="w-full md:w-full px-3 mb-6">
