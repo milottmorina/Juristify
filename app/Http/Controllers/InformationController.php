@@ -13,13 +13,16 @@ class InformationController extends Controller
  
     public function index()
     {
-        $infos = information::with('user')->orderBy('id', 'asc')->paginate(5);
-        return view('Information/information')->with(['infos'=>$infos]);
+        $infos = information::with('user')->orderBy('id', 'desc')->paginate(5);
+        $citys = information::select('lokacioni')->get();
+        $categories = information::select('kategoria')->get();
+
+        return view('Information/information')->with(['infos'=>$infos,'citys'=>$citys,'categories'=>$categories]);
     }
 
     public function allInfos()
     {
-        $infos = information::with('user')->orderBy('id', 'asc')->paginate(5);
+        $infos = information::with('user')->orderBy('id', 'desc')->paginate(5);
         return view('dashboard/all-informations')->with(['infos'=>$infos]);
     }
 
@@ -73,6 +76,27 @@ class InformationController extends Controller
     public function edit($id)
     {
         //
+    }
+
+    public function findInfo(Request $request){
+        $infos=information::orderBy('id', 'desc')->where([
+            ['titulli', '!=' , Null],
+            ['lokacioni', '!=' , Null],
+            ['kategoria', '!=' , Null],
+            [function ($query) use ($request){
+                if(($term=$request->term)){
+                    $query->where('titulli', 'LIKE', '%'.$term.'%');
+                }
+                if(($location=$request->loc)){
+                    $query->where('lokacioni', 'LIKE', '%'.$location.'%');
+                }  
+                if(($kategoria=$request->cat)){
+                    $query->where('kategoria', 'LIKE', '%'.$kategoria.'%');
+                }     
+    }]])->paginate(5);
+    $citys = information::select('lokacioni')->get();
+    $categories = information::select('kategoria')->get();
+    return view('Information/information')->with(['infos'=>$infos,'citys'=>$citys,'categories'=>$categories]);
     }
 
 

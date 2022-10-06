@@ -23,7 +23,7 @@ class NewsController extends Controller
         return view('dashboard/all-news')->with(['news'=>$news]);
     }
     public function findNews(Request $request){
-        $news=news::orderBy('id', 'asc')->where([
+        $news=news::orderBy('id', 'desc')->where([
             ['titulli', '!=' , Null],
             [function ($query) use ($request){
                 if(($term=$request->term)){
