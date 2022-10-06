@@ -107,6 +107,8 @@ Route::prefix('infromation')->group(
             Route::post('/store-info', [InformationController::class, 'store'])->name('info.store');
             Route::get('/destroy/{id}', [InformationController::class, 'destroy'])->name('info.delete');
             Route::post('/update-info/{id}', [InformationController::class, 'update'])->name('info.update');
+            Route::get('/find', [InformationController::class, 'findInfo'])->name('info.find');
+
         });
 
 

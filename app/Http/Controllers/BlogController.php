@@ -32,7 +32,7 @@ class BlogController extends Controller
     }
 
     public function showAll(){
-        $blogs = blog::with('user')->orderBy('id', 'asc')->paginate(5);
+        $blogs = blog::with('user')->orderBy('id', 'desc')->paginate(5);
         return view('dashboard/all-blogs')->with(['blogs'=>$blogs]);
     }
     public function cverifiko($id){
@@ -113,7 +113,7 @@ class BlogController extends Controller
     }
 
     public function findBlog(Request $request){
-        $blogs=blog::orderBy('id', 'asc')->where([
+        $blogs=blog::orderBy('id', 'desc')->where([
             ['titulli', '!=' , Null],
             [function ($query) use ($request){
                 if(($term=$request->term)){

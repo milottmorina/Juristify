@@ -76,10 +76,16 @@ class FilesController extends Controller
     }
     public function update(Request $request, $id)
     {
-        
-     
         $file = $request->hasFile('dokumenti');
-   
+        if(Auth::user()->role==="admin"){
+            $file = files::findOrFail($id);
+            $file->user_id =$file->user_id;
+            $file->titulli = $request->titulli;
+            $file->pershkrimi = $request->pershkrimi;
+            $file->dokumenti= $file->dokumenti;
+            $file->save();
+            return back();
+        }else{
         if ($file) { 
             $request->validate([
             'titulli' => ['required','max:40','min:4'],
@@ -108,6 +114,7 @@ class FilesController extends Controller
         $file->dokumenti=$file->dokumenti;
         $file->save();
         return back();
+    }
     }
     }
 

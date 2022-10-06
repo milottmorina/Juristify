@@ -16,7 +16,7 @@ class ContactController extends Controller
 
     public function show(){
        if(Auth::user() && Auth::user()->role==='admin'){
-        $contacts = contact::orderBy('id', 'asc')->paginate(5);
+        $contacts = contact::orderBy('id', 'desc')->paginate(5);
         return view('Dashboard/all-contacts')->with(['contacts'=>$contacts]);
         }else{
             return redirect('/home');
