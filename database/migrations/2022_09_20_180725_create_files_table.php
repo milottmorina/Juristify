@@ -14,6 +14,7 @@ return new class extends Migration
             $table->string('titulli');
             $table->text('pershkrimi');
             $table->text('dokumenti');
+            $table->string('status')->default('jo');
             $table->foreignId('user_id')
             ->references('id')->on('users')
             ->onDelete('cascade');

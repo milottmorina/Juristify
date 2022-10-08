@@ -10,6 +10,10 @@ use Illuminate\Support\Facades\Storage;
 class FilesController extends Controller
 {
 
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     public function index()
     {
         $files = files::with('user')->where('user_id',Auth::user()->id)->orderBy('id', 'desc')->paginate(5);
@@ -21,6 +25,19 @@ class FilesController extends Controller
         $files = files::with('user')->orderBy('id', 'desc')->paginate(5);
         return view('dashboard/all-files')->with(['files'=>$files]);
     }
+
+    public function cverifiko($id){
+        $files = files::findOrFail($id);
+        $files->status='jo';
+        $files->save();
+        return back()->with('msg',"Dokumenti u c'verifikua me sukses!");
+    }
+    public function verifiko($id){
+        $files = files::findOrFail($id);
+        $files->status='po';
+        $files->save();
+        return back()->with('msg',"Dokumenti u verifikua me sukses!");
+    }
  
 
 
@@ -28,11 +45,11 @@ class FilesController extends Controller
     {
       
         $file = $request->hasFile('dokumenti');
-        if ($file) {
+        if ($file && Auth::user()->role==="admin") {
         
         $request->validate([
             'titulli' => ['required','max:40','min:4'],
-            'pershkrimi' => ['required','max:250','min:10'],
+            'pershkrimi' => ['required','max:500','min:10'],
             'dokumenti' => ['required','mimes:pdf,docx','max:2048'],
         ]);
             $newFile = $request->file('dokumenti');
@@ -42,10 +59,25 @@ class FilesController extends Controller
                 'pershkrimi' => $request['pershkrimi'],
                 'dokumenti' => $file_path,
                 'user_id' => Auth::user()->id,
+                'status'=>'po'
             ]);
         return back()->with('msg','Dokumenti juaj u shtua me sukses!');
         }else{
-            return back()->with('error','Plotesoni hapesirate e kerkuara!');
+            $request->validate([
+                'titulli' => ['required','max:40','min:4'],
+                'pershkrimi' => ['required','max:500','min:10'],
+                'dokumenti' => ['required','mimes:pdf,docx','max:2048'],
+            ]);
+                $newFile = $request->file('dokumenti');
+                $file_path = $newFile->store('/public/dokumentet');
+                files::create([
+                    'titulli' => $request['titulli'],
+                    'pershkrimi' => $request['pershkrimi'],
+                    'dokumenti' => $file_path,
+                    'user_id' => Auth::user()->id,
+                    'status'=>'jo'
+                ]);
+                return back()->with('msg','Dokumenti juaj u shtua me sukses por duhet te prisni per aprovim nga ana jone!');
         }
        
     }
@@ -53,7 +85,7 @@ class FilesController extends Controller
 
     public function show()
     {
-        $files = files::with('user')->orderBy('id', 'desc')->paginate(10);
+        $files = files::with('user')->where('status','po')->orderBy('id', 'desc')->paginate(10);
 
         return view('LibraryDocs/allDocuments')->with(['files'=>$files]);
     }
@@ -69,10 +101,20 @@ class FilesController extends Controller
             ['titulli', '!=' , Null],
             [function ($query) use ($request){
                 if(($term=$request->term)){
-                    $query->where('titulli', 'LIKE', '%'.$term.'%');
+                    $query->where('titulli', 'LIKE', '%'.$term.'%')->where('status','po');
                 }   
     }]])->paginate(5);
     return view('LibraryDocs/allDocuments')->with(['files'=>$files]);
+    }
+    public function findFileDashboard(Request $request){
+        $files=files::orderBy('id', 'asc')->where([
+            ['titulli', '!=' , Null],
+            [function ($query) use ($request){
+                if(($term=$request->term)){
+                    $query->where('titulli', 'LIKE', '%'.$term.'%');
+                }   
+    }]])->paginate(5);
+    return view('dashboard/all-files')->with(['files'=>$files]);
     }
     public function update(Request $request, $id)
     {

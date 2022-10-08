@@ -12,6 +12,10 @@ use Illuminate\Support\Facades\Storage;
 
 class BlogController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
    
     public function index()
     {
@@ -117,10 +121,20 @@ class BlogController extends Controller
             ['titulli', '!=' , Null],
             [function ($query) use ($request){
                 if(($term=$request->term)){
-                    $query->where('titulli', 'LIKE', '%'.$term.'%');
+                    $query->where('titulli', 'LIKE', '%'.$term.'%')->where('aktive','po');
                 }   
     }]])->paginate(5);
     return view('Blog/blog')->with(['blogs'=>$blogs]);
+    }
+    public function findBlogDashboard(Request $request){
+        $blogs=blog::orderBy('id', 'desc')->where([
+            ['titulli', '!=' , Null],
+            [function ($query) use ($request){
+                if(($term=$request->term)){
+                    $query->where('titulli', 'LIKE', '%'.$term.'%');
+                }   
+    }]])->paginate(5);
+    return view('dashboard/all-blogs')->with(['blogs'=>$blogs]);
     }
   
      public function update(Request $request, $id)

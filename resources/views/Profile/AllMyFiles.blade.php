@@ -79,6 +79,19 @@
                                         <img class="ml-2 justify-center" src="{{ asset('/noProfilePhoto/docs.png') }}"
                                             width="100px" />
                                             <p class="block text-center">{{$f->titulli}}</p>
+                                            @if ($f->status==="po")
+                                                    <div class="text-center">
+                                                          <h3
+                                                    class="tracking-widest rounded  bg-green-400 text-white p-1 text-xs font-medium title-font">
+                                                  AKTIVE</h3> 
+                                                </div>
+                                                    @else
+                                                    <div class="text-center" >
+                                                        <h3
+                                                  class="tracking-widest rounded  bg-red-400 text-white p-1 text-xs font-medium title-font">
+                                                JO AKTIVE</h3>
+                                                    </div>
+                                                    @endif
                                             <p class="hidden text-center hover:block">{{$f->pershkrimi}}</p>
                                             </a>
                                        
