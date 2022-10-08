@@ -9,7 +9,11 @@ use Illuminate\Support\Facades\Storage;
 
 
 class NewsController extends Controller
-{
+{   
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     
     public function index()
     {
@@ -32,6 +36,20 @@ class NewsController extends Controller
     }]])->paginate(5);
     return view('News/news')->with(['news'=>$news]);
     }
+
+
+    public function findNewsDashboard(Request $request){
+        $news=news::orderBy('id', 'desc')->where([
+            ['titulli', '!=' , Null],
+            [function ($query) use ($request){
+                if(($term=$request->term)){
+                    $query->where('titulli', 'LIKE', '%'.$term.'%');
+                }   
+    }]])->paginate(5);
+    return view('dashboard/all-news')->with(['news'=>$news]);
+    }
+
+    
 
     public function create()
     {

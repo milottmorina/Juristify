@@ -8,7 +8,11 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
 class InformationController extends Controller
-{
+{   
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
 
  
     public function index()
@@ -23,7 +27,9 @@ class InformationController extends Controller
     public function allInfos()
     {
         $infos = information::with('user')->orderBy('id', 'desc')->paginate(5);
-        return view('dashboard/all-informations')->with(['infos'=>$infos]);
+        $citys = information::select('lokacioni')->get();
+        $categories = information::select('kategoria')->get();
+        return view('dashboard/all-informations')->with(['infos'=>$infos,'citys'=>$citys,'categories'=>$categories]);
     }
 
  
@@ -97,6 +103,27 @@ class InformationController extends Controller
     $citys = information::select('lokacioni')->get();
     $categories = information::select('kategoria')->get();
     return view('Information/information')->with(['infos'=>$infos,'citys'=>$citys,'categories'=>$categories]);
+    }
+
+    public function findInfoDashboard(Request $request){
+        $infos=information::orderBy('id', 'desc')->where([
+            ['titulli', '!=' , Null],
+            ['lokacioni', '!=' , Null],
+            ['kategoria', '!=' , Null],
+            [function ($query) use ($request){
+                if(($term=$request->term)){
+                    $query->where('titulli', 'LIKE', '%'.$term.'%');
+                }
+                if(($location=$request->loc)){
+                    $query->where('lokacioni', 'LIKE', '%'.$location.'%');
+                }  
+                if(($kategoria=$request->cat)){
+                    $query->where('kategoria', 'LIKE', '%'.$kategoria.'%');
+                }     
+    }]])->paginate(5);
+    $citys = information::select('lokacioni')->get();
+    $categories = information::select('kategoria')->get();
+    return view('dashboard/all-informations')->with(['infos'=>$infos,'citys'=>$citys,'categories'=>$categories]);
     }
 
 

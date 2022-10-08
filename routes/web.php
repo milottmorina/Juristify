@@ -15,59 +15,46 @@ Route::get('/', function () {
     if(Auth::user()){
         return redirect('/home');
     }else{
-    return view('home');
+    return view('auth/login');
 }
 });
-
-
-
-
+//home
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-
 Route::prefix('contact-us')->group(function () {
 
     Route::get('/', [ContactController::class, 'index'])->name('contact.index');
     Route::post('/store', [ContactController::class, 'store'])->name('contact.store');
-    Route::get('/destroy/{id}', [ContactController::class, 'destroy'])->name('contact.delete');
+    Route::get('/destroy/{id}', [ContactController::class, 'destroy'])->name('contact.delete')->middleware('admin');
    
 });
-
-
-
-
-
+//dashboard
 Route::prefix('dashboard')->group(function(){
-   
-   
-    Route::get('/', [User::class, 'dashboard'])->name('dashboard.view');
-    Route::get('/library', [FilesController::class, 'showAll'])->name('library.all');
-    Route::get('/blogs', [BlogController::class, 'showAll'])->name('blog.all');
-    Route::get('/news', [NewsController::class, 'showAll'])->name('news.all');
-    Route::get('/informations', [InformationController::class, 'allInfos'])->name('informations.view');
-    
-    
-    Route::get('contact-us/all', [ContactController::class, 'show'])->name('contact.show');
-
-
+    Route::get('/', [User::class, 'dashboard'])->name('dashboard.view')->middleware('admin');
+    Route::get('/library', [FilesController::class, 'showAll'])->name('library.all')->middleware('admin');
+    Route::get('/blogs', [BlogController::class, 'showAll'])->name('blog.all')->middleware('admin');
+    Route::get('/news', [NewsController::class, 'showAll'])->name('news.all')->middleware('admin');
+    Route::get('/informations', [InformationController::class, 'allInfos'])->name('informations.view')->middleware('admin');
+    Route::get('contact-us/all', [ContactController::class, 'show'])->name('contact.show')->middleware('admin');
+    Route::get('/blogs/find', [BlogController::class, 'findBlogDashboard'])->name('blog.findDashboard');
+    Route::get('/library/find', [FilesController::class, 'findFileDashboard'])->name('file.findDashboard');
+    Route::get('/information/find', [InformationController::class, 'findInfoDashboard'])->name('info.findDashboard')->middleware('admin');
+    Route::get('/news/find', [NewsController::class, 'findNewsDashboard'])->name('news.findDashboard')->middleware('admin');
 
     Route::prefix('/users')->group(function(){
-    Route::get('/', [User::class, 'allUsers'])->name('user.all');
-    Route::get('/find', [User::class, 'findUser'])->name('user.find');
-    Route::get('/verified', [User::class, 'getVerifiedUsers'])->name('user.verified');
-    Route::get('/non-verified', [User::class, 'getNonVerifiedUsers'])->name('user.nonverified');
-    Route::get('/admin', [User::class, 'getAdmin'])->name('user.admin');
-    Route::get('/default', [User::class, 'getDefaultUsers'])->name('user.default');
-    Route::post('/verifiko/{id}', [User::class, 'verifiko'])->name('user.verifiko');
-    Route::post('/cverifiko/{id}', [User::class, 'cverifiko'])->name('user.cverifiko');
-    Route::post('/make-admin/{id}', [User::class, 'makeAdmin'])->name('user.makeadmin');
-    Route::post('/make-default-user/{id}', [User::class, 'makeDefault'])->name('user.defaultuser');
+    Route::get('/', [User::class, 'allUsers'])->name('user.all')->middleware('admin');
+    Route::get('/find', [User::class, 'findUser'])->name('user.find')->middleware('admin');
+    Route::get('/verified', [User::class, 'getVerifiedUsers'])->name('user.verified')->middleware('admin');
+    Route::get('/non-verified', [User::class, 'getNonVerifiedUsers'])->name('user.nonverified')->middleware('admin');
+    Route::get('/admin', [User::class, 'getAdmin'])->name('user.admin')->middleware('admin');
+    Route::get('/default', [User::class, 'getDefaultUsers'])->name('user.default')->middleware('admin');
+    Route::post('/verifiko/{id}', [User::class, 'verifiko'])->name('user.verifiko')->middleware('admin');
+    Route::post('/cverifiko/{id}', [User::class, 'cverifiko'])->name('user.cverifiko')->middleware('admin');
+    Route::post('/make-admin/{id}', [User::class, 'makeAdmin'])->name('user.makeadmin')->middleware('admin');
+    Route::post('/make-default-user/{id}', [User::class, 'makeDefault'])->name('user.defaultuser')->middleware('admin');
 
 });
 });
-
-
-
-
+//profili 
 Route::prefix('profile')->group(
     function () {
         Route::get('/', [User::class, 'index'])->name('user.index');
@@ -88,43 +75,34 @@ Route::prefix('profile')->group(
 
     }
 );
-
-
-
-
+// library
 Route::prefix('library')->group(
     function (){
         Route::get('/', [FilesController::class, 'show'])->name('all.uploads');
-        Route::get('/find', [FilesController::class, 'findFile'])->name('file.find');
+        Route::get('/search', [FilesController::class, 'findFile'])->name('file.find');
+        Route::post('/verifiko/{id}', [FilesController::class, 'verifiko'])->name('file.verifiko')->middleware('admin');
+        Route::post('/cverifiko/{id}', [FilesController::class, 'cverifiko'])->name('file.cverifiko')->middleware('admin');
     });
-
-
-
-
+//information
 Route::prefix('infromation')->group(
         function (){
             Route::get('/', [InformationController::class, 'index'])->name('infos.view');
-            Route::post('/store-info', [InformationController::class, 'store'])->name('info.store');
-            Route::get('/destroy/{id}', [InformationController::class, 'destroy'])->name('info.delete');
-            Route::post('/update-info/{id}', [InformationController::class, 'update'])->name('info.update');
-            Route::get('/find', [InformationController::class, 'findInfo'])->name('info.find');
-
-        });
-
-
-
+            Route::post('/store-info', [InformationController::class, 'store'])->name('info.store')->middleware('admin');
+            Route::get('/destroy/{id}', [InformationController::class, 'destroy'])->name('info.delete')->middleware('admin');
+            Route::post('/update-info/{id}', [InformationController::class, 'update'])->name('info.update')->middleware('admin');
+            Route::get('/search', [InformationController::class, 'findInfo'])->name('info.find');
+});
+//news
 Route::prefix('news')->group(
             function (){
                 Route::get('/', [NewsController::class, 'index'])->name('news.view');
                 Route::get('/single/{id}', [NewsController::class, 'show'])->name('news.show');
-                Route::post('/store-news', [NewsController::class, 'store'])->name('news.store');
-                Route::get('/destroy/{id}', [NewsController::class, 'destroy'])->name('news.delete');
-                Route::post('/update-news/{id}', [NewsController::class, 'update'])->name('news.update');
-                Route::get('/find', [NewsController::class, 'findNews'])->name('news.find');
-            });
-
-
-
+                Route::post('/store-news', [NewsController::class, 'store'])->name('news.store')->middleware('admin');
+                Route::get('/destroy/{id}', [NewsController::class, 'destroy'])->name('news.delete')->middleware('admin');
+                Route::post('/update-news/{id}', [NewsController::class, 'update'])->name('news.update')->middleware('admin');
+                Route::get('/search', [NewsController::class, 'findNews'])->name('news.find');
+});
+//blog
 Route::prefix('blog')->group(
 function (){
 Route::get('/', [BlogController::class, 'index'])->name('blog.view');
@@ -133,18 +111,15 @@ Route::post('/store-news', [BlogController::class, 'store'])->name('blog.store')
 Route::post('/verifiko/{id}', [BlogController::class, 'verifiko'])->name('blog.verifiko');
 Route::post('/cverifiko/{id}', [BlogController::class, 'cverifiko'])->name('blog.cverifiko');
 Route::get('/destroy/{id}', [BlogController::class, 'destroy'])->name('blog.delete');
-Route::get('/find', [BlogController::class, 'findBlog'])->name('blog.find');
-// Route::get('/', [CommentController::class, 'index'])->name('comment.view');
+Route::get('/search', [BlogController::class, 'findBlog'])->name('blog.find');
+
 });
-
-
-
-
+//comment
 Route::prefix('comment')->group(
     function (){
-        
         Route::post('/store-comment', [CommentController::class, 'store'])->name('comment.store');
         Route::post('/update-comment/{id}', [CommentController::class, 'update'])->name('comment.update');
         Route::get('/destroy/{id}', [CommentController::class, 'destroy'])->name('comment.delete');
-    });
+});
 Auth::routes();
+

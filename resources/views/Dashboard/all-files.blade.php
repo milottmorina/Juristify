@@ -52,7 +52,20 @@
                             </div>
                         </div>
                         @endif
-    
+                        <div class="flex justify-center pt-4">
+                            <form class="w-3/5 " action="{{ route('file.findDashboard') }}" method="GET" role="search">   
+                                <label for="default-search" class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-gray-300">Search</label>
+                                <div class="relative">
+                                    <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
+                                        <svg aria-hidden="true" class="w-5 h-5 text-gray-500 dark:text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                                    </div>
+                                    <input type="search" name="term" id="default-search" class="block p-4 ml-2 pl-10 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="     Search title..." required="">
+                                    <a href="{{route('file.findDashboard')}}" >
+                                    <button type="submit" class="text-white absolute right-2.5 bottom-2 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Search</button>
+                                    </a>
+                                </div>
+                            </form>
+                            </div>
                         <div class="flex overflow-x-scroll p-10 hide-scroll-bar ">
                             
                             <div class="flex flex-nowrap md:ml-20 mr-10 ">
@@ -83,7 +96,18 @@
                                       <a class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white" type="button" data-modal-toggle="popup-modal{{$f->id}}">
                                         Delete
                                       </a>
-                                   
+                                      <a class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white" >
+
+                                        @if ($f->status!='po')
+                                        <button class="block text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800" type="button" data-modal-toggle="p-modal{{$f->id}}">
+                                            Aktivizo
+                                          </button>                  
+                                            @else
+                                          <button class="block text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800" type="button" data-modal-toggle="modal-p{{$f->id}}">
+                                            C'aktivizo
+                                          </button>
+                                        @endif
+                                      </a>
                                      
                                     </li>
                                     
@@ -103,8 +127,21 @@
                                                 </a>
                                                 
                                         </div>  
+                                        
                                         <p class="block text-center font-bold">{{$f->titulli}}</p>
-
+                                        @if ($f->status==="po")
+                                        <div class="text-center w-[20%] ml-5">
+                                              <h3
+                                        class="w-50 tracking-widest rounded  bg-green-400 text-white p-1 text-xs font-medium title-font">
+                                      AKTIVE</h3> 
+                                    </div>
+                                        @else
+                                        <div class="text-center w-[30%] ml-5">
+                                            <h3
+                                      class="tracking-widest rounded  bg-red-400 text-white p-1 text-xs font-medium title-font">
+                                    JO AKTIVE</h3>
+                                        </div>
+                                        @endif
                                         <div class="flex">
                                             
                                             <div class="ml-3">   @if ($f->user->img==="public/noProfilePhoto/nofoto.jpg")  
@@ -222,6 +259,50 @@
                                             </div>
                                         </div>
                                     </div>
+
+                                    <div id="p-modal{{$f->id}}" tabindex="-1" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 md:inset-0 h-modal md:h-full justify-center items-center" aria-hidden="true">
+                                        <div class="relative p-4 w-full max-w-md h-full md:h-auto">
+                                            <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+                                                <button type="button" class="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-800 dark:hover:text-white" data-modal-toggle="p-modal{{$f->id}}">
+                                                    <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+                                                    <span class="sr-only">Close modal</span>
+                                                </button>
+                                                <div class="p-6 text-center">
+                                                  <form action="{{route('file.verifiko',$f->id)}}" method="post">
+                                                      @csrf
+                                                    <svg aria-hidden="true" class="mx-auto mb-4 w-14 h-14 text-gray-400 dark:text-gray-200" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                                    <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">A jeni i sigurt qe doni ta aktivizoni kete dokument?</h3>
+                                                    <button data-modal-toggle="p-modal{{$f->id}}" type="submit" class="text-white bg-green-600 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 dark:focus:ring-green-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center mr-2">
+                                                        Po, jam i sigurt
+                                                    </button>
+                                                  </form>
+                                                    <button data-modal-toggle="p-modal{{$f->id}}" type="button" class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600">Jo, anulo</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div id="modal-p{{$f->id}}" tabindex="-1" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 md:inset-0 h-modal md:h-full justify-center items-center" aria-hidden="true">
+                                      <div class="relative p-4 w-full max-w-md h-full md:h-auto">
+                                          <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+                                              <button type="button" class="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-800 dark:hover:text-white" data-modal-toggle="modal-p{{$f->id}}">
+                                                  <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+                                                  <span class="sr-only">Close modal</span>
+                                              </button>
+                                              <div class="p-6 text-center">
+                                                  <form action="{{route('file.cverifiko',$f->id)}}" method="post">
+                                                      @csrf
+                                                  <svg aria-hidden="true" class="mx-auto mb-4 w-14 h-14 text-gray-400 dark:text-gray-200" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                                  <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">A jeni i sigurt qe doni ta caktivizoni kete file?</h3>
+                                                  <button data-modal-toggle="modal-p{{$f->id}}" type="submit" class="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center mr-2">
+                                                      Po, jam i sigurt
+                                                  </button>
+                                                  </form>
+                                                  <button data-modal-toggle="modal-p{{$f->id}}" type="button" class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600">Jo, anulo</button>
+                                              </div>
+                                          </div>
+                                      </div>
+                                  </div>
                                         @endforeach
                                         
                                 </div>

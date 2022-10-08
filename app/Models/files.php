@@ -15,7 +15,8 @@ class files extends Model
         'titulli',
         'pershkrimi',
         'dokumenti',
-        'user_id'
+        'user_id',
+        'status'
     ];
 
     public function user()

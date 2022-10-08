@@ -22,7 +22,7 @@
   
     </div>
   </div>
-  {{-- {{dd($categories)}} --}}
+
 <div class="w-full  shadow p-20 rounded-lg bg-white">
     <div class="px-5">
         <form action="{{ route('info.find') }}" method="GET" role="search">

@@ -9,18 +9,20 @@ use Illuminate\Http\Request;
 class ContactController extends Controller
 {
 
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     public function index()
     {
         return view('ContactUs/contact');
     }
 
     public function show(){
-       if(Auth::user() && Auth::user()->role==='admin'){
+
         $contacts = contact::orderBy('id', 'desc')->paginate(5);
         return view('Dashboard/all-contacts')->with(['contacts'=>$contacts]);
-        }else{
-            return redirect('/home');
-        }
+       
     }
 
 
