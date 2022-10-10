@@ -4,11 +4,15 @@ namespace App\Http\Controllers;
 
 use App\Models\Blog;
 use App\Models\Comment;
+use App\Models\User as UserModel;
 use App\Http\Requests\StoreBlogRequest;
 use App\Http\Requests\UpdateBlogRequest;
+use App\Mail\BlogActivate;
+use App\Mail\BlogDeactivated;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Mail;
 
 class BlogController extends Controller
 {
@@ -43,12 +47,17 @@ class BlogController extends Controller
         $blog = blog::findOrFail($id);
         $blog->aktive='jo';
         $blog->save();
+        $email=UserModel::select('email')->where('id',$blog->user_id)->get();
+        Mail::to($email)->send(new BlogDeactivated($email));    
         return back()->with('msg',"Blogu u c'verifikua me sukses!");
     }
     public function verifiko($id){
         $blog = blog::findOrFail($id);
         $blog->aktive='po';
         $blog->save();
+        
+        $email=UserModel::select('email')->where('id',$blog->user_id)->get();
+        Mail::to($email)->send(new BlogActivate($email));    
         return back()->with('msg',"Blogu u verifikua me sukses!");
     }
    

@@ -2,12 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\UserDeactivated;
+use App\Mail\UserVerification;
 use App\Models\User as ModelsUser;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
+
 
 class User extends Controller
 {
@@ -75,6 +79,8 @@ class User extends Controller
         $user = ModelsUser::findOrFail($id);
         $user->verifikuar='po';
         $user->save();
+        $email=ModelsUser::select('email')->where('id',$id)->get();
+        Mail::to($email)->send(new UserVerification($email));
         return back()->with('msg','User u verifikua me sukses!');
     }
     public function makeAdmin($id){
@@ -93,6 +99,8 @@ class User extends Controller
         $user = ModelsUser::findOrFail($id);
         $user->verifikuar='jo';
         $user->save();
+        $email=ModelsUser::select('email')->where('id',$id)->get();
+        Mail::to($email)->send(new UserDeactivated($email));
         return back()->with('msg',"User u c'verifikua me sukses!");
     }
     public function updateProfile(Request $request, $id)

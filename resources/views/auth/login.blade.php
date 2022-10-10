@@ -100,6 +100,13 @@
            <h2 class="text-center text-4xl text-[#d9b64c] font-display font-semibold lg:text-left xl:text-5xl
            xl:text-bold">Log in</h2>
            <div class="mt-12">
+            @if (Session::has('msg'))
+            <div class="alert alert-success text-center text-green-600 relative ">
+               <div class="p-4 mb-4 text-sm text-green-700 bg-green-100 rounded-lg dark:bg-green-200 dark:text-green-800" role="alert">
+                  <span class="font-medium">{!! \Session::get('msg') !!}</span> 
+                </div>
+            </div>
+            @endif
                <form method="POST" action="{{ route('login') }}">
                   @csrf
                    <div>

@@ -2,10 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\LibraryActivated;
+use App\Mail\LibraryDeactivated;
 use App\Models\files;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Mail;
+use App\Models\User as UserModel;
 
 class FilesController extends Controller
 {
@@ -30,12 +34,16 @@ class FilesController extends Controller
         $files = files::findOrFail($id);
         $files->status='jo';
         $files->save();
+        $email=UserModel::select('email')->where('id',$files->user_id)->get();
+        Mail::to($email)->send(new LibraryDeactivated($email));   
         return back()->with('msg',"Dokumenti u c'verifikua me sukses!");
     }
     public function verifiko($id){
         $files = files::findOrFail($id);
         $files->status='po';
         $files->save();
+        $email=UserModel::select('email')->where('id',$files->user_id)->get();
+        Mail::to($email)->send(new LibraryActivated($email));  
         return back()->with('msg',"Dokumenti u verifikua me sukses!");
     }
  
