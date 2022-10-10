@@ -99,8 +99,7 @@
 
                 <div class="col-span-12 sm:col-span-6">
                   <label for="last-name" class="block text-sm font-medium text-gray-700">Nr. Telefonit</label>
-                  <input type="text" name="numriTel" value="{{Auth::user()->numriTel ? Auth::user()->numriTel : '. . .
-                    '}}" id="last-name" autocomplete="family-name" class=" @error('numriTel') is-invalid @enderror mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-sky-500 focus:border-sky-500 sm:text-sm">
+                  <input type="text" name="numriTel" value="{{Auth::user()->numriTel ? Auth::user()->numriTel : 'ska'}}" id="last-name" autocomplete="family-name" class=" @error('numriTel') is-invalid @enderror mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-sky-500 focus:border-sky-500 sm:text-sm">
                   @error('numriTel')
                   <span class="invalid-feedback " role="alert">
                       <p class="text-xs text-red-600 ml-2">{{ $message }}</p>
@@ -112,7 +111,7 @@
 
                 <div class="col-span-12 sm:col-span-6">
                   <label for="company" class="block text-sm font-medium text-gray-700">Rruga</label>
-                  <input type="text" name="rruga" value="{{Auth::user()->rruga ? Auth::user()->rruga : '. . .'}}" id="company" autocomplete="organization" class="@error('rruga') is-invalid @enderror mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-sky-500 focus:border-sky-500 sm:text-sm">
+                  <input type="text" name="rruga" value="{{Auth::user()->rruga ? Auth::user()->rruga : 'ska'}}" id="company" autocomplete="organization" class="@error('rruga') is-invalid @enderror mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-sky-500 focus:border-sky-500 sm:text-sm">
                  
                   @error('rruga')
                   <span class="invalid-feedback " role="alert">

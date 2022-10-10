@@ -105,7 +105,7 @@
         
       </ul>
      
-<!--<form class="flex items-center">   
+<form class="flex items-center">   
   <label for="simple-search" class="sr-only">Search</label>
   <div class="relative w-full">
       <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
@@ -117,7 +117,7 @@
       <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
       <span class="sr-only">Search</span>
   </button>
-</form> -->
+</form>
 @if(!Auth::user())
 <a href="{{route('login')}}">
   <button class="bg-blue-500 hover:bg-blue-700 ml-20 text-white font-bold py-2 px-4 rounded">

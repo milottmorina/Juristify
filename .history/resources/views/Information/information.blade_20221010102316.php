@@ -9,6 +9,7 @@
         <p class=" text-2xl text-white text-center">Information</p>
     </div>
     <div class="flex justify-center">        
+  <a data-popover-target="popover-description" class="flex items-center text-sm font-light text-white  dark:text-white">What can I find here click me <button data-popover-target="popover-description" data-popover-placement="bottom-end" type="button"><svg class="ml-2 w-4 h-4 text-white hover:text-gray-500" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-8-3a1 1 0 00-.867.5 1 1 0 11-1.731-1A3 3 0 0113 8a3.001 3.001 0 01-2 2.83V11a1 1 0 11-2 0v-1a1 1 0 011-1 1 1 0 100-2zm0 8a1 1 0 100-2 1 1 0 000 2z" clip-rule="evenodd"></path></svg><span class="sr-only">Show information</span></button></a>
   <div data-popover="" id="popover-description" role="tooltip" class="inline-block absolute invisible z-10 w-72 text-sm font-light text-gray-500 bg-white rounded-lg border border-gray-200 shadow-sm opacity-0 transition-opacity duration-300 dark:bg-gray-800 dark:border-gray-600 dark:text-gray-400" style="position: absolute; inset: 0px auto auto 0px; margin: 0px; transform: translate3d(0px, 410.4px, 0px);" data-popper-reference-hidden="" data-popper-escaped="" data-popper-placement="bottom">
     <div class="p-3 space-y-2">
         <h3 class="font-semibold text-gray-900 dark:text-white">Activity growth - Incremental</h3>

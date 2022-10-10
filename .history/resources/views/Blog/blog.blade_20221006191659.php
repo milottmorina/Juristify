@@ -3,13 +3,14 @@
 
 <div class="grid sm:grid-cols-3 grid-cols-1 gap-3 bg-[#d8b64b] sm:h-64 lg:h-48 content-center">
   <div class="flex justify-center">
-      <img class="w-36 " src="{{asset('storyset/News-amico.png')}}" alt="" >
+      <img class="w-36 " src="{{asset('storyset/Blogging-cuate.png')}}" alt="" >
   </div>
  
   <div > <h1 class=" text-6xl text-white text-center mt-4">Juristify</h1>
-      <p class=" text-2xl text-white text-center">News</p>
+      <p class=" text-2xl text-white text-center">Blog</p>
   </div>
   <div class="flex justify-center">        
+<a data-popover-target="popover-description" class="flex items-center text-sm font-light text-white  dark:text-white">What can I find here click me <button data-popover-target="popover-description" data-popover-placement="bottom-end" type="button"><svg class="ml-2 w-4 h-4 text-white hover:text-gray-500" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-8-3a1 1 0 00-.867.5 1 1 0 11-1.731-1A3 3 0 0113 8a3.001 3.001 0 01-2 2.83V11a1 1 0 11-2 0v-1a1 1 0 011-1 1 1 0 100-2zm0 8a1 1 0 100-2 1 1 0 000 2z" clip-rule="evenodd"></path></svg><span class="sr-only">Show information</span></button></a>
 <div data-popover="" id="popover-description" role="tooltip" class="inline-block absolute invisible z-10 w-72 text-sm font-light text-gray-500 bg-white rounded-lg border border-gray-200 shadow-sm opacity-0 transition-opacity duration-300 dark:bg-gray-800 dark:border-gray-600 dark:text-gray-400" style="position: absolute; inset: 0px auto auto 0px; margin: 0px; transform: translate3d(0px, 410.4px, 0px);" data-popper-reference-hidden="" data-popper-escaped="" data-popper-placement="bottom">
   <div class="p-3 space-y-2">
       <h3 class="font-semibold text-gray-900 dark:text-white">Activity growth - Incremental</h3>
@@ -25,48 +26,41 @@
 <section class="text-gray-600 body-font">
     <div class="container lg:px-5 pb-24 mt-4 mx-auto max-w-7x1">
       <div class="flex justify-center mt-3">
-        <form class="w-3/5 " action="{{ route('news.find') }}" method="GET" role="search">   
+        <form class="w-3/5 " action="{{ route('blog.find') }}" method="GET" role="search">   
           <label for="default-search" class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-gray-300">Search</label>
           <div class="relative">
               <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
                   <svg aria-hidden="true" class="w-5 h-5 text-gray-500 dark:text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
               </div>
               <input type="search" name="term" id="default-search" class="block p-4 ml-2 pl-10 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="     Search title..." required="">
-              <a href="{{route('news.find')}}" >
+              <a href="{{route('blog.find')}}" >
               <button type="submit" class="text-white absolute right-2.5 bottom-4 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Search</button>
               </a>
           </div>
       </form>
         </div>
       <div class="flex flex-wrap -m-4">
-    
-        @foreach ($news as $n)
-        @php
-        $link = explode('/', $n->img);
-        
-    @endphp
-
-        <div class="xl:w-1/3 md:w-1/2 p-4"> 
-           <a href="{{route('news.show',$n->id)}}/?{{$n->titulli}}">
+       
+            @foreach ($blogs as $b)
+              
+            @php
+            $link = explode('/', $b->img);
+            
+        @endphp
+       
+        <div class="xl:w-1/3 md:w-1/2 p-4">
+          <a href="{{route('blog.show',$b->id)}}/?{{$b->titulli}}">
           <div class="bg-white p-6 rounded-lg">
-            <img class="lg:h-60 xl:h-56 md:h-64 sm:h-72 xs:h-72 h-72  rounded w-full object-cover object-center mb-6" src="{{ asset('storage/news/' . $link[2]) }}" alt="Image Size 720x400">
-            <h3 class="tracking-widest text-[#d8b64b] text-xs font-medium title-font ">{{$n->kategoria}} / {{date('d F, Y', strtotime($n->created_at))}}</h3>
-            <h2 class="text-lg text-gray-900 font-medium title-font mb-4"> @if (strlen($n->titulli)>=37)
-              {{substr($n->titulli,0,37)}}... 
-              @else
-              {{$n->titulli}}
-              @endif</h2>
-            <p class="leading-relaxed text-base"> {{ substr($n->pershkrimi, 0, 240) }}...</p>
-          </div></a>
-        </div>
-          @endforeach
-  
-       
-       
+            <img class="lg:h-60 xl:h-56 md:h-64 sm:h-72 xs:h-72 h-72  rounded w-full object-cover object-center mb-6" src="{{ asset('storage/blog/' . $link[2]) }}" alt="Image Size 720x400">
+            <h3 class="tracking-widest  text-[#d8b64b] text-xs font-medium title-font">{{$b->kategoria}}</h3>
+            <h2 class="text-lg text-gray-900 font-medium title-font mb-4">{{$b->titulli}}</h2>
+            <p class="leading-relaxed text-base"> {{ substr($b->pershkrimi, 0, 240) }}...</p>     
+          </div>
+          </a>
+          </div>
+      
+        @endforeach
       </div>
-      <div class="flex justify-center items-center p-3">
-      {{$news->links()}}
-    </div>
     </div>
   </section>
 
