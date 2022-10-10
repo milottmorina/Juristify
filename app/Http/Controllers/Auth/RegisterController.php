@@ -56,6 +56,7 @@ class RegisterController extends Controller
             'img'=>"public/noProfilePhoto/nofoto.jpg",
             'password' => Hash::make($data['password']),
         ]);
+        
     
     }
 }
