@@ -22,8 +22,8 @@
     </div>
   </div>
 
-<div class="w-full  shadow p-20 rounded-lg bg-white">
-    <div class="px-5">
+<div class="w-full shadow lg:p-20  rounded-lg bg-white">
+    <div class="mx-2 mb-2 ">
         <form action="{{ route('info.find') }}" method="GET" role="search">
             <div class="flex justify-center">
                <div class="w-50">
@@ -46,10 +46,10 @@
                 
                 <div class="relative w-50">
                     <label>Kerko titullin e shpalljes</label>
-                    <input type="search" name="term" id="search-dropdown" class="block p-2.5 w-full z-20 text-sm text-gray-900 bg-gray-50 rounded-r-lg border-l-gray-50 border-l-2 border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-l-gray-700  dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:border-blue-500" placeholder="Search Mockups, Logos, Design Templates..." >
+                    <input type="search" name="term" id="search-dropdown" class="absolute top-[21.8px] block p-2.5 w-full z-20 text-sm text-gray-900 bg-gray-50 rounded-r-lg border-l-gray-50 border-l-2 border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-l-gray-700  dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:border-blue-500" placeholder="Search Mockups, Logos, Design Templates..." >
                     
                     <a href="{{route('info.find')}}" >
-                    <button type="submit" class="absolute top-[21.8px] right-0 p-2.5 text-sm font-medium text-white bg-blue-700 rounded-r-lg border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                    <button type="submit" class="absolute top-[21.8px] z-20 right-0 p-2.5 text-sm font-medium text-white bg-blue-700 rounded-r-lg border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
                         <svg aria-hidden="true" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
                         <span class="sr-only">Search</span>
                     </button>
@@ -61,28 +61,54 @@
 
    
 
-
-    <div class="pt-6 pb-12 flex">
-        <div id="card" class="md:w-3/4">
+        @if (count($infos)>=1)
+    <div class="flex m-2.5">
+        <div id="card" class="lg:w-3/4">
  @foreach ($infos as $i)
       
             @php
             $link = explode('/', $i->img);
-            
+              
+    $rand = array('0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f');
+    $color = '#'.$rand[rand(0,15)].$rand[rand(0,15)].$rand[rand(0,15)].$rand[rand(0,15)].$rand[rand(0,15)].$rand[rand(0,15)];
+    date_default_timezone_set("Europe/Belgrade");
+   
+    
+    $earlier = new DateTime(date("Y-m-d"));
+$later = new DateTime($i->dataSkadimit);
+
+$pos_diff = $earlier->diff($later)->format("%r%a");
         @endphp
       
+
                 <a data-modal-toggle="defaultModal{{$i->id}}" class="flex flex-col items-center bg-white mb-4 rounded-lg border shadow-md md:flex-row hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700">
                     <img class="object-cover w-full h-96 rounded-t-lg md:h-auto md:w-48 md:rounded-none md:rounded-l-lg" src="{{ asset('storage/info/' . $link[2]) }}" alt="">
-                    <div class="flex flex-col justify-between p-4 leading-normal">
-                        <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{{$i->titulli}}</h5>
-                        <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">{{ substr($i->pershkrimi, 0, 237) }}... </p>
-                        <span class="flex items-center justify-start text-gray-500 mt-3">
-                                                    
-                            <i class="fa-solid fa-briefcase mr-1"></i>{{' ' . $i->emriKompanis }}
-                            <i class="fa-solid fa-tag mr-1 ml-5"></i>{{ ' ' . $i->kategoria }}
-                            <i class="fa-solid fa-location-pin ml-5"></i>{{ ' ' . $i->lokacioni }}
-                   
+                    <div class="flex flex-col justify-between p-4 leading-normal sm:min-w-[800px]">
+                        <div class="flex justify-between">
+                 
+                        <h5 class="mb-2 mr-3 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{{$i->titulli}}</h5> 
+                       
+                        <span class="flex justify-end text-gray-500 mr-2 bg-[{{$color}}] text-white p-2 rounded">
+                            Dite te mbetura: {{ ' ' . $pos_diff }}<i class="fa-solid fa-calendar-days ml-1 mt-1 bg-[{{$color}}] text-white"></i>
+                            
                         </span>
+                    </div>
+                        <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">{{ substr($i->pershkrimi, 0, 120) }}... </p>
+                        <span class="flex items-center justify-start text-gray-500 mt-3">
+
+                        <span class="flex items-center justify-start text-gray-500 mr-2 mt-3 bg-[{{$color}}] text-white p-2 rounded">
+                                                    
+                            <i class="fa-solid fa-briefcase mr-1 bg-[{{$color}}] text-white"></i>{{' ' . $i->emriKompanis }}
+                        </span>
+                        <span class="flex items-center justify-start text-gray-500 mr-2 mt-3 bg-[{{$color}}] text-white p-2 rounded">
+                            <i class="fa-solid fa-tag mr-1  bg-[{{$color}}] text-white"></i>{{ ' ' . $i->kategoria }}
+                        </span>
+                        <span class="flex items-center justify-start text-gray-500 mr-2 mt-3 bg-[{{$color}}] text-white p-2 rounded">
+                            <i class="fa-solid fa-location-pin mr-1  bg-[{{$color}}] text-white"></i>{{ ' ' . $i->lokacioni }}
+                        </span>
+                     
+                        </span>
+                     
                     </div>
                 </a>
 
@@ -112,15 +138,26 @@
                 <img class="object-cover justify-center w-48 h-48 rounded-t-lg " src="{{ asset('storage/info/' . $link[2]) }}" alt="">
                
             </div>
-             <h1 class="font-bold text-2xl ml-3 text-center">{{$i->titulli}}</h1>
+             <h1 class="font-bold text-2xl ml-3 text-center capitalize">{{$i->titulli}}</h1>
              <hr>
-             <span class="flex items-center justify-center text-gray-500  ">
-                                                    
-                <i class="fa-solid fa-briefcase mr-1"></i>{{' ' . $i->emriKompanis }}
-                <i class="fa-solid fa-tag mr-1 ml-5"></i>{{ ' ' . $i->kategoria }}
-                <i class="fa-solid fa-location-pin ml-5"></i>{{ ' ' . $i->lokacioni }}
-       
-            </span>
+        
+            <span class="flex items-center justify-center text-gray-500 mt-3">
+                <span class="flex items-center justify-start text-gray-500 mr-2 mt-3 bg-[{{$color}}] text-white p-2 rounded">
+                    Dite te mbetura: {{ ' ' . $pos_diff }}<i class="fa-solid fa-calendar-days ml-1 bg-[{{$color}}] text-white"></i>
+                    
+                </span>
+                <span class="flex items-center justify-start text-gray-500 mr-2 mt-3 bg-[{{$color}}] text-white p-2 rounded">
+                                            
+                    <i class="fa-solid fa-briefcase mr-1 bg-[{{$color}}] text-white"></i>{{' ' . $i->emriKompanis }}
+                </span>
+                <span class="flex items-center justify-start text-gray-500 mr-2 mt-3 bg-[{{$color}}] text-white p-2 rounded">
+                    <i class="fa-solid fa-tag mr-1  bg-[{{$color}}] text-white"></i>{{ ' ' . $i->kategoria }}
+                </span>
+                <span class="flex items-center justify-start text-gray-500 mr-2 mt-3 bg-[{{$color}}] text-white p-2 rounded">
+                    <i class="fa-solid fa-location-pin mr-1  bg-[{{$color}}] text-white"></i>{{ ' ' . $i->lokacioni }}
+                </span>
+           
+                </span>
              <hr>
                   <p class="text-base leading-relaxed text-gray-500 dark:text-gray-400">
                     {{$i->pershkrimi}}
@@ -143,6 +180,16 @@
         </div>
         <!--/ flex-->
     </div>
+    @else
+    <div class="grid place-items-center mt-10">
+        <div class="flex items-center p-4 mb-4 text-sm text-blue-700 bg-blue-100 rounded-lg dark:bg-blue-200 dark:text-blue-800" role="alert">
+            <svg aria-hidden="true" class="flex-shrink-0 inline w-5 h-5 mr-3" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path></svg>
+            <span class="sr-only">Info</span>
+            <div>
+              <span class="font-medium">Info alert!</span> Change a few things up and try submitting again.
+            </div>
+          </div></div>
+    @endif
     <div>
 
     </div>

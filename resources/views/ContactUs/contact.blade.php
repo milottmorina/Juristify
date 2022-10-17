@@ -131,9 +131,10 @@
                          border border-[f0f0f0]
                          outline-none
                          focus-visible:shadow-none
-                         focus:border-primary
+                         focus:border-primary capitalize
                          "
                          name="emri" required
+                         value="{{Auth::user()->emri . " ".Auth::user()->mbiemri}}" disabled
                          />
                        
                                             @error('emri')
@@ -156,9 +157,10 @@
                          border border-[f0f0f0]
                          outline-none
                          focus-visible:shadow-none
-                         focus:border-primary
+                         focus:border-primary 
                          "
                          name="email" required
+                         value="{{Auth::user()->email}}" disabled
                          />
                          @error('email')
                          <div class="ml-1 text-red-500 text-sm ">{{ $message }}
@@ -166,24 +168,49 @@
                          @enderror
                    </div>
                    <div class="mb-6">
-                      <input
-                         type="text"
-                         placeholder="Your Phone"
-                         class="@error('numriTel')
-                         is-invalid
-                      @enderror
-                         w-full
-                         rounded
-                         py-3
-                         px-[14px]
-                         text-body-color text-base
-                         border border-[f0f0f0]
-                         outline-none
-                         focus-visible:shadow-none
-                         focus:border-primary
-                         "
-                         name="numriTel" required
-                         />
+                     @if (Auth::user()->numriTel!=null)
+                     <input
+                     type="text"
+                     placeholder="Your Phone"
+                     class="@error('numriTel')
+                     is-invalid
+                  @enderror
+                     w-full
+                     rounded
+                     py-3
+                     px-[14px]
+                     text-body-color text-base
+                     border border-[f0f0f0]
+                     outline-none
+                     focus-visible:shadow-none
+                     focus:border-primary
+                     "
+                     name="numriTel" required
+                     value="{{Auth::user()->numriTel}}"
+                     disabled
+                     />
+                     @else
+                     <input
+                     type="text"
+                     placeholder="Your Phone"
+                     class="@error('numriTel')
+                     is-invalid
+                  @enderror
+                     w-full
+                     rounded
+                     py-3
+                     px-[14px]
+                     text-body-color text-base
+                     border border-[f0f0f0]
+                     outline-none
+                     focus-visible:shadow-none
+                     focus:border-primary
+                     "
+                     name="numriTel" required
+                     
+                     />
+                     @endif
+                 
                          @error('numriTel')
                          <div class="ml-1 text-red-500 text-sm ">{{ $message }}
                          </div>

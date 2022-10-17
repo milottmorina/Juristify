@@ -32,15 +32,14 @@ class ContactController extends Controller
     {  
         
         $request->validate([
-            'emri' => ['required', 'regex:/^[a-z A-Z]+$/u', 'string', 'max:25'],
-            'email' => ['required', 'string', 'max:40'],
-            'numriTel'=>['required','string', 'max:10'],
+            'numriTel'=>['number', 'max:10'],
             'mesazhi' => ['required','string','max:400']
         ]);
+    
         contact::create([
-            'emri' => $request['emri'],
-            'email' => $request['email'],
-            'numriTel'=>$request['numriTel'],
+            'emri' => Auth::user()->emri." ".Auth::user()->mbiemri ,
+            'email' => Auth::user()->email,
+            'numriTel'=>Auth::user()->numriTel,
             'mesazhi'=>$request['mesazhi'],
         ]);
         return back()->with('msg','Mesazhi juaj u dergua me sukses!');

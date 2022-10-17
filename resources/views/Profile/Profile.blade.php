@@ -60,6 +60,7 @@
                   </div>
                   @php
                   $link = explode('/', Auth::user()->img);
+                  $link2 = explode('/', Auth::user()->id_kartela);
                   @endphp
                   <div class="hidden relative rounded-full overflow-hidden lg:block">
                     @if (Auth::user()->img==="public/noProfilePhoto/nofoto.jpg")  
@@ -73,9 +74,17 @@
                       <input type="file" id="desktop-user-photo" name="img" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer border-gray-300 rounded-md">
                     </label>
                   </div>
+                  {{--  --}}
+                  <div class="mt-6 grid grid-cols-12 gap-6">
+                    <div class="col-span-12 sm:col-span-6">
+                      <label for="first-name" class="block text-sm font-medium text-gray-700">Your ID</label>
+    
+                  <img class="relative rounded-full w-40 h-40 object-cover"  src="/storage/id_kartela/{{$link2[2]}}" alt="Rounded avatar">
+    
+                    </div></div>
                 </div>
               </div>
-
+           
               <div class="mt-6 grid grid-cols-12 gap-6">
                 <div class="col-span-12 sm:col-span-6">
                   <label for="first-name" class="block text-sm font-medium text-gray-700">First name</label>

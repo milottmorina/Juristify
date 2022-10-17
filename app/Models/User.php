@@ -35,6 +35,7 @@ class User extends Authenticatable
         'img','role',
         'email',
         'password',
+        'id_kartela'
     ];
 
     public function files()

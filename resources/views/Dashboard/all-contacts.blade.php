@@ -13,30 +13,15 @@
                    <div class="bg-white shadow rounded-lg p-4 sm:p-6 xl:p-8 ">
                       <div class="flex items-center">
                          <div class="flex-shrink-0">
-                            <span class="text-2xl sm:text-3xl leading-none font-bold text-gray-900">2,340</span>
-                            <h3 class="text-base font-normal text-gray-500">New products this week</h3>
+                            <span class="text-2xl sm:text-3xl leading-none font-bold text-gray-900">
+                                {{ App\Models\contact::get()->count() }}
+                            </span>
+                            <h3 class="text-base font-normal text-gray-500">All Contact Messages</h3>
                          </div>
                         
                       </div>
                    </div>
-                   <div class="bg-white shadow rounded-lg p-4 sm:p-6 xl:p-8 ">
-                      <div class="flex items-center">
-                         <div class="flex-shrink-0">
-                            <span class="text-2xl sm:text-3xl leading-none font-bold text-gray-900">5,355</span>
-                            <h3 class="text-base font-normal text-gray-500">Visitors this week</h3>
-                         </div>
-                      
-                      </div>
-                   </div>
-                   <div class="bg-white shadow rounded-lg p-4 sm:p-6 xl:p-8 ">
-                      <div class="flex items-center">
-                         <div class="flex-shrink-0">
-                            <span class="text-2xl sm:text-3xl leading-none font-bold text-gray-900">385</span>
-                            <h3 class="text-base font-normal text-gray-500">User signups this week</h3>
-                         </div>
-                      
-                      </div>
-                   </div>
+              
                 </div>
                 <div class="overflow-x-auto relative shadow-md sm:rounded-lg mt-5 bg-white">
                     <caption class="p-5 text-lg font-semibold text-left text-gray-900 bg-white dark:text-white dark:bg-gray-800">
