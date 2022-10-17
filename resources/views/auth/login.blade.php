@@ -125,7 +125,7 @@
                                Password
                            </div>
                            <div>
-                               <a class="text-xs font-display font-semibold text-[#d9b64c]
+                               <a href="/password/reset" class="text-xs font-display font-semibold text-[#d9b64c]
                                cursor-pointer">
                                    Forgot Password?
                                </a>

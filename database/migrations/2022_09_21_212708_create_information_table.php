@@ -22,7 +22,7 @@ return new class extends Migration
             $table->string('emriKompanis');
             $table->string('kategoria');
             $table->string('lokacioni');
-            $table->string('dataSkadimit');
+            $table->date('dataSkadimit');
             $table->string('vende');
             $table->text('pershkrimi');
             $table->text('img');

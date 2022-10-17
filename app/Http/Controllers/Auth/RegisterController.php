@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rules;
 use Illuminate\Http\Request;
 
+
 class RegisterController extends Controller
 {
   
@@ -36,7 +37,8 @@ class RegisterController extends Controller
             'universiteti' => ['required', 'string', 'max:80'],
             'gjinia' => ['required'],
             'email' => ['required', 'string', 'email', 'max:50', 'unique:users'],
-            'password' => ['required', 'regex:/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/ ', 'confirmed', Rules\Password::defaults()]
+            'password' => ['required', 'regex:/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/ ', 'confirmed', Rules\Password::defaults()],
+            'id_kartela'=>['required','mimes:pdf,png,jpg','max:2048'],
         ]);
     }
 
@@ -45,8 +47,8 @@ class RegisterController extends Controller
    
     protected function create(array $data)
     {
- 
-        return User::create([
+      
+            $data= User::create([
             'emri' => $data['emri'],
             'mbiemri' => $data['mbiemri'],
             'dataLindjes' => $data['dataLindjes'],
@@ -56,7 +58,12 @@ class RegisterController extends Controller
             'img'=>"public/noProfilePhoto/nofoto.jpg",
             'password' => Hash::make($data['password']),
         ]);
-        
+       if(request()->hasFile('id_kartela')){
+           $file_path= request()->file('id_kartela')->store('/public/id_kartela');
+            $data->update(['id_kartela'=>$file_path]);
+        }
+   
+        return $data;
     
     }
 }

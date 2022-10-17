@@ -38,6 +38,7 @@
           </div>
       </form>
         </div>
+        @if (count($blogs)>=1)
       <div class="flex flex-wrap -m-4">
        
             @foreach ($blogs as $b)
@@ -49,17 +50,27 @@
        
         <div class="xl:w-1/3 md:w-1/2 p-4">
           <a href="{{route('blog.show',$b->id)}}/?{{$b->titulli}}">
-          <div class="bg-white p-6 rounded-lg">
+          <div class="bg-white p-6 rounded-lg shadow-xl">
             <img class="lg:h-60 xl:h-56 md:h-64 sm:h-72 xs:h-72 h-72  rounded w-full object-cover object-center mb-6" src="{{ asset('storage/blog/' . $link[2]) }}" alt="Image Size 720x400">
             <h3 class="tracking-widest  text-[#d8b64b] text-xs font-medium title-font">{{$b->kategoria}}</h3>
             <h2 class="text-lg text-gray-900 font-medium title-font mb-4">{{$b->titulli}}</h2>
-            <p class="leading-relaxed text-base"> {{ substr($b->pershkrimi, 0, 240) }}...</p>     
+            <p class="leading-relaxed text-base"> {{ substr($b->pershkrimi, 0, 45) }}...</p>     
           </div>
           </a>
           </div>
       
         @endforeach
       </div>
+      @else
+      <div class="grid place-items-center mt-10">
+        <div class="flex items-center p-4 mb-4 text-sm text-blue-700 bg-blue-100 rounded-lg dark:bg-blue-200 dark:text-blue-800" role="alert">
+            <svg aria-hidden="true" class="flex-shrink-0 inline w-5 h-5 mr-3" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path></svg>
+            <span class="sr-only">Info</span>
+            <div>
+              <span class="font-medium">Info alert!</span> Change a few things up and try submitting again.
+            </div>
+          </div></div>
+      @endif
     </div>
   </section>
 

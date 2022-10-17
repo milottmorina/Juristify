@@ -43,6 +43,7 @@ class FilesController extends Controller
         $files->status='po';
         $files->save();
         $email=UserModel::select('email')->where('id',$files->user_id)->get();
+        
         Mail::to($email)->send(new LibraryActivated($email));  
         return back()->with('msg',"Dokumenti u verifikua me sukses!");
     }
