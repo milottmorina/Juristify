@@ -16,7 +16,7 @@
           <img class="w-10 h-10 rounded-full object-cover" src="{{asset('/noProfilePhoto/'.$link[2])}}" alt="Rounded avatar">
         
           @endif
-                     <span class="ml-3 capitalize font-bold">{{Auth::user()->emri." ".Auth::user()->mbiemri}}</span>
+                     <span class="ml-3 capitalize font-bold">{{Auth::user()->name." ".Auth::user()->surname}}</span>
                   </a>
                </li>
                

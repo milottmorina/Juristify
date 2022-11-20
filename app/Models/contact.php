@@ -10,9 +10,9 @@ class contact extends Model
     use HasFactory;
     protected $table="contacts";
     protected $fillable = [
-        'emri',
+        'name',
         'email',
-        'numriTel',
-        'mesazhi'
+        'phoneNo',
+        'msg'
     ];
 }

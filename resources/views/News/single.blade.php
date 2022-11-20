@@ -18,7 +18,7 @@
         <div class="p-4 absolute bottom-0 left-0 z-20">
 
           <h2 class="text-4xl font-semibold text-gray-100 leading-tight">
-            {{$news->titulli}}
+            {{$news->title}}
           </h2>
           <div class="flex mt-3">
             @if ($news->user->img!="public/noProfilePhoto/nofoto.jpg")  
@@ -29,7 +29,7 @@
             @endif
  
             <div>
-              <p class="font-semibold text-gray-200 text-sm capitalize">{{$news->user->emri." ".$news->user->mbiemri}}</p>
+              <p class="font-semibold text-gray-200 text-sm capitalize">{{$news->user->name." ".$news->user->surname}}</p>
               <p class="font-semibold text-gray-400 text-xs"> {{date('d F, Y', strtotime($news->created_at))}} </p>
             </div>
           </div>
@@ -38,11 +38,11 @@
 
       <div class="px-4 lg:px-0 mt-12 text-gray-700 max-w-screen-md mx-auto text-lg leading-relaxed">
         <h2 class="text-4xl font-semibold text-black leading-tight">
-          {{$news->titulli}}
+          {{$news->title}}
         </h2>
         <p 
-        class="px-4 py-1 bg-black text-gray-200 inline-flex items-center text-[#d8b64b] justify-center mb-2">{{$news->kategoria}}</p>
-        <p class="pb-6">{{$news->pershkrimi}}</p>
+        class="px-4 py-1 bg-black text-gray-200 inline-flex items-center text-[#d8b64b] justify-center mb-2">{{$news->category}}</p>
+        <p class="pb-6">{{$news->description}}</p>
 
        
 

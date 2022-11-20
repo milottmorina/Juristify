@@ -5,6 +5,10 @@ namespace App\Http\Controllers;
 use App\Mail\UserDeactivated;
 use App\Mail\UserVerification;
 use App\Models\User as ModelsUser;
+use App\Models\Blog;
+use App\Models\contact;
+use App\Models\files;
+use App\Models\information;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -20,45 +24,73 @@ class User extends Controller
         $this->middleware('auth');
     }
     public function allUsers(){
-        if(Auth::user() && Auth::user()->role==='admin'){
-        $users = ModelsUser::orderBy('id', 'asc')->paginate(5);
-        return view('Dashboard/users')->with(['users'=>$users]);
+        if(Auth::user() && Auth::user()->role===1){
+        $us=ModelsUser::count();
+        $usAc=ModelsUser::where('verified',1)->count();
+        $usNac=ModelsUser::where('verified',0)->count();
+        $users = ModelsUser::select(['id','name','surname','birthday','university','gender','phoneNo','street','verified','email','img','id_card','role'])->latest()->paginate(5);
+        return view('Dashboard/users')->with(['users'=>$users,'us'=>$us,'usAc'=>$usAc,'usNac'=>$usNac]);
         }else{
             return redirect('/home');
         }
     }
     public function findUser(Request $request){
+        $us=ModelsUser::count();
+        $usAc=ModelsUser::where('verified',1)->count();
+        $usNac=ModelsUser::where('verified',0)->count();
         $users=ModelsUser::orderBy('id', 'asc')->where([
-            ['emri', '!=' , Null],
-            ['mbiemri', '!=' , Null],
+            ['name', '!=' , Null],
+            ['surname', '!=' , Null],
             [function ($query) use ($request){
                 if(($term=$request->term)){
-                    $query->where('emri', 'LIKE', '%'.$term.'%')
-                    ->orWhere(DB::raw('CONCAT(emri," ",mbiemri)'), 'LIKE', '%' . $term . '%');
+                    $query->where('name', 'LIKE', '%'.$term.'%')
+                    ->orWhere(DB::raw('CONCAT(name," ",surname)'), 'LIKE', '%' . $term . '%');
                 }
                 
     }]])->paginate(5);
-    return view('Dashboard/users')->with(['users'=>$users]);
+    return view('Dashboard/users')->with(['users'=>$users,'us'=>$us,'usAc'=>$usAc,'usNac'=>$usNac]);
     }
     public function getVerifiedUsers(){
-        $users = ModelsUser::orderBy('id', 'asc')->where('verifikuar','=','po')->paginate(5);
-        return view('Dashboard/users')->with(['users'=>$users]);
+        
+        $us=ModelsUser::count();
+        $usAc=ModelsUser::where('verified',1)->count();
+        $usNac=ModelsUser::where('verified',0)->count();
+        $users = ModelsUser::orderBy('id', 'asc')->where('verified',1)->paginate(5);
+        return view('Dashboard/users')->with(['users'=>$users,'us'=>$us,'usAc'=>$usAc,'usNac'=>$usNac]);
     }
     public function getNonVerifiedUsers(){
-        $users = ModelsUser::orderBy('id', 'asc')->where('verifikuar','=','jo')->paginate(5);
-        return view('Dashboard/users')->with(['users'=>$users]);
+        $us=ModelsUser::count();
+        $usAc=ModelsUser::where('verified',1)->count();
+        $usNac=ModelsUser::where('verified',0)->count();
+        $users = ModelsUser::orderBy('id', 'asc')->where('verified',0)->paginate(5);
+        return view('Dashboard/users')->with(['users'=>$users,'us'=>$us,'usAc'=>$usAc,'usNac'=>$usNac]);
     }
     public function getAdmin(){
-        $users = ModelsUser::orderBy('id', 'asc')->where('role','=','admin')->paginate(5);
-        return view('Dashboard/users')->with(['users'=>$users]);
+        $us=ModelsUser::count();
+        $usAc=ModelsUser::where('verified',1)->count();
+        $usNac=ModelsUser::where('verified',0)->count();
+        $users = ModelsUser::orderBy('id', 'asc')->where('role',1)->paginate(5);
+        return view('Dashboard/users')->with(['users'=>$users,'us'=>$us,'usAc'=>$usAc,'usNac'=>$usNac]);
     }
     public function getDefaultUsers(){
-        $users = ModelsUser::orderBy('id', 'asc')->where('role','=','user')->paginate(5);
-        return view('Dashboard/users')->with(['users'=>$users]);
+        $us=ModelsUser::count();
+        $usAc=ModelsUser::where('verified',1)->count();
+        $usNac=ModelsUser::where('verified',0)->count();
+        $users = ModelsUser::orderBy('id', 'asc')->where('role',0)->paginate(5);
+        return view('Dashboard/users')->with(['users'=>$users,'us'=>$us,'usAc'=>$usAc,'usNac'=>$usNac]);
     }
     public function dashboard(){
-        if(Auth::user() && Auth::user()->role==="admin"){
-        return view('dashboard/dashboard');
+        if(Auth::user() && Auth::user()->role===1){
+            $us=ModelsUser::count();
+            $usAc=ModelsUser::where('verified',1)->count();
+            $usNac=ModelsUser::where('verified',0)->count();
+            $blog=Blog::count();
+            $blogAc=Blog::where('active',1)->count();
+            $blogNac=Blog::where('active',0)->count();
+            $files=files::count();
+            $infos=information::count();
+            $contact=contact::count();
+        return view('dashboard/dashboard')->with(['contact'=>$contact,'infos'=>$infos,'us'=>$us,'usAc'=>$usAc,'usNac'=>$usNac,'blog'=>$blog,'blogAc'=>$blogAc,'blogNac'=>$blogNac,'file'=>$files]);
     }else{
         return redirect('/home');
     }
@@ -77,38 +109,38 @@ class User extends Controller
     }
     public function verifiko($id){
         $user = ModelsUser::findOrFail($id);
-        $user->verifikuar='po';
+        $user->verified=1;
         $user->save();
         $email=ModelsUser::select('email')->where('id',$id)->get();
         Mail::to($email)->send(new UserVerification($email));
-        return back()->with('msg','User u verifikua me sukses!');
+        return back()->with('msg','User verified successfully!');
     }
     public function makeAdmin($id){
         $user = ModelsUser::findOrFail($id);
-        $user->role='admin';
+        $user->role=1;
         $user->save();
-        return back()->with('msg','User tani ka aksesin e adminit!');
+        return back()->with('msg','User has access of admin!');
     }
     public function makeDefault($id){
         $user = ModelsUser::findOrFail($id);
-        $user->role='user';
+        $user->role=0;
         $user->save();
-        return back()->with('msg','User tani eshte user i thjeshte!');
+        return back()->with('msg','User is now default user!');
     }
     public function cverifiko($id){
         $user = ModelsUser::findOrFail($id);
-        $user->verifikuar='jo';
+        $user->verified=0;
         $user->save();
         $email=ModelsUser::select('email')->where('id',$id)->get();
         Mail::to($email)->send(new UserDeactivated($email));
-        return back()->with('msg',"User u c'verifikua me sukses!");
+        return back()->with('msg',"User is un-verified successfully!");
     }
     public function updateProfile(Request $request, $id)
     {
         $request->validate([
                 'email' => 'required','unique',
-                'numriTel' => 'required','unique',
-                'rruga' => 'required',
+                'phoneNo' => 'required','unique',
+                'street' => 'required',
             ]);
         $img =  $request->hasFile('img');
         $user = ModelsUser::findOrFail($id);
@@ -116,28 +148,21 @@ class User extends Controller
         if ($img) {
             $newImg = $request->file('img');
             $img_path = $newImg->store('/public/img');
-   
-   
-        $user->rruga = $request->rruga;
-        $user->numriTel = $request->numriTel;
-        $user->email = $request->email;
-        $user->img = $img_path;
+            $user->street = $request->street;
+            $user->phoneNo = $request->phoneNo;
+            $user->email = $request->email;
+            $user->img = $img_path;
         
-      
-        $user->save();
-   
-        return back()->with('msg','Te dhenat tuaja jane ndryshuar me sukses!');
+            $user->save();
+            return back()->with('msg','Your profile data has been successfully updated!');
 
         }else{
-          
-        
-            $user->rruga = $request->rruga;
-            $user->numriTel = $request->numriTel;
+            $user->street = $request->street;
+            $user->phoneNo = $request->phoneNo;
             $user->email = $request->email;
             
             $user->save();
-  
-            return back()->with('msg','Te dhenat tuaja jane ndryshuar me sukses!');
+            return back()->with('msg','Your profile data has been successfully updated!');
         }
     }
 
@@ -154,11 +179,9 @@ class User extends Controller
         if($request->new_password!==$request->new_password_confirmation){
             return back()->with("error", "Confirm Password Doesn't match!");
         }
-
         ModelsUser::whereId(Auth::user()->id)->update([
             'password' => Hash::make($request->new_password)
         ]);
-
-        return back()->with("msg", "Password-i ndryshoi me sukses!");
+        return back()->with("msg", "Your password changed successfully!");
     }
 }

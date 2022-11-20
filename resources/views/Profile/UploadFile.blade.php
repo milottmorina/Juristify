@@ -61,8 +61,8 @@
                                     <p class="text-xs text-gray-500 dark:text-gray-400">PDF OR DOCX (MAX.
                                         2MB)</p>
                                 </div>
-                                <input id="dropzone-file" type="file" class="@error('dokumenti') is-invalid @enderror hidden " name="dokumenti">
-                              @error('dokumenti')
+                                <input id="dropzone-file" type="file" class="@error('file') is-invalid @enderror hidden " name="file">
+                              @error('file')
                             <span class="invalid-feedback " role="alert">
                                 <p class="text-xs text-red-600 ml-2">{{ $message }}</p>
                             </span>
@@ -70,28 +70,28 @@
                          
                         </div>
 
-                        <div class="mt-6 grid grid-cols-12 gap-6">
-                            <div class="col-span-12 sm:col-span-6">
+                        <div class="mt-6 grid lg:grid-cols-12 lg:gap-12">
+                            <div class="col-span-12 sm:col-span-12">
                                 <label for="first-name" class="block text-sm font-medium text-gray-700">Title</label>
-                                <input type="text" name="titulli" id="titulli" autocomplete="given-name"
-                                    class="@error('titulli') is-invalid @enderror capitalize mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-sky-500 focus:border-sky-500 sm:text-sm">
+                                <input type="text" name="title" id="title" autocomplete="given-name"
+                                    class="@error('title') is-invalid @enderror capitalize mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-sky-500 focus:border-sky-500 sm:text-sm">
                                     
-                                    @error('titulli')
+                                    @error('title')
                                     <span class="invalid-feedback " role="alert">
                                         <p class="text-xs text-red-600 ml-2">{{ $message }}</p>
                                     </span>
                                 @enderror
                                 </div>
                         </div>
-                        <div class="mt-6 grid grid-cols-12 gap-6">
-                            <div class="col-span-12 sm:col-span-6 ">
+                        <div class="mt-6 grid lg:grid-cols-12 lg:gap-12">
+                            <div class="col-span-12 sm:col-span-12">
                                 <label for="first-name"
                                     class="block text-sm font-medium text-gray-700">Description</label>
-                                <textarea type="text" rows="4" name="pershkrimi" id="first-name" autocomplete="given-name"
-                                    class=" @error('pershkrimi') is-invalid @enderror mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-sky-500 focus:border-sky-500 sm:text-sm">
+                                <textarea type="text" maxlength="2500" rows="4" name="description" id="first-name" autocomplete="given-name"
+                                    class=" @error('description') is-invalid @enderror mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-sky-500 focus:border-sky-500 sm:text-sm">
                   </textarea>
                  
-                  @error('pershkrimi')
+                  @error('description')
                   <span class="invalid-feedback " role="alert">
                       <p class="text-xs text-red-600 ml-2">{{ $message }}</p>
                   </span>
@@ -107,7 +107,7 @@
                                 class="bg-white border border-gray-300 rounded-md shadow-sm py-2 px-4 inline-flex justify-center text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-500">Cancel</button>
                         </a>
                         <button type="submit"
-                            class="ml-5 bg-sky-700 border border-transparent rounded-md shadow-sm py-2 px-4 inline-flex justify-center text-sm font-medium text-white hover:bg-sky-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-500">Save</button>
+                            class="ml-5 bg-gray-700 border border-transparent rounded-md shadow-sm py-2 px-4 inline-flex justify-center text-sm font-medium text-white hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-500">Save</button>
                     </div>
                 </form>
             </div>

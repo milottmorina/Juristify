@@ -8,16 +8,17 @@ use App\Models\User;
 class information extends Model
 {
     use HasFactory;
+    protected $with = ['user'];
     protected $table="information";
     protected $fillable = [
-        'titulli',
-        'pershkrimi',
+        'title',
+        'description',
         'img',
-        'vende',
-        'dataSkadimit',
-        'lokacioni',
-        'kategoria',
-        'emriKompanis',
+        'free_places',
+        'expiration_date',
+        'location',
+        'category',
+        'company_name',
         'user_id'
     ];
 

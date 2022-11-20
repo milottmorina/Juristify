@@ -5,8 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\Blog;
 use App\Models\Comment;
 use App\Models\User as UserModel;
-use App\Http\Requests\StoreBlogRequest;
-use App\Http\Requests\UpdateBlogRequest;
 use App\Mail\BlogActivate;
 use App\Mail\BlogDeactivated;
 use Illuminate\Http\Request;
@@ -23,14 +21,12 @@ class BlogController extends Controller
    
     public function index()
     {
-        
-        $blogs = blog::with('user')->where('aktive','po')->orderBy('id', 'desc')->paginate(9);
-       
+        $blogs = blog::with('user')->active(1)->orderBy('id', 'desc')->paginate(9);
         return view('Blog/blog')->with(['blogs'=>$blogs]);
     }
 
     public function myBlogs(){
-        $blogs = blog::with('user')->where('user_id',Auth::user()->id)->orderBy('id', 'desc')->paginate(9);
+        $blogs = blog::with('user')->myblogs()->orderBy('id', 'desc')->paginate(9);
         return view('Profile/AllMyBlogs')->with(['blogs'=>$blogs]);
     }
     
@@ -41,66 +37,68 @@ class BlogController extends Controller
 
     public function showAll(){
         $blogs = blog::with('user')->orderBy('id', 'desc')->paginate(5);
-        return view('dashboard/all-blogs')->with(['blogs'=>$blogs]);
+        $allBlogs=$blogs->count();
+        $NonAcBlogs=$blogs->where('active',0)->count();
+        $AcBlogs=$blogs->where('active',1)->count();
+        return view('dashboard/all-blogs')->with(['AcBlogs'=>$AcBlogs,'NonAcBlogs'=>$NonAcBlogs,'blogs'=>$blogs,'allBlogs'=>$allBlogs]);
     }
     public function cverifiko($id){
         $blog = blog::findOrFail($id);
-        $blog->aktive='jo';
+        $blog->active=0;
         $blog->save();
         $email=UserModel::select('email')->where('id',$blog->user_id)->get();
         Mail::to($email)->send(new BlogDeactivated($email));    
-        return back()->with('msg',"Blogu u c'verifikua me sukses!");
+        return back()->with('msg',"Blog is unverified successfully!");
     }
     public function verifiko($id){
         $blog = blog::findOrFail($id);
-        $blog->aktive='po';
+        $blog->active=1;
         $blog->save();
-        
         $email=UserModel::select('email')->where('id',$blog->user_id)->get();
         Mail::to($email)->send(new BlogActivate($email));    
-        return back()->with('msg',"Blogu u verifikua me sukses!");
+        return back()->with('msg',"Blog is verified successfully!");
     }
    
     public function store(Request $request)
     {
         $blog = $request->hasFile('img');
-        if ($blog && Auth::user()->role==="user") {
+        if ($blog && Auth::user()->role===0) {
             $request->validate([
-                'titulli' => ['required','max:40','min:4'],
-                'pershkrimi' => ['required','max:1500','min:10'],
+                'title' => ['required','max:100','min:4'],
+                'description' => ['required','max:6000','min:10'],
                 'img' => ['required','mimes:jpeg,png','max:2048'],
-                'kategoria' => ['required','max:20'],
+                'category' => ['required','max:50'],
             ]);
             $newblog = $request->file('img');
             $blog_path = $newblog->store('/public/blog');
             blog::create([
-                'titulli' => $request['titulli'],
-                'pershkrimi' => $request['pershkrimi'],
+                'title' => $request['title'],
+                'description' => $request['description'],
                 'img' => $blog_path,
-                'kategoria'=>$request['kategoria'],
+                'category'=>$request['category'],
                 'user_id' => Auth::user()->id,
-                'aktive'=>'jo'
+                'active'=>0
             ]);
-       return back()->with('msg','Blog juaj u shtua me sukses, por ju duhet te prisni per aprovimin nga admini!');
+       return back()->with('msg','Blog is stored succesfully, please be patient until we verify!');
         }else{
             $newblog = $request->file('img');
             $blog_path = $newblog->store('/public/blog');
             $request->validate([
-                'titulli' => ['required','max:40','min:4'],
-                'pershkrimi' => ['required','max:1500','min:10'],
+                'title' => ['required','max:100','min:4'],
+                'description' => ['required','max:6000','min:10'],
                 'img' => ['required','mimes:jpeg,png','max:2048'],
-                'kategoria' => ['required','max:20'],
+                'category' => ['required','max:50'],
 
             ]);
             blog::create([
-                'titulli' => $request['titulli'],
-                'pershkrimi' => $request['pershkrimi'],
+                'title' => $request['title'],
+                'description' => $request['description'],
                 'img' => $blog_path,
-                'kategoria'=>$request['kategoria'],
+                'category'=>$request['category'],
                 'user_id' => Auth::user()->id,
-                'aktive'=>'po'
+                'active'=>1
             ]);
-            return back()->with('msg','Blog juaj u shtua me sukses!');
+            return back()->with('msg','Blog is stored successfully!');
         }
         
     }
@@ -108,78 +106,127 @@ class BlogController extends Controller
    
     public function show($id)
     {
-        
         $blogs = blog::with('user')->findOrFail($id);
-        $comments = Comment::with('user','blog')->where('blog_id',$id)->orderBy('id', 'desc')->get();
-    
-        if($blogs->aktive==="po"){
-        return view('Blog/Single')->with(['blogs'=>$blogs,'comments'=>$comments]);
-        }else{
+        $comments = Comment::with('user','blog')->where('blog_id',$id)->orderBy('id', 'desc')->paginate(10);
+        if($blogs->active!==1){
             return redirect('/blog');
         }
-    }
-
-
-    public function edit($id)
-    {
-        
+        return view('Blog/Single')->with(['blogs'=>$blogs,'comments'=>$comments]);
     }
 
     public function findBlog(Request $request){
-        $blogs=blog::orderBy('id', 'desc')->where([
-            ['titulli', '!=' , Null],
+        $blogs=blog::active(1)->with('user')->orderBy('id', 'desc')->where([
+            ['title', '!=' , Null],
             [function ($query) use ($request){
                 if(($term=$request->term)){
-                    $query->where('titulli', 'LIKE', '%'.$term.'%')->where('aktive','po');
+                    $query->where('title', 'LIKE', '%'.$term.'%');
                 }   
     }]])->paginate(5);
     return view('Blog/blog')->with(['blogs'=>$blogs]);
     }
-    public function findBlogDashboard(Request $request){
-        $blogs=blog::orderBy('id', 'desc')->where([
-            ['titulli', '!=' , Null],
+    
+    public function findMyBlog(Request $request){
+        $blogs=blog::with('user')->orderBy('id','asc')->where([
+            ['title', '!=' , Null],
             [function ($query) use ($request){
                 if(($term=$request->term)){
-                    $query->where('titulli', 'LIKE', '%'.$term.'%');
+                    $query->where('title', 'LIKE', '%'.$term.'%');
+                }  
+            }]
+        ])->where('user_id',Auth::user()->id)->paginate(9);
+        return view('Profile/AllMyBlogs')->with(['blogs'=>$blogs]);
+    }
+
+    public function findBlogDashboard(Request $request){
+        $blogs=blog::with('user')->orderBy('id', 'desc')->where([
+            ['title', '!=' , Null],
+            [function ($query) use ($request){
+                if(($term=$request->term)){
+                    $query->where('title', 'LIKE', '%'.$term.'%');
                 }   
     }]])->paginate(5);
-    return view('dashboard/all-blogs')->with(['blogs'=>$blogs]);
+    $allBlogs=blog::count();
+    $NonAcBlogs=blog::where('active',0)->count();
+    $AcBlogs=blog::where('active',1)->count();
+    return view('dashboard/all-blogs')->with(['AcBlogs'=>$AcBlogs,'NonAcBlogs'=>$NonAcBlogs,'allBlogs'=>$allBlogs,'blogs'=>$blogs]);
     }
   
      public function update(Request $request, $id)
     {
-        $blog = $request->hasfile('img');
+        $blog = $request->hasFile('img');
         if ($blog) {
-             $blog = blog::findOrFail($id);
-            $request->validate([
-            'titulli' => ['required','max:40','min:4'],
-            'pershkrimi' => ['required','max:250','min:10'],
-            'img' => ['required','mimes:jpeg,png','max:2048'],
-        ]);
-            $newblog = $request->file('img');
-            $blog_path = $newblog->store('/public/blog');
-     
-        
-        $blog->user_id = Auth::user()->id;
-        $blog->titulli = $request->titulli;
-        $blog->pershkrimi = $request->pershkrimi;
+        $blog = blog::findOrFail($id);
+        $request->validate([
+        'title' => ['required','max:100','min:4'],
+        'description' => ['required','max:6000','min:10'],
+        'img' => ['required','mimes:jpeg,png','max:2048'],
+        'category'=>['required','min:3','max:50']
+         ]);
+        $newblog = $request->file('img');
+        $blog_path = $newblog->store('/public/blog');
+        $blog->user_id = $blog->user_id;
+        $blog->title = $request->title;
+        $blog->description = $request->description;
         $blog->img=$blog_path;
-        $blog->aktive=$blog->aktive;
+        $blog->category=$request->category;
+        $blog->active=$blog->active;
         $blog->save();
         return back();
     }else{
         $request->validate([
-            'titulli' => ['required','max:40','min:4'],
-            'pershkrimi' => ['required','max:250','min:10'],
+        'title' => ['required','max:100','min:4'],
+        'description' => ['required','max:6000','min:10'],
+        'category'=>['required','min:3','max:50']
         ]);
         $blog = blog::findOrFail($id);
-        $blog->user_id = Auth::user()->id;
-        $blog->titulli = $request->titulli;
-        $blog->pershkrimi = $request->pershkrimi;
+        $blog->user_id = $blog->user_id;
+        $blog->title = $request->title;
+        $blog->category=$request->category;
+        $blog->description = $request->description;
         $blog->img=$blog->img;
-        $blog->aktive=$blog->aktive;
+        $blog->active=$blog->active;
         $blog->save();
         return back();
+    }
+    }
+
+    public function updateBlogDashboard(Request $request, $id)
+    {
+        $blog = $request->file('img');
+        // dd($blog);
+        if ($blog) {
+        $blog = blog::findOrFail($id);
+        $request->validate([
+        'title' => ['required','max:100','min:4'],
+        'description' => ['required','max:6000','min:10'],
+        'img' => ['required','mimes:jpeg,png','max:2048'],
+        'category'=>['required','min:3','max:50']
+         ]);
+        $newblog = $request->file('img');
+        $blog_path = $newblog->store('/public/blog');
+        $blog->user_id = $blog->user_id;
+        $blog->title = $request->title;
+        $blog->description = $request->description;
+        $blog->img=$blog_path;
+        $blog->category=$request->category;
+        $blog->active=$blog->active;
+        $blog->save();
+        return back()->with('msg','Error 111');
+    }else{
+        $request->validate([
+        'title' => ['required','max:100','min:4'],
+        'description' => ['required','max:6000','min:10'],
+        'category'=>['required','min:3','max:50']
+        ]);
+        $blog = blog::findOrFail($id);
+        $blog->user_id = $blog->user_id;
+        $blog->title = $request->title;
+        $blog->category=$request->category;
+        $blog->description = $request->description;
+        $blog->img=$blog->img;
+        $blog->active=$blog->active;
+        $blog->save();
+        return back()->with('msg','Error');
     }
     }
 
@@ -190,6 +237,6 @@ class BlogController extends Controller
         Storage::delete($blog->img);
         Storage::delete("storage/app/".$blog->img);
         $blog->delete();
-        return back()->with('msg','Blogu u fshi me sukses!');
+        return back()->with('msg','Blog successfully deleted!');
     }
 }

@@ -17,21 +17,22 @@ class NewsController extends Controller
     
     public function index()
     {
-        $news = news::with('user')->orderBy('id', 'desc')->paginate(9);
+        $news = news::with('user')->orderBy('id', 'desc')->take(50)->paginate(9);
         return view('News/news')->with(['news'=>$news]);
     }
 
     public function showAll()
     {
         $news = news::with('user')->orderBy('id', 'desc')->paginate(9);
-        return view('dashboard/all-news')->with(['news'=>$news]);
+        $nw=news::count();
+        return view('dashboard/all-news')->with(['news'=>$news,'nw'=>$nw]);
     }
     public function findNews(Request $request){
         $news=news::orderBy('id', 'desc')->where([
-            ['titulli', '!=' , Null],
+            ['title', '!=' , Null],
             [function ($query) use ($request){
                 if(($term=$request->term)){
-                    $query->where('titulli', 'LIKE', '%'.$term.'%');
+                    $query->where('title', 'LIKE', '%'.$term.'%');
                 }   
     }]])->paginate(5);
     return view('News/news')->with(['news'=>$news]);
@@ -39,14 +40,15 @@ class NewsController extends Controller
 
 
     public function findNewsDashboard(Request $request){
+        $nw=news::count();
         $news=news::orderBy('id', 'desc')->where([
-            ['titulli', '!=' , Null],
+            ['title', '!=' , Null],
             [function ($query) use ($request){
                 if(($term=$request->term)){
-                    $query->where('titulli', 'LIKE', '%'.$term.'%');
+                    $query->where('title', 'LIKE', '%'.$term.'%');
                 }   
     }]])->paginate(5);
-    return view('dashboard/all-news')->with(['news'=>$news]);
+    return view('dashboard/all-news')->with(['news'=>$news,'nw'=>$nw]);
     }
 
     
@@ -62,24 +64,24 @@ class NewsController extends Controller
         $file = $request->hasFile('img');
         if ($file) {
             $request->validate([
-                'titulli' => ['required','max:40','min:4'],
-                'pershkrimi' => ['required','max:250','min:10'],
+                'title' => ['required','max:100','min:4'],
+                'description' => ['required','max:7500','min:10'],
                 'img' => ['required','mimes:jpeg,png','max:2048'],
-                'kategoria' => ['required','max:20'],
+                'category' => ['required','max:50'],
 
             ]);
             $newFile = $request->file('img');
             $file_path = $newFile->store('/public/news');
             news::create([
-                'titulli' => $request['titulli'],
-                'pershkrimi' => $request['pershkrimi'],
+                'title' => $request['title'],
+                'description' => $request['description'],
                 'img' => $file_path,
-                'kategoria'=>$request['kategoria'],
+                'category'=>$request['category'],
                 'user_id' => Auth::user()->id,
             ]);
-       return back()->with('msg','Lajmi juaj u shtua me sukses!');
+       return back()->with('msg','News successfully stored!');
         }else{
-            return back()->with('error','Ploteso hapesirat e kerkuara!');
+            return back()->with('error','Please fill the required fields!');
  
         }
         
@@ -92,35 +94,39 @@ class NewsController extends Controller
         return view('News/Single')->with(['news'=>$news]);
     }
   
-
-   
-    public function edit($id)
-    {
-        //
-    }
-
-
     public function update(Request $request, $id)
     {
         $file = $request->hasFile('img');
         if ($file) {
-            $newFile = $request->file('img');
-            $file_path = $newFile->store('/public/news');
+            $request->validate([
+                'title' => ['required','max:100','min:4'],
+                'description' => ['required','max:7500','min:10'],
+                'img' => ['required','mimes:jpeg,png','max:2048'],
+                'category' => ['required','max:20'],
+
+            ]);
+        $newFile = $request->file('img');
+        $file_path = $newFile->store('/public/news');
         $news = News::findOrFail($id);
         $news->user_id = Auth::user()->id;
         $news->img = $file_path;
-        $news->titulli = $request->titulli;
-        $news->pershkrimi = $request->pershkrimi;
-        $news->kategoria = $request->kategoria;
+        $news->title = $request->title;
+        $news->description = $request->description;
+        $news->category = $request->category;
         $news->save();
         return back();
         }else{
+            $request->validate([
+                'title' => ['required','max:100','min:4'],
+                'description' => ['required','max:7500','min:10'],
+                'category' => ['required','max:20'],
+            ]);
             $news = News::findOrFail($id);
             $news->user_id = Auth::user()->id;
             $news->img = $news->img;
-            $news->titulli = $request->titulli;
-            $news->pershkrimi = $request->pershkrimi;
-            $news->kategoria = $request->kategoria;
+            $news->title = $request->title;
+            $news->description = $request->description;
+            $news->category = $request->category;
             $news->save();
             return back();
         }

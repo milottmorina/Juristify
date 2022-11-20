@@ -1,10 +1,8 @@
 @include('layouts.app')
-
 <div class="grid sm:grid-cols-3 grid-cols-1 gap-3 bg-[#d8b64b] sm:h-64 lg:h-48 content-center">
     <div class="flex justify-center">
         <img class="w-36 " src="{{asset('storyset/Hiring-amico.png')}}" alt="" >
     </div>
-   
     <div > <h1 class=" text-6xl text-white text-center mt-4">Juristify</h1>
         <p class=" text-2xl text-white text-center">Information</p>
     </div>
@@ -18,183 +16,97 @@
     </div>
     <div data-popper-arrow="" style="position: absolute; left: 0px; transform: translate3d(0px, 0px, 0px);"></div>
   </div>
-  
     </div>
   </div>
-
-<div class="w-full shadow lg:p-20  rounded-lg bg-white">
-    <div class="mx-2 mb-2 ">
-        <form action="{{ route('info.find') }}" method="GET" role="search">
-            <div class="flex justify-center">
-               <div class="w-50">
-                <label>Zgjedh Kategorine</label>
-                <select id="small" name="cat" class="block p-2.5 w-full rounded-l z-20 text-sm text-gray-900 bg-gray-50 border-l-gray-50 border-l-2 border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-l-gray-700  dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:border-blue-500">
-                   <option></option>
-                    @foreach ($categories as $c)
-                    <option value="{{$c->kategoria}}">{{$c->kategoria}}</option>
-                      @endforeach            
-                  </select></div>
-                  <div class="w-50">
-                    <label>Zgjedh Lokacionin</label>
-                  <select id="small" name="loc" class="block p-2.5 w-full z-20 text-sm text-gray-900 bg-gray-50  border-l-gray-50 border-l-2 border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-l-gray-700  dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:border-blue-500">
-                    <option></option>
-                    @foreach ($citys as $c)
-                     <option value="{{$c->lokacioni}}">{{$c->lokacioni}}</option>
-                       @endforeach            
-                   </select>
-                  </div>
-                
-                <div class="relative w-50">
-                    <label>Kerko titullin e shpalljes</label>
-                    <input type="search" name="term" id="search-dropdown" class="absolute top-[21.8px] block p-2.5 w-full z-20 text-sm text-gray-900 bg-gray-50 rounded-r-lg border-l-gray-50 border-l-2 border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-l-gray-700  dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:border-blue-500" placeholder="Search Mockups, Logos, Design Templates..." >
-                    
-                    <a href="{{route('info.find')}}" >
-                    <button type="submit" class="absolute top-[21.8px] z-20 right-0 p-2.5 text-sm font-medium text-white bg-blue-700 rounded-r-lg border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-                        <svg aria-hidden="true" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
-                        <span class="sr-only">Search</span>
-                    </button>
-                    </a>
+  <section class="text-gray-600 body-font">
+    <div class="container lg:px-5 pb-24 mt-4 mx-auto max-w-7x1">
+        <div class="m-2.5 w-full flex justify-center">
+          <form  action="{{ route('info.find') }}" method="GET" role="search">
+            <div class="max-w-xl">
+              <div class="flex space-x-4">
+                <div class="flex rounded-md overflow-hidden w-full">
+                  <input type="text" name="term" class="w-full rounded-md rounded-r-none" />
+                  <a href="{{route('info.find')}}" >
+                  <button class="bg-[#374151] text-white px-6 text-lg font-semibold py-4 rounded-r-md">Search</button>
+                  </a>
                 </div>
+              </div>
             </div>
-        </form>
+          </form>
+             <a href={{route('infos.view')}}>
+                <button class="bg-transparent px-6 text-lg font-semibold py-4 rounded-md">Clear</button></a>
         </div>
-
-   
-
-        @if (count($infos)>=1)
-    <div class="flex m-2.5">
-        <div id="card" class="lg:w-3/4">
- @foreach ($infos as $i)
-      
-            @php
-            $link = explode('/', $i->img);
-              
-    $rand = array('0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f');
-    $color = '#'.$rand[rand(0,15)].$rand[rand(0,15)].$rand[rand(0,15)].$rand[rand(0,15)].$rand[rand(0,15)].$rand[rand(0,15)];
-    date_default_timezone_set("Europe/Belgrade");
-   
-    
-    $earlier = new DateTime(date("Y-m-d"));
-$later = new DateTime($i->dataSkadimit);
-
+        <div class="grid lg:grid-cols-2 gap-4 mt-5">   
+@foreach ($infos as $i) 
+@php
+$link = explode('/', $i->img);
+$rand = array('0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f');
+$color = '#'.$rand[rand(0,15)].$rand[rand(0,15)].$rand[rand(0,15)].$rand[rand(0,15)].$rand[rand(0,15)].$rand[rand(0,15)];
+date_default_timezone_set("Europe/Belgrade");
+$earlier = new DateTime(date("Y-m-d"));
+$later = new DateTime($i->expiration_date);
 $pos_diff = $earlier->diff($later)->format("%r%a");
-        @endphp
-      
-
-                <a data-modal-toggle="defaultModal{{$i->id}}" class="flex flex-col items-center bg-white mb-4 rounded-lg border shadow-md md:flex-row hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700">
-                    <img class="object-cover w-full h-96 rounded-t-lg md:h-auto md:w-48 md:rounded-none md:rounded-l-lg" src="{{ asset('storage/info/' . $link[2]) }}" alt="">
-                    <div class="flex flex-col justify-between p-4 leading-normal sm:min-w-[800px]">
-                        <div class="flex justify-between">
-                 
-                        <h5 class="mb-2 mr-3 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{{$i->titulli}}</h5> 
-                       
-                        <span class="flex justify-end text-gray-500 mr-2 bg-[{{$color}}] text-white p-2 rounded">
-                            Dite te mbetura: {{ ' ' . $pos_diff }}<i class="fa-solid fa-calendar-days ml-1 mt-1 bg-[{{$color}}] text-white"></i>
-                            
-                        </span>
-                    </div>
-                        <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">{{ substr($i->pershkrimi, 0, 120) }}... </p>
-                        <span class="flex items-center justify-start text-gray-500 mt-3">
-
-                        <span class="flex items-center justify-start text-gray-500 mr-2 mt-3 bg-[{{$color}}] text-white p-2 rounded">
-                                                    
-                            <i class="fa-solid fa-briefcase mr-1 bg-[{{$color}}] text-white"></i>{{' ' . $i->emriKompanis }}
-                        </span>
-                        <span class="flex items-center justify-start text-gray-500 mr-2 mt-3 bg-[{{$color}}] text-white p-2 rounded">
-                            <i class="fa-solid fa-tag mr-1  bg-[{{$color}}] text-white"></i>{{ ' ' . $i->kategoria }}
-                        </span>
-                        <span class="flex items-center justify-start text-gray-500 mr-2 mt-3 bg-[{{$color}}] text-white p-2 rounded">
-                            <i class="fa-solid fa-location-pin mr-1  bg-[{{$color}}] text-white"></i>{{ ' ' . $i->lokacioni }}
-                        </span>
-                     
-                        </span>
-                     
-                    </div>
-                </a>
-
-
-                
-<!-- Modal toggle -->
-
-  
-  <!-- Main modal -->
-  <div id="defaultModal{{$i->id}}" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 w-full md:inset-0 h-modal md:h-full justify-center items-center">
-      <div class="relative p-4 w-full max-w-2xl h-full md:h-auto">
-          <!-- Modal content -->
-          <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
-              <!-- Modal header -->
-              <div class="flex justify-between items-start p-4 rounded-t border-b dark:border-gray-600">
-                  <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
-                      {{$i->titulli}}
-                  </h3>
-                  <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-toggle="defaultModal{{$i->id}}">
-                      <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
-                      <span class="sr-only">Close modal</span>
-                  </button>
-              </div>
-              <!-- Modal body -->
-              <div class="p-6 space-y-6">
-                <div class="flex justify-center">
-                <img class="object-cover justify-center w-48 h-48 rounded-t-lg " src="{{ asset('storage/info/' . $link[2]) }}" alt="">
-               
+@endphp
+<a data-modal-toggle="defaultModal{{$i->id}}" class="flex flex-col items-center bg-white rounded-lg border shadow-md md:flex-row md:max-w hover:bg-gray-100">
+    <img class="object-cover w-full h-96 rounded-t-lg md:h-auto md:w-48 md:rounded-none md:rounded-l-lg" src="{{ asset('storage/info/' . $link[2]) }}" alt="">
+    <div class="flex flex-col justify-between p-4 leading-normal">
+        <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{{ substr($i->title, 0, 12) }}... </h5>
+        <span class="flex justify-between bg-[{{$color}}] text-white p-2 rounded">
+         <span class="flex">
+                  <i class="fa-solid fa-tag bg-[{{$color}}] ml-2  mt-1 mr-1  text-white"></i>{{' '.$i->category}}
+                  <i class="fa-solid fa-circle-nodes bg-[{{$color}}] ml-2  mt-1 mr-1  text-white"></i>{{'  Free places:'}}{{' '.$i->free_places}}
+                  <i class="fa-solid fa-calendar-days mt-1 ml-2 mr-1 bg-[{{$color}}] text-white"></i>{{'  Days left:'}} {{$pos_diff }} 
+                </span>
+        </span>
+        <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">{{ substr($i->description, 0, 100) }}...<span class="font-bold text-[#374151]">read more</span> </p>
+    </div>
+</a>
+<div id="defaultModal{{$i->id}}" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 w-full md:inset-0 h-modal md:h-full">
+    <div class="relative p-4 w-full max-w-2xl h-full md:h-auto">
+        <!-- Modal content -->
+        <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+            <!-- Modal header -->
+            <div class="flex justify-between items-start p-4 rounded-t border-b dark:border-gray-600">
+                <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
+                   {{$i->title}}
+                </h3>
+                <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-toggle="defaultModal{{$i->id}}">
+                    <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+                    <span class="sr-only">Close modal</span>
+                </button>
             </div>
-             <h1 class="font-bold text-2xl ml-3 text-center capitalize">{{$i->titulli}}</h1>
-             <hr>
-        
-            <span class="flex items-center justify-center text-gray-500 mt-3">
-                <span class="flex items-center justify-start text-gray-500 mr-2 mt-3 bg-[{{$color}}] text-white p-2 rounded">
-                    Dite te mbetura: {{ ' ' . $pos_diff }}<i class="fa-solid fa-calendar-days ml-1 bg-[{{$color}}] text-white"></i>
-                    
-                </span>
-                <span class="flex items-center justify-start text-gray-500 mr-2 mt-3 bg-[{{$color}}] text-white p-2 rounded">
-                                            
-                    <i class="fa-solid fa-briefcase mr-1 bg-[{{$color}}] text-white"></i>{{' ' . $i->emriKompanis }}
-                </span>
-                <span class="flex items-center justify-start text-gray-500 mr-2 mt-3 bg-[{{$color}}] text-white p-2 rounded">
-                    <i class="fa-solid fa-tag mr-1  bg-[{{$color}}] text-white"></i>{{ ' ' . $i->kategoria }}
-                </span>
-                <span class="flex items-center justify-start text-gray-500 mr-2 mt-3 bg-[{{$color}}] text-white p-2 rounded">
-                    <i class="fa-solid fa-location-pin mr-1  bg-[{{$color}}] text-white"></i>{{ ' ' . $i->lokacioni }}
-                </span>
-           
-                </span>
-             <hr>
-                  <p class="text-base leading-relaxed text-gray-500 dark:text-gray-400">
-                    {{$i->pershkrimi}}
-                </p>
-                
-              </div>
-              <!-- Modal footer -->
-              <div class="flex items-center p-6 space-x-2 rounded-b border-t border-gray-200 dark:border-gray-600">
-                  <button data-modal-toggle="defaultModal{{$i->id}}" type="button" class="text-white bg-[#374151] hover:bg-[#374159] focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center w-full">Mbyll</button>
-              </div>
-          </div>
-      </div>
-  </div>
-  
-            @endforeach
-            <!--/ card-->
-            
+            <!-- Modal body -->
+            <div class="p-6 space-y-6">
+                <span class="grid lg:grid-cols-2 lg:gap-1 text-gray-500">
 
-
+                    <span class="flex items-center justify-start mr-2 mt-3 bg-[{{$color}}] text-white p-2 rounded">
+                                                
+                        <i class="fa-solid fa-briefcase mr-1 bg-[{{$color}}] text-white"></i>{{' ' . $i->company_name }}
+                    </span>
+                    <span class="flex items-center justify-start mr-2 mt-3 bg-[{{$color}}] text-white p-2 rounded">
+                        <i class="fa-solid fa-tag mr-1  bg-[{{$color}}] text-white"></i>{{ ' ' . $i->category }}
+                    </span>
+                    <span class="flex items-center justify-start mr-2 mt-3 bg-[{{$color}}] text-white p-2 rounded">
+                        <i class="fa-solid fa-location-pin mr-1  bg-[{{$color}}] text-white"></i>{{ ' ' . $i->location }}
+                    </span>
+                    <span class="flex items-center justify-start mr-2 mt-3 bg-[{{$color}}] text-white p-2 rounded">
+                        <i class="fa-solid fa-calendar-days ml-1 mr-1 bg-[{{$color}}] text-white"></i>{{'  Days left:'}} {{$pos_diff }} 
+                    </span>
+                    </span>
+                 {{$i->description}}
+            </div>
+            <!-- Modal footer -->
+            <div class="p-3">
+                <button data-modal-toggle="defaultModal{{$i->id}}" type="button" class="w-full text-white bg-[#374151] focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">CLOSE</button>          
+            </div>
+     </div>
+    </div>
+</div>
+@endforeach 
         </div>
-        <!--/ flex-->
-    </div>
-    @else
-    <div class="grid place-items-center mt-10">
-        <div class="flex items-center p-4 mb-4 text-sm text-blue-700 bg-blue-100 rounded-lg dark:bg-blue-200 dark:text-blue-800" role="alert">
-            <svg aria-hidden="true" class="flex-shrink-0 inline w-5 h-5 mr-3" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path></svg>
-            <span class="sr-only">Info</span>
-            <div>
-              <span class="font-medium">Info alert!</span> Change a few things up and try submitting again.
-            </div>
-          </div></div>
-    @endif
-    <div>
-
-    </div>
+        <div class="flex justify-center mt-5">
+{{$infos->links()}}
 </div>
-</div>
-
-
+    </div>
+  </section>
 @include('layouts.footer')

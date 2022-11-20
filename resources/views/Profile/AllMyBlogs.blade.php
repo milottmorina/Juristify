@@ -3,7 +3,7 @@
 <div class="relative flex justify-center bg-[#d8b64b]">
     <div class="bg-[#d8b64b] h-44">
         <h1 class="relative top-[45px] text-6xl text-white text-center">Juristify</h1>
-        <p class="relative top-[50px] text-2xl text-white text-center">Recent Uploads</p>
+        <p class="relative top-[50px] text-2xl text-white text-center">Recent Blogs</p>
     </div>
 
 </div>
@@ -23,7 +23,7 @@
                 <div class="divide-y divide-gray-200 lg:col-span-9">
                     <div class="py-6 px-4 sm:p-6 lg:pb-8">
                         <div>
-                            <h2 class="text-lg leading-6 font-medium text-gray-900">Recent Uploads</h2>
+                            <h2 class="text-lg leading-6 font-medium text-gray-900">Recent Blogs</h2>
                             <p class="mt-1 text-sm text-gray-500">This information will be displayed publicly so be
                                 careful what you share.</p>
                         </div>
@@ -36,6 +36,22 @@
                             </div>
                         </div>
                     @endif
+                    <div class="p-4 w-full flex justify-center">
+                        <form action="{{ route('blog.findMyBlog') }}" method="GET" role="search">
+                          <div class="max-w-xl">
+                            <div class="flex space-x-4">
+                              <div class="flex rounded-md overflow-hidden w-full">
+                                <input type="text" name="term" class="w-full rounded-md rounded-r-none" />
+                                <a href="{{ route('blog.findMyBlog') }}">
+                                  <button class="bg-[#374151] text-white px-6 text-lg font-semibold py-4 rounded-r-md">Search</button>
+                                </a>
+                              </div>
+                            </div>
+                          </div>
+                        </form>
+                        <a href={{ route('blog.myBlogs') }}>
+                          <button class="bg-transparent px-6 text-lg font-semibold py-4 rounded-md">Clear</button></a>
+                      </div>
 
                     <div class="flex overflow-x-scroll p-10 hide-scroll-bar ">
 
@@ -97,23 +113,23 @@
                                                     <div class="flex justify-start">
                                                     <h3
                                                     class="capitalize tracking-widest  text-[#d8b64b] text-xs font-medium title-font">
-                                                    {{ $b->kategoria }}</h3>
+                                                    {{ $b->category }}</h3>
                                                 </div>
-                                                    @if ($b->aktive==="po")
+                                                    @if ($b->active===1)
                                                     <div class="flex justify-end">
                                                           <h3
                                                     class="tracking-widest rounded  bg-green-400 text-white p-1 text-xs font-medium title-font">
-                                                  AKTIVE</h3> </div>
+                                                  ACTIVE</h3> </div>
                                                     @else
                                                     <div>
                                                         <h3
                                                   class="tracking-widest rounded  bg-red-400 text-white p-1 text-xs font-medium title-font">
-                                                JO AKTIVE</h3> </div>
+                                                NON-ACTIVE</h3> </div>
                                                 @endif
                                                 </div>
                                                 <h2 class="text-lg text-gray-900 font-medium title-font mb-4 capitalize">
-                                                    {{ $b->titulli }}</h2>
-                                                    <p>{{substr($b->pershkrimi,0,30)}}...</p>
+                                                    {{ $b->title }}</h2>
+                                                    <p>{{substr($b->description,0,30)}}...</p>
                                             </div>
 
                                         </div>
@@ -186,7 +202,7 @@
                                                     <div class="justify-center items-center w-full">
                                                         
                                                         <label for="first-name" class="block text-sm font-medium text-gray-700">Image</label>
-                                                        <input type="file" name="img" id="titulli" autocomplete="given-name"
+                                                        <input type="file" name="img" id="title" autocomplete="given-name"
                                                             class="@error('img') is-invalid @enderror capitalize mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-sky-500 focus:border-sky-500 sm:text-sm">
                                                           @error('img')
                                                         <span class="invalid-feedback " role="alert">
@@ -199,21 +215,21 @@
                                                     <div class="mt-6 grid grid-cols-12 gap-6">
                                                         <div class="col-span-12 sm:col-span-12">
                                                             <label for="first-name" class="block text-sm font-medium text-gray-700">Title</label>
-                                                            <input type="text" name="titulli" id="titulli" autocomplete="given-name"
-                                                                value="{{$b->titulli}}" class="@error('titulli') is-invalid @enderror capitalize mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-sky-500 focus:border-sky-500 sm:text-sm">
+                                                            <input type="text" name="title" id="title" autocomplete="given-name"
+                                                                value="{{$b->title}}" class="@error('title') is-invalid @enderror capitalize mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-sky-500 focus:border-sky-500 sm:text-sm">
                                                                 
-                                                                @error('titulli')
+                                                                @error('title')
                                                                 <span class="invalid-feedback " role="alert">
                                                                     <p class="text-xs text-red-600 ml-2">{{ $message }}</p>
                                                                 </span>
                                                             @enderror
                                                             </div>
                                                             <div class="col-span-12 sm:col-span-12">
-                                                                <label for="first-name" class="block text-sm font-medium text-gray-700">Kategoria</label>
-                                                                <input type="text" name="kategoria" id="titulli" autocomplete="given-name"
-                                                                    value="{{$b->kategoria}}" class="@error('kategoria') is-invalid @enderror capitalize mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-sky-500 focus:border-sky-500 sm:text-sm">
+                                                                <label for="first-name" class="block text-sm font-medium text-gray-700">category</label>
+                                                                <input type="text" name="category" id="title" autocomplete="given-name"
+                                                                    value="{{$b->category}}" class="@error('category') is-invalid @enderror capitalize mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-sky-500 focus:border-sky-500 sm:text-sm">
                                                                     
-                                                                    @error('kategoria')
+                                                                    @error('category')
                                                                     <span class="invalid-feedback " role="alert">
                                                                         <p class="text-xs text-red-600 ml-2">{{ $message }}</p>
                                                                     </span>
@@ -224,11 +240,10 @@
                                                         <div class="col-span-12 sm:col-span-12 ">
                                                             <label for="first-name"
                                                                 class="block text-sm font-medium text-gray-700">Description</label>
-                                                            <textarea type="text" rows="4" name="pershkrimi" id="first-name" autocomplete="given-name"
-                                                                class=" @error('pershkrimi') is-invalid @enderror mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-sky-500 focus:border-sky-500 sm:text-sm">
-                                             {{$b->pershkrimi}} </textarea>
+                                                            <textarea type="text" rows="4" name="description" id="first-name" autocomplete="given-name"
+                                                                class=" @error('description') is-invalid @enderror mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-sky-500 focus:border-sky-500 sm:text-sm">{{$b->description}}</textarea>
                                              
-                                              @error('pershkrimi')
+                                              @error('description')
                                               <span class="invalid-feedback " role="alert">
                                                   <p class="text-xs text-red-600 ml-2">{{ $message }}</p>
                                               </span>
@@ -238,7 +253,7 @@
                                                 </div>
                                                 <!-- Modal footer -->
                                                 <div class="flex items-center p-6 space-x-2 rounded-b border-t border-gray-200 dark:border-gray-600">
-                                                    <button data-modal-toggle="defaultModal{{$b->id}}" type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Update</button>
+                                                    <button data-modal-toggle="defaultModal{{$b->id}}" type="submit" class="text-white bg-gray-700 hover:bg-gray-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Update</button>
                                                     <button data-modal-toggle="defaultModal{{$b->id}}" type="button" class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600">Decline</button>
                                                 </div>
                                             </form>

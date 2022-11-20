@@ -21,161 +21,154 @@ class FilesController extends Controller
     public function index()
     {
         $files = files::with('user')->where('user_id',Auth::user()->id)->orderBy('id', 'desc')->paginate(5);
-
         return view('profile/AllMyFiles')->with(['files'=>$files]);
     }
 
     public function showAll(){
         $files = files::with('user')->orderBy('id', 'desc')->paginate(5);
-        return view('dashboard/all-files')->with(['files'=>$files]);
+        $allFiles=$files->count();
+        $allAcFiles=$files->where('status',1)->count();
+        $allNacFiles=$files->where('status',0)->count();
+        return view('dashboard/all-files')->with(['allNacFiles'=>$allNacFiles,'allAcFiles'=>$allAcFiles,'allFiles'=>$allFiles,'files'=>$files]);
     }
 
     public function cverifiko($id){
         $files = files::findOrFail($id);
-        $files->status='jo';
+        $files->status=0;
         $files->save();
         $email=UserModel::select('email')->where('id',$files->user_id)->get();
         Mail::to($email)->send(new LibraryDeactivated($email));   
-        return back()->with('msg',"Dokumenti u c'verifikua me sukses!");
+        return back()->with('msg',"File has been failed verified!");
     }
     public function verifiko($id){
         $files = files::findOrFail($id);
-        $files->status='po';
+        $files->status=1;
         $files->save();
         $email=UserModel::select('email')->where('id',$files->user_id)->get();
-        
         Mail::to($email)->send(new LibraryActivated($email));  
-        return back()->with('msg',"Dokumenti u verifikua me sukses!");
+        return back()->with('msg',"File has been successfully verified!");
     }
  
-
-
     public function store(Request $request)
     {
       
-        $file = $request->hasFile('dokumenti');
-        if ($file && Auth::user()->role==="admin") {
+        $file = $request->hasFile('file');
+        if ($file && Auth::user()->role===1) {
         
         $request->validate([
-            'titulli' => ['required','max:40','min:4'],
-            'pershkrimi' => ['required','max:500','min:10'],
-            'dokumenti' => ['required','mimes:pdf,docx','max:2048'],
+            'title' => ['required','max:100','min:4'],
+            'description' => ['required','max:1000','min:10'],
+            'file' => ['required','mimes:pdf,docx','max:2048'],
         ]);
-            $newFile = $request->file('dokumenti');
+            $newFile = $request->file('file');
             $file_path = $newFile->store('/public/dokumentet');
             files::create([
-                'titulli' => $request['titulli'],
-                'pershkrimi' => $request['pershkrimi'],
-                'dokumenti' => $file_path,
+                'title' => $request['title'],
+                'description' => $request['description'],
+                'file' => $file_path,
                 'user_id' => Auth::user()->id,
-                'status'=>'po'
+                'status'=>1
             ]);
-        return back()->with('msg','Dokumenti juaj u shtua me sukses!');
+        return back()->with('msg','Document has been successfully stored!');
         }else{
             $request->validate([
-                'titulli' => ['required','max:40','min:4'],
-                'pershkrimi' => ['required','max:500','min:10'],
-                'dokumenti' => ['required','mimes:pdf,docx','max:2048'],
+                'title' => ['required','max:100','min:4'],
+                'description' => ['required','max:1000','min:10'],
+                'file' => ['required','mimes:pdf,docx','max:2048'],
             ]);
-                $newFile = $request->file('dokumenti');
+                $newFile = $request->file('file');
                 $file_path = $newFile->store('/public/dokumentet');
                 files::create([
-                    'titulli' => $request['titulli'],
-                    'pershkrimi' => $request['pershkrimi'],
-                    'dokumenti' => $file_path,
+                    'title' => $request['title'],
+                    'description' => $request['description'],
+                    'file' => $file_path,
                     'user_id' => Auth::user()->id,
-                    'status'=>'jo'
+                    'status'=>0
                 ]);
-                return back()->with('msg','Dokumenti juaj u shtua me sukses por duhet te prisni per aprovim nga ana jone!');
+                return back()->with('msg','Document has been successfully stored, please be patient until we approve the file!');
         }
        
     }
 
-
     public function show()
     {
-        $files = files::with('user')->where('status','po')->orderBy('id', 'desc')->paginate(10);
+        $files = files::with('user')->where('status',1)->orderBy('id', 'desc')->paginate(10);
 
         return view('LibraryDocs/allDocuments')->with(['files'=>$files]);
     }
 
-
-    public function edit(files $files)
-    {
-        //
+    public function findMyFile(Request $request){
+        $files=files::with('user')->orderBy('id','asc')->where([
+            ['title', '!=' , Null],
+            [function ($query) use ($request){
+                if(($term=$request->term)){
+                    $query->where('title', 'LIKE', '%'.$term.'%');
+                }  
+            }]
+        ])->where('user_id',Auth::user()->id)->paginate(5);
+        return view('profile/AllMyFiles')->with(['files'=>$files]);
     }
 
     public function findFile(Request $request){
-        $files=files::orderBy('id', 'asc')->where([
-            ['titulli', '!=' , Null],
+        $files=files::with('user')->orderBy('id', 'asc')->where([
+            ['title', '!=' , Null],
             [function ($query) use ($request){
                 if(($term=$request->term)){
-                    $query->where('titulli', 'LIKE', '%'.$term.'%')->where('status','po');
+                    $query->where('title', 'LIKE', '%'.$term.'%');
                 }   
-    }]])->paginate(5);
+    }]])->where('status',1)->paginate(5);
     return view('LibraryDocs/allDocuments')->with(['files'=>$files]);
     }
     public function findFileDashboard(Request $request){
-        $files=files::orderBy('id', 'asc')->where([
-            ['titulli', '!=' , Null],
+        $files=files::with('user')->orderBy('id', 'asc')->where([
+            ['title', '!=' , Null],
             [function ($query) use ($request){
                 if(($term=$request->term)){
-                    $query->where('titulli', 'LIKE', '%'.$term.'%');
+                    $query->where('title', 'LIKE', '%'.$term.'%');
                 }   
     }]])->paginate(5);
-    return view('dashboard/all-files')->with(['files'=>$files]);
+    $allFiles=files::count();
+    $allAcFiles=files::where('status',1)->count();
+    $allNacFiles=files::where('status',0)->count();
+    return view('dashboard/all-files')->with(['allNacFiles'=>$allNacFiles,'allAcFiles'=>$allAcFiles,'allFiles'=>$allFiles,'files'=>$files]);
     }
     public function update(Request $request, $id)
     {
-        $file = $request->hasFile('dokumenti');
-        if(Auth::user()->role==="admin"){
+        $file = $request->hasFile('file');
+        if ($file) { 
+            $request->validate([
+            'title' => ['required','max:100','min:4'],
+            'description' => ['required','max:1000','min:10'],
+            'file' => ['required','mimes:pdf,docx','max:2048'],
+            ]);
+            $newFile = $request->file('file');
+            $file_path = $newFile->store('/public/dokumentet');
             $file = files::findOrFail($id);
-            $file->user_id =$file->user_id;
-            $file->titulli = $request->titulli;
-            $file->pershkrimi = $request->pershkrimi;
-            $file->dokumenti= $file->dokumenti;
+            $file->title = $request->title;
+            $file->description = $request->description;
+            $file->file=$file_path;
             $file->save();
             return back();
         }else{
-        if ($file) { 
-            $request->validate([
-            'titulli' => ['required','max:40','min:4'],
-            'pershkrimi' => ['required','max:250','min:10'],
-            'dokumenti' => ['required','mimes:pdf,docx','max:2048'],
-        ]);
-            $newFile = $request->file('dokumenti');
-            $file_path = $newFile->store('/public/dokumentet');
-     
-        $file = files::findOrFail($id);
-        $file->user_id = Auth::user()->id;
-        $file->titulli = $request->titulli;
-        $file->pershkrimi = $request->pershkrimi;
-        $file->dokumenti=$file_path;
-        $file->save();
-        return back();
-    }else{
         $request->validate([
-            'titulli' => ['required','max:40','min:4'],
-            'pershkrimi' => ['required','max:250','min:10'],
+            'title' => ['required','max:100','min:4'],
+            'description' => ['required','max:1000','min:10'],
         ]);
         $file = files::findOrFail($id);
-        $file->user_id = Auth::user()->id;
-        $file->titulli = $request->titulli;
-        $file->pershkrimi = $request->pershkrimi;
-        $file->dokumenti=$file->dokumenti;
+        $file->title = $request->title;
+        $file->description = $request->description;
         $file->save();
         return back();
-    }
-    }
-    }
+        }
+        }
 
   
     public function destroy($id)
     {
         $file = files::findOrFail($id);
-        Storage::delete($file->dokumenti);
-        Storage::delete("storage/app/".$file->dokumenti);
+        Storage::delete($file->file);
+        Storage::delete("storage/app/".$file->file);
         $file->delete();
-        return back()->with('msg','File u fshi me sukses!');
+        return back()->with('msg','File deleted successfully!');
     }
 }

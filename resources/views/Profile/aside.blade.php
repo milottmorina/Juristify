@@ -67,7 +67,7 @@ class="border-transparent text-gray-900  hover:text-[#d8b64b] group border-l-4 p
 </div>
 </a>
 
-    @if (Auth::user()->role==="admin")
+    @if (Auth::user()->role===1)
  
     <p class=" bg-gray-300 p-1 text-white text-center">ADMIN ACTIONS</p>
   

@@ -15,20 +15,20 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->string('emri');
-            $table->string('mbiemri');
-            $table->date('dataLindjes');
-            $table->string('universiteti');
-            $table->string('gjinia');
-            $table->string('numriTel')->default('');
-            $table->string('rruga')->default('');
-            $table->string('verifikuar')->default('jo');
+            $table->string('name')->index();
+            $table->string('surname')->index();
+            $table->date('birthday');
+            $table->string('university');
+            $table->string('gender');
+            $table->string('phoneNo')->default('');
+            $table->string('street')->default('');
+            $table->boolean('verified')->default(0);
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->text('img');
-            $table->text('id_kartela')->nullable();
-            $table->string('role', length: 15)->default('user');
+            $table->text('id_card')->nullable();
+            $table->boolean('role')->default(0);
             $table->rememberToken();
             $table->timestamps();
         });

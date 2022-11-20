@@ -122,7 +122,7 @@
                       <input
                          type="text"
                          placeholder="Your Name"
-                         class="  @error('emri') is-invalid @enderror
+                         class="  @error('name') is-invalid @enderror
                          w-full
                          rounded
                          py-3
@@ -133,11 +133,11 @@
                          focus-visible:shadow-none
                          focus:border-primary capitalize
                          "
-                         name="emri" required
-                         value="{{Auth::user()->emri . " ".Auth::user()->mbiemri}}" disabled
+                         name="name" required
+                         value="{{Auth::user()->name . " ".Auth::user()->surname}}" disabled
                          />
                        
-                                            @error('emri')
+                                            @error('name')
                                             <div class="ml-1 text-red-500 text-sm ">{{ $message }}
                                             </div>
                                             @enderror
@@ -168,11 +168,11 @@
                          @enderror
                    </div>
                    <div class="mb-6">
-                     @if (Auth::user()->numriTel!=null)
+                     @if (Auth::user()->phoneNo!=null)
                      <input
                      type="text"
                      placeholder="Your Phone"
-                     class="@error('numriTel')
+                     class="@error('phoneNo')
                      is-invalid
                   @enderror
                      w-full
@@ -185,15 +185,13 @@
                      focus-visible:shadow-none
                      focus:border-primary
                      "
-                     name="numriTel" required
-                     value="{{Auth::user()->numriTel}}"
-                     disabled
+                     name="phoneNo" required
                      />
                      @else
                      <input
-                     type="text"
+                     type="number"
                      placeholder="Your Phone"
-                     class="@error('numriTel')
+                     class="@error('phoneNo')
                      is-invalid
                   @enderror
                      w-full
@@ -204,14 +202,11 @@
                      border border-[f0f0f0]
                      outline-none
                      focus-visible:shadow-none
-                     focus:border-primary
-                     "
-                     name="numriTel" required
-                     
+                     focus:border-primary"
+                     name="phoneNo" required
                      />
                      @endif
-                 
-                         @error('numriTel')
+                         @error('phoneNo')
                          <div class="ml-1 text-red-500 text-sm ">{{ $message }}
                          </div>
                          @enderror
@@ -220,7 +215,7 @@
                       <textarea
                          rows="6"
                          placeholder="Your Message"
-                         class="@error('numriTel')
+                         class="@error('msg')
                          is-invalid
                       @enderror
                          w-full
@@ -234,9 +229,9 @@
                          focus-visible:shadow-none
                          focus:border-primary
                          "
-                         name="mesazhi" required
+                         name="msg" required
                          ></textarea>
-                         @error('mesazhi')
+                         @error('msg')
                          <div class="ml-1 text-red-500 text-sm ">{{ $message }}
                          </div>
                          @enderror

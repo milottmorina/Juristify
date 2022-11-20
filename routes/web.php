@@ -35,14 +35,14 @@ Route::prefix('dashboard')->group(function(){
     Route::get('/news', [NewsController::class, 'showAll'])->name('news.all')->middleware('admin');
     Route::get('/informations', [InformationController::class, 'allInfos'])->name('informations.view')->middleware('admin');
     Route::get('contact-us/all', [ContactController::class, 'show'])->name('contact.show')->middleware('admin');
-    Route::get('/blogs/find', [BlogController::class, 'findBlogDashboard'])->name('blog.findDashboard');
-    Route::get('/library/find', [FilesController::class, 'findFileDashboard'])->name('file.findDashboard');
-    Route::get('/information/find', [InformationController::class, 'findInfoDashboard'])->name('info.findDashboard')->middleware('admin');
-    Route::get('/news/find', [NewsController::class, 'findNewsDashboard'])->name('news.findDashboard')->middleware('admin');
+    Route::get('/blogs/search', [BlogController::class, 'findBlogDashboard'])->name('blog.findDashboard')->middleware('admin');
+    Route::get('/library/search', [FilesController::class, 'findFileDashboard'])->name('file.findDashboard')->middleware('admin');
+    Route::get('/information/search', [InformationController::class, 'findInfoDashboard'])->name('info.findDashboard')->middleware('admin');
+    Route::get('/news/search', [NewsController::class, 'findNewsDashboard'])->name('news.findDashboard')->middleware('admin');
 
     Route::prefix('/users')->group(function(){
     Route::get('/', [User::class, 'allUsers'])->name('user.all')->middleware('admin');
-    Route::get('/find', [User::class, 'findUser'])->name('user.find')->middleware('admin');
+    Route::get('/search', [User::class, 'findUser'])->name('user.find')->middleware('admin');
     Route::get('/verified', [User::class, 'getVerifiedUsers'])->name('user.verified')->middleware('admin');
     Route::get('/non-verified', [User::class, 'getNonVerifiedUsers'])->name('user.nonverified')->middleware('admin');
     Route::get('/admin', [User::class, 'getAdmin'])->name('user.admin')->middleware('admin');
@@ -68,11 +68,11 @@ Route::prefix('profile')->group(
         Route::get('/create-info', [InformationController::class, 'create'])->name('info.create');
         Route::get('/create-news', [NewsController::class, 'create'])->name('news.create');
         Route::get('/create-blog', [BlogController::class, 'create'])->name('blog.create');
-        Route::post('/update-file/{id}', [FilesController::class, 'update'])->name('file.update');
         Route::get('/my-blogs', [BlogController::class, 'myBlogs'])->name('blog.myBlogs');
         Route::post('/update-blog/{id}', [BlogController::class, 'update'])->name('blog.update');
-
-
+        Route::get('recent-uploads/search', [FilesController::class, 'findMyFile'])->name('file.findMyFile');
+        Route::get('my-blogs/search', [BlogController::class, 'findMyBlog'])->name('blog.findMyBlog');
+        // findMyBlog
     }
 );
 // library
@@ -82,9 +82,10 @@ Route::prefix('library')->group(
         Route::get('/search', [FilesController::class, 'findFile'])->name('file.find');
         Route::post('/verifiko/{id}', [FilesController::class, 'verifiko'])->name('file.verifiko')->middleware('admin');
         Route::post('/cverifiko/{id}', [FilesController::class, 'cverifiko'])->name('file.cverifiko')->middleware('admin');
+        Route::post('/update-file/{id}', [FilesController::class, 'update'])->name('file.update');  
     });
 //information
-Route::prefix('infromation')->group(
+Route::prefix('information')->group(
         function (){
             Route::get('/', [InformationController::class, 'index'])->name('infos.view');
             Route::post('/store-info', [InformationController::class, 'store'])->name('info.store')->middleware('admin');
@@ -104,15 +105,15 @@ Route::prefix('news')->group(
 });
 //blog
 Route::prefix('blog')->group(
-function (){
-Route::get('/', [BlogController::class, 'index'])->name('blog.view');
-Route::get('/single/{id}', [BlogController::class, 'show'])->name('blog.show');
-Route::post('/store-news', [BlogController::class, 'store'])->name('blog.store');
-Route::post('/verifiko/{id}', [BlogController::class, 'verifiko'])->name('blog.verifiko');
-Route::post('/cverifiko/{id}', [BlogController::class, 'cverifiko'])->name('blog.cverifiko');
-Route::get('/destroy/{id}', [BlogController::class, 'destroy'])->name('blog.delete');
-Route::get('/search', [BlogController::class, 'findBlog'])->name('blog.find');
-
+    function (){
+        Route::get('/', [BlogController::class, 'index'])->name('blog.view');
+        Route::get('/single/{id}', [BlogController::class, 'show'])->name('blog.show');
+        Route::post('/store-news', [BlogController::class, 'store'])->name('blog.store');
+        Route::post('/verifiko/{id}', [BlogController::class, 'verifiko'])->name('blog.verifiko');
+        Route::post('/cverifiko/{id}', [BlogController::class, 'cverifiko'])->name('blog.cverifiko');
+        Route::get('/destroy/{id}', [BlogController::class, 'destroy'])->name('blog.delete');
+        Route::get('/search', [BlogController::class, 'findBlog'])->name('blog.find');
+        Route::post('update-blog/{id}',[BlogController::class,'updateBlogDashboard'])->name('update.blogDashboard');
 });
 //comment
 Route::prefix('comment')->group(

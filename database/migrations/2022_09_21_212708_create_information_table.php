@@ -18,13 +18,13 @@ return new class extends Migration
             $table->foreignId('user_id')
             ->references('id')->on('users')
             ->onDelete('cascade');
-            $table->string('titulli');
-            $table->string('emriKompanis');
-            $table->string('kategoria');
-            $table->string('lokacioni');
-            $table->date('dataSkadimit');
-            $table->string('vende');
-            $table->text('pershkrimi');
+            $table->string('title')->index();
+            $table->string('company_name');
+            $table->string('category')->index();
+            $table->string('location')->index();
+            $table->date('expiration_date');
+            $table->string('free_places');
+            $table->text('description');
             $table->text('img');
             $table->timestamps();
         });

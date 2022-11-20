@@ -15,49 +15,26 @@ class CommentController extends Controller
     {
         $this->middleware('auth');
     }
-    public function index()
-    {
-        //$_GET["id"]
-        $comments = Comment::with('user','blog')->where('$_GET["id"]',)->orderBy('id', 'desc')->get();
-        dd($comments);
-        return view('Blog/Single')->with(['comments', $comments]);
-
-    }
-
-  
-    public function create()
-    {
-        //
-    }
-
  
     public function store(Request $request)
     {
-            // 'user_id',
-    // 'blog_id',
-    // 'pershkrimi'
+        $request->validate([
+            'pershkrimi' => ['required','string','max:700','min:6']
+        ]);
         Comment::create([
             'user_id' => Auth::user()->id,
             'blog_id' => $request['blog_id'],
             'pershkrimi'=>$request['pershkrimi'],
         ]);
-        return back()->with('msg','Komenti juaj u be me sukses!');
-    }
-
-    public function show($id)
-    {
-        //
-    }
-
- 
-    public function edit($id)
-    {
-        //
+        return back()->with('msg','Comment added successfully!');
     }
 
    
     public function update(Request $request, $id)
     {
+        $request->validate([
+            'pershkrimi' => ['required','string','max:700','min:6']
+        ]);
         $comment = Comment::findOrFail($id);
         $comment->user_id = Auth::user()->id;
         $comment->blog_id = $request->blog_id;
@@ -70,8 +47,7 @@ class CommentController extends Controller
     public function destroy($id)
     {
         $comment = comment::findOrFail($id);
-        
         $comment->delete();
-        return back()->with('msg','Komenti juaj u fshi me sukses!');
+        return back()->with('msg','Comment deleted successfully!');
     }
 }

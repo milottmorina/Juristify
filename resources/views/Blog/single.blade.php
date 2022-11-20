@@ -17,9 +17,9 @@
         <img src="{{ asset('storage/blog/' . $link[2]) }}" class="absolute left-0 top-0 w-full h-full z-0 object-cover" />
         <div class="p-4 absolute bottom-0 left-0 z-20">
           <p 
-            class="px-4 py-1 bg-black text-gray-200 inline-flex items-center text-[#d8b64b] justify-center mb-2">{{$blogs->kategoria}}</p>
+            class="px-4 py-1 bg-black text-gray-200 inline-flex items-center text-[#d8b64b] justify-center mb-2">{{$blogs->category}}</p>
           <h2 class="text-4xl font-semibold text-gray-100 leading-tight">
-            {{$blogs->titulli}}
+            {{$blogs->title}}
           </h2>
           <div class="flex mt-3">
             @if ($blogs->user->img!="public/noProfilePhoto/nofoto.jpg")  
@@ -30,7 +30,7 @@
             @endif
  
             <div>
-              <p class="font-semibold text-gray-200 text-sm capitalize">{{$blogs->user->emri." ".$blogs->user->mbiemri}}</p>
+              <p class="font-semibold text-gray-200 text-sm capitalize">{{$blogs->user->name." ".$blogs->user->surname}}</p>
               <p class="font-semibold text-gray-400 text-xs"> {{date('d F, Y', strtotime($blogs->created_at))}} </p>
             </div>
           </div>
@@ -39,9 +39,9 @@
 
       <div class="px-4 lg:px-0 mt-12 text-gray-700 max-w-screen-md mx-auto text-lg leading-relaxed">
         <h2 class="text-4xl font-semibold text-black leading-tight">
-          {{$blogs->titulli}}
+          {{$blogs->title}}
         </h2>
-        <p class="pb-6">{{$blogs->pershkrimi}}</p>
+        <p class="pb-6">{{$blogs->description}}</p>
         <hr>
         <h1 class="flex items-start py-2 mx-4" >Drop a Comment</h1>
         
@@ -90,7 +90,7 @@
           @endif
           <div>
             <div class="bg-gray-100 dark:bg-gray-700 rounded-3xl px-4 pt-2 pb-2.5">
-              <div class="font-semibold text-sm leading-relaxed capitalize">{{$c->user->emri." ".$c->user->mbiemri}}</div>
+              <div class="font-semibold text-sm leading-relaxed capitalize">{{$c->user->name." ".$c->user->surname}}</div>
               <div class="text-normal leading-snug md:leading-normal">
                 {{$c->pershkrimi}}
             </div>
@@ -167,10 +167,11 @@
         </div>
     </div>
         @endforeach
-   
-
+   <hr class="p-3">
+    {{$comments->links()}}
+ 
       </div>
-      
+  
     </main>
     
 

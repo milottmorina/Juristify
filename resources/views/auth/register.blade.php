@@ -21,7 +21,7 @@
         @csrf
         <div class="flex flex-wrap -mx-3 mb-6">
             @if (Session::has('msg'))
-                <div class="alert alert-success text-center text-green-600 relative left-[51px]">
+                <div class="alert alert-success text-center text-green-600 ml-1 ">
                     <div class="p-4 mb-4 text-sm text-green-700 bg-green-100 rounded-lg dark:bg-green-200 dark:text-green-800"
                         role="alert">
                         <span class="font-medium">{!! \Session::get('msg') !!}</span>
@@ -31,11 +31,11 @@
             <div class="flex">
                 <div class="w-full md:w-full px-7 mb-6">
                     <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-                        for='Password'>Emri</label>
-                    <input placeholder="Emri"
-                        class="@error('emri') is-invalid @enderror appearance-none block w-full bg-white text-gray-900 font-medium border border-gray-400 rounded-lg py-3 px-3 leading-tight focus:outline-none"
-                        type='text' name="emri" required>
-                    @error('emri')
+                        for='Password'>Name</label>
+                    <input placeholder="Name"
+                        class="@error('name') is-invalid @enderror appearance-none block w-full bg-white text-gray-900 font-medium border border-gray-400 rounded-lg py-3 px-3 leading-tight focus:outline-none"
+                        type='text' name="name" required>
+                    @error('name')
                         <span class="invalid-feedback" role="alert">
                             <p class="text-xs text-red-600 ml-2">{{ $message }}</p>
                         </span>
@@ -43,12 +43,11 @@
                 </div>
                 <div class="w-full md:w-full px-7 mb-6">
                     <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-                        for='Password'>Mbiemri</label>
-                    <input placeholder="Mbiemri"
-                        class="@error('mbiemri') is-invalid @enderror appearance-none block w-full bg-white text-gray-900 font-medium border border-gray-400 rounded-lg py-3 px-3 leading-tight focus:outline-none"
-                        type='text' name="mbiemri" required>
-                    <input type="hidden" name="verifikuar" id="" value="jo">
-                    @error('mbiemri')
+                        for='Password'>Surname</label>
+                    <input placeholder="Surname"
+                        class="@error('surname') is-invalid @enderror appearance-none block w-full bg-white text-gray-900 font-medium border border-gray-400 rounded-lg py-3 px-3 leading-tight focus:outline-none"
+                        type='text' name="surname" required>
+                    @error('surname')
                         <span class="invalid-feedback" role="alert">
                             <p class="text-xs text-red-600 ml-2">{{ $message }}</p>
                         </span>
@@ -57,12 +56,11 @@
             </div>
 
             <div class="w-full md:w-full px-7 mb-6">
-                <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for='Password'>Data
-                    Lindjes</label>
+                <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for='Password'>Birthday</label>
                 <input
-                    class="@error('dataLindjes') is-invalid @enderror appearance-none block w-full bg-white text-gray-900 font-medium border border-gray-400 rounded-lg py-3 px-3 leading-tight focus:outline-none"
-                    type='date' name="dataLindjes" required>
-                @error('dataLindjes')
+                    class="@error('birthday') is-invalid @enderror appearance-none block w-full bg-white text-gray-900 font-medium border border-gray-400 rounded-lg py-3 px-3 leading-tight focus:outline-none"
+                    type='date' name="birthday" required>
+                @error('birthday')
                     <span class="invalid-feedback" role="alert">
                         <p class="text-xs text-red-600 ml-2">{{ $message }}</p>
                     </span>
@@ -82,18 +80,15 @@
             </div>
 
             <div class="w-full md:w-full px-7 mb-6">
-                <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for='Password'>Zgjidh
-                    Universitetin</label>
-                <select name="universiteti"
-                    class="@error('universiteti') is-invalid @enderror appearance-none block w-full bg-white text-gray-900 font-medium border border-gray-400 rounded-lg py-3 px-3 leading-tight focus:outline-none"
+                <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for='Password'>University</label>
+                <select name="university"
+                    class="@error('university') is-invalid @enderror appearance-none block w-full bg-white text-gray-900 font-medium border border-gray-400 rounded-lg py-3 px-3 leading-tight focus:outline-none"
                     id="grid-state">
-
                     <option>Zgjidh Universitetin</option>
                     <option>UniversitetiiLondres</option>
                     <option>Universiteti i Texas</option>
-
                 </select>
-                @error('universiteti')
+                @error('university')
                     <span class="invalid-feedback" role="alert">
                         <p class="text-xs text-red-600 ml-2">{{ $message }}</p>
                     </span>
@@ -114,10 +109,10 @@
                 </div>
                 <div class="w-full md:w-full px-7 mb-6">
                     <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-                        for='Password'>Konfirmo Password-in</label>
+                        for='Password'>Confirm Password</label>
                     <input
                         class="@error('password_confirmation') is-invalid @enderror appearance-none block w-full bg-white text-gray-900 font-medium border border-gray-400 rounded-lg py-3 px-3 leading-tight focus:outline-none"
-                        type='password' placeholder="Konfirmo Password-in" name="password_confirmation" required>
+                        type='password' placeholder="Confirm Password" name="password_confirmation" required>
                     @error('password_confirmation')
                         <span class="invalid-feedback" role="alert">
                             <p class="text-xs text-red-600 ml-2">{{ $message }}</p>
@@ -128,14 +123,14 @@
 
             <div class="w-full md:w-full px-7 mb-6">
                 <label class=" block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-                    for='Password'>Gjinia</label>
-                <select name="gjinia"
-                    class=" @error('gjinia') is-invalid @enderror appearance-none block w-full bg-white text-gray-900 font-medium border border-gray-400 rounded-lg py-3 px-3 leading-tight focus:outline-none"
+                    for='Password'>Gender</label>
+                <select name="gender"
+                    class=" @error('gender') is-invalid @enderror appearance-none block w-full bg-white text-gray-900 font-medium border border-gray-400 rounded-lg py-3 px-3 leading-tight focus:outline-none"
                     id="grid-state">
                     <option>Mashkull</option>
                     <option>Femer</option>
                 </select>
-                @error('gjinia')
+                @error('gender')
                     <span class="invalid-feedback" role="alert">
                         <p class="text-xs text-red-600 ml-2">{{ $message }}</p>
                     </span>
@@ -144,22 +139,23 @@
             </div>
             <div class="w-full md:w-full px-7 mb-6">
                 <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300" for="file_input">Upload
-                    file</label>
+                    University ID Card</label>
                 <input
-                    class=" @error('id_kartela') is-invalid @enderror block w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 cursor-pointer dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
-                    aria-describedby="id_kartela" name="id_kartela" id="id_kartela" type="file" >
-                    @error('id_kartela')
+                    class=" @error('id_card') is-invalid @enderror block w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 cursor-pointer dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
+                    aria-describedby="id_kartela" name="id_card" id="id_card" type="file" >
+                    @error('id_card')
                     <span class="invalid-feedback" role="alert">
                         <p class="text-xs text-red-600 ml-2">{{ $message }}</p>
                     </span>
                 @enderror
+                <input type="hidden" name="verified" id="verified" value="0">
                 <p class="mt-1 text-sm text-gray-500 dark:text-gray-300" id="file_input_help">PNG or JPG</p>
 
             </div>
 
             <div class="w-full md:w-full px-7 mb-6">
                 <button
-                    class="appearance-none block w-full bg-blue-600 text-gray-100 font-bold border border-gray-200 rounded-lg py-3 px-3 leading-tight hover:bg-blue-500 focus:outline-none focus:bg-white focus:border-gray-500">Register</button>
+                    class="appearance-none block w-full bg-[#374151] text-gray-100 font-bold border border-gray-200 rounded-lg py-3 px-3 leading-tight hover:bg-[#374151] focus:outline-none focus:bg-white focus:border-gray-500">Register</button>
             </div>
 
 
