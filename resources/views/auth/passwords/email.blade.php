@@ -1,7 +1,11 @@
-@extends('layouts.app')
+{{-- @extends('layouts.app') --}}
 
-@section('content')
-<div class="container">
+{{-- @section('content') --}}
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="{{ asset('css/app.css') }}" rel="stylesheet">
+@vite(['resources/sass/app.scss', 'resources/js/app.js'])
+
+<div class="justify-content-center mt-10">
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
@@ -33,7 +37,7 @@
 
                         <div class="row mb-0">
                             <div class="col-md-6 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
+                                <button type="submit" class="bg-blue-600 text-white p-3 rounded">
                                     {{ __('Send Password Reset Link') }}
                                 </button>
                             </div>
@@ -44,4 +48,4 @@
         </div>
     </div>
 </div>
-@endsection
+{{-- @endsection --}}

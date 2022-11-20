@@ -107,28 +107,28 @@
            
             <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                 <td class="py-4 px-6 capitalize text-center">
-                    {{$u->emri}}
+                    {{$u->name}}
                 </td>
                 <td class="py-4 px-6 capitalize text-center">
-                    {{$u->mbiemri}}
+                    {{$u->surname}}
                 </td>
                 <td class="py-4 px-14 capitalize text-center" >
-                    {{$u->dataLindjes}}
+                    {{$u->birthday}}
                 </td>
                 <td class="py-4 px-6 overflow-clip capitalize text-center">
-                    {{$u->universiteti}}
+                    {{$u->university}}
                 </td>
                 <td class="py-4 px-6 overflow-clip capitalize text-center">
-                    {{$u->gjinia}}
+                    {{$u->gender}}
                 </td>
                 <td class="py-4 px-6 overflow-clip capitalize text-center">
-                    {{$u->numriTel}}
+                    {{$u->phoneNo}}
                 </td>
                 <td class="py-4 px-6 overflow-clip capitalize text-center w-full">
-                    {{$u->rruga}}
+                    {{$u->street}}
                 </td>
                 <td class="py-4 px-6 overflow-clip uppercase text-center">
-                    @if($u->verifikuar!='po')
+                    @if($u->verified!=1)
                     <svg class="w-5 h-5 text-red-500 text-center" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
                     @else
                     <svg class="w-5 h-5 text-green-500 text-center" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
@@ -138,10 +138,10 @@
                     {{$u->email}}
                 </td>
                 <td class="py-4 px-6 overflow-clip uppercase">
-                    @if($u->role!='admin')
-                    <p class="bg-red-700 text-white rounded p-1 text-center">{{$u->role}}</p>
+                    @if($u->role!=1)
+                    <p class="bg-red-700 text-white rounded p-1 text-center">USER</p>
                     @else
-                    <p class="bg-green-700 text-white rounded p-1 text-center">{{$u->role}}</p>
+                    <p class="bg-green-700 text-white rounded p-1 text-center">ADMIN</p>
                     @endif
                 </td>
   <td class="py-4 px-6 overflow-clip">
@@ -154,15 +154,15 @@
                   
                 </td>
                 <td class="py-4 px-6 overflow-clip uppercase">
-                    @if ($u->verifikuar!='po')
-                    <button type="button" data-modal-toggle="popup-modal{{$u->id}}" class="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">Verifiko</button>
+                    @if ($u->verified!=1)
+                    <button type="button" data-modal-toggle="popup-modal{{$u->id}}" class="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">Verify</button>
                     @else
-                    <button type="button" data-modal-toggle="popup-modali{{$u->id}}" class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800">C'Verifiko</button>
+                    <button type="button" data-modal-toggle="popup-modali{{$u->id}}" class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800">Un-Verify</button>
 
                     @endif
                 </td>
                 <td class="py-4 px-6 overflow-clip uppercase">
-                    @if($u->role!='admin')
+                    @if($u->role!=1)
                     <button type="button" data-modal-toggle="popup-modalAdmin{{$u->id}}" class="focus:outline-none text-white bg-indigo-700 hover:bg-indigo-800 focus:ring-4 focus:ring-indigo-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-indigo-600 dark:hover:bg-indigo-700 dark:focus:ring-indigo-800">Beje ADMIN</button>
                     @else
                     <button type="button" data-modal-toggle="popup-modaliUser{{$u->id}}" class="focus:outline-none text-white bg-yellow-700 hover:bg-yellow-800 focus:ring-4 focus:ring-yellow-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-yellow-600 dark:hover:bg-yellow-700 dark:focus:ring-yellow-800">Beje USER</button>
@@ -182,11 +182,11 @@
                           <form action="{{route('user.makeadmin',$u->id)}}" method="post">
                               @csrf
                             <svg aria-hidden="true" class="mx-auto mb-4 w-14 h-14 text-gray-400 dark:text-gray-200" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                            <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">A jeni i sigurt qe doni t'ia heqni privilegjet e adminit?</h3>
+                            <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">Are you sure you want to remove admin privileges?</h3>
                             <button data-modal-toggle="popup-modalAdmin{{$u->id}}" type="submit" class="text-white bg-green-600 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center mr-2">
-                                Po, i sigurt
+                                Yes
                             </button></form>
-                            <button data-modal-toggle="popup-modalAdmin{{$u->id}}" type="button" class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600">Jo, anulo</button>
+                            <button data-modal-toggle="popup-modalAdmin{{$u->id}}" type="button" class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600">No</button>
                         </div>
                     </div>
                 </div>
@@ -202,11 +202,11 @@
                           <form action="{{route('user.defaultuser',$u->id)}}" method="post">
                               @csrf
                             <svg aria-hidden="true" class="mx-auto mb-4 w-14 h-14 text-gray-400 dark:text-gray-200" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                            <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">A jeni i sigurt qe doni t'ia heqni privilegjet e adminit?</h3>
+                            <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">Are you sure you want to remove admin privileges?</h3>
                             <button data-modal-toggle="popup-modaliUser{{$u->id}}" type="submit" class="text-white bg-green-600 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center mr-2">
-                                Po, i sigurt
+                                Yes
                             </button></form>
-                            <button data-modal-toggle="popup-modaliUser{{$u->id}}" type="button" class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600">Jo, anulo</button>
+                            <button data-modal-toggle="popup-modaliUser{{$u->id}}" type="button" class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600">No</button>
                         </div>
                     </div>
                 </div>
@@ -223,11 +223,11 @@
                 <form action="{{route('user.verifiko',$u->id)}}" method="post">
                     @csrf
                   <svg aria-hidden="true" class="mx-auto mb-4 w-14 h-14 text-gray-400 dark:text-gray-200" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                  <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">A jeni i sigurt qe doni ta verifikoni kete user?</h3>
+                  <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">Are you sure you want to verify this?</h3>
                   <button data-modal-toggle="popup-modal{{$u->id}}" type="submit" class="text-white bg-green-600 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center mr-2">
-                      Po, i sigurt
+                      Yes
                   </button></form>
-                  <button data-modal-toggle="popup-modal{{$u->id}}" type="button" class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600">Jo, anulo</button>
+                  <button data-modal-toggle="popup-modal{{$u->id}}" type="button" class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600">No</button>
               </div>
           </div>
       </div>
@@ -244,11 +244,11 @@
               <form action="{{route('user.cverifiko',$u->id)}}" method="post">
                   @csrf
                 <svg aria-hidden="true" class="mx-auto mb-4 w-14 h-14 text-gray-400 dark:text-gray-200" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">A jeni i sigurt qe doni ta c'verifikoni kete user?</h3>
+                <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">Are you sure you want to un-verify this user?</h3>
                 <button data-modal-toggle="popup-modali{{$u->id}}" type="submit" class="text-white bg-green-600 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center mr-2">
-                    Po, i sigurt
+                    Yes
                 </button></form>
-                <button data-modal-toggle="popup-modali{{$u->id}}" type="button" class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600">Jo, anulo</button>
+                <button data-modal-toggle="popup-modali{{$u->id}}" type="button" class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600">No</button>
             </div>
         </div>
     </div>

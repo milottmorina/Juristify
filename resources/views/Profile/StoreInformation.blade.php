@@ -50,8 +50,7 @@
                                     </svg>
                                     <p class="mb-2 text-sm text-gray-500 dark:text-gray-400"><span
                                             class="font-semibold">Click to upload</span> or drag and drop</p>
-                                    <p class="text-xs text-gray-500 dark:text-gray-400">SVG, PNG, JPG or GIF (MAX.
-                                        800x400px)</p>
+                                    <p class="text-xs text-gray-500 dark:text-gray-400">PNG, JPG(MAX.2MB)</p>
                                 </div>
                                 <input required id="dropzone-file" type="file" class="@error('img') is-invalid @enderror hidden" name="img">
                                 @error('img')
@@ -65,19 +64,19 @@
                         <div class="mt-6 grid grid-cols-12 gap-6">
                             <div class="col-span-12 sm:col-span-6">
                                 <label for="first-name" class="block text-sm font-medium text-gray-700">Title</label>
-                                <input required type="text" name="titulli" id="titulli" autocomplete="given-name"
-                                    class="@error('titulli') is-invalid @enderror capitalize mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-sky-500 focus:border-sky-500 sm:text-sm">
-                                    @error('titulli')
+                                <input required type="text" name="title" id="title" autocomplete="given-name"
+                                    class="@error('title') is-invalid @enderror capitalize mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-sky-500 focus:border-sky-500 sm:text-sm">
+                                    @error('title')
                                     <span class="invalid-feedback " role="alert">
                                         <p class="text-xs text-red-600 ml-2">{{ $message }}</p>
                                     </span>
                                 @enderror
                                 </div>
                             <div class="col-span-12 sm:col-span-6">
-                                <label for="first-name" class="block text-sm font-medium text-gray-700">Emri Kompanis</label>
-                                <input required type="text" name="emriKompanis" id="emriKompanis" autocomplete="given-name"
-                                    class="@error('titulli') is-invalid @enderror capitalize mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-sky-500 focus:border-sky-500 sm:text-sm">
-                                    @error('emriKompanis')
+                                <label for="first-name" class="block text-sm font-medium text-gray-700">Company Name</label>
+                                <input required type="text" name="company_name" id="company_name" autocomplete="given-name"
+                                    class="@error('company_name') is-invalid @enderror capitalize mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-sky-500 focus:border-sky-500 sm:text-sm">
+                                    @error('company_name')
                                     <span class="invalid-feedback " role="alert">
                                         <p class="text-xs text-red-600 ml-2">{{ $message }}</p>
                                     </span>
@@ -86,20 +85,20 @@
                         </div>
                         <div class="mt-6 grid grid-cols-12 gap-6">
                             <div class="col-span-12 sm:col-span-6">
-                                <label for="first-name" class="block text-sm font-medium text-gray-700">Kategoria</label>
-                                <input required type="text" name="kategoria" id="kategoria" autocomplete="given-name"
-                                    class="@error('kategoria') is-invalid @enderror capitalize mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-sky-500 focus:border-sky-500 sm:text-sm">
-                                    @error('kategoria')
+                                <label for="first-name" class="block text-sm font-medium text-gray-700">Category</label>
+                                <input required type="text" name="category" id="category" autocomplete="given-name"
+                                    class="@error('category') is-invalid @enderror capitalize mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-sky-500 focus:border-sky-500 sm:text-sm">
+                                    @error('category')
                                     <span class="invalid-feedback " role="alert">
                                         <p class="text-xs text-red-600 ml-2">{{ $message }}</p>
                                     </span>
                                 @enderror
                                 </div>
                             <div class="col-span-12 sm:col-span-6">
-                                <label for="first-name" class="block text-sm font-medium text-gray-700">Lokacioni</label>
-                                <input required type="text" name="lokacioni" id="lokacioni" autocomplete="given-name"
-                                    class="@error('lokacioni') is-invalid @enderror capitalize mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-sky-500 focus:border-sky-500 sm:text-sm">
-                                    @error('lokacioni')
+                                <label for="first-name" class="block text-sm font-medium text-gray-700">Location</label>
+                                <input required type="text" name="location" id="location" autocomplete="given-name"
+                                    class="@error('location') is-invalid @enderror capitalize mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-sky-500 focus:border-sky-500 sm:text-sm">
+                                    @error('location')
                                     <span class="invalid-feedback " role="alert">
                                         <p class="text-xs text-red-600 ml-2">{{ $message }}</p>
                                     </span>
@@ -108,34 +107,34 @@
                         </div>
                         <div class="mt-6 grid grid-cols-12 gap-6">
                             <div class="col-span-12 sm:col-span-6">
-                                <label for="first-name" class="block text-sm font-medium text-gray-700">Data Skadimit</label>
-                                <input required type="date"  min=<?php echo date('Y-m-d'); ?> name="dataSkadimit" id="dataSkadimit" autocomplete="given-name"
-                                    class="@error('dataSkadimit') is-invalid @enderror capitalize mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-sky-500 focus:border-sky-500 sm:text-sm">
-                                    @error('dataSkadimit')
+                                <label for="first-name" class="block text-sm font-medium text-gray-700">Expiration Date</label>
+                                <input required type="date"  min=<?php echo date('Y-m-d'); ?> name="expiration_date" id="expiration_date" autocomplete="given-name"
+                                    class="@error('expiration_date') is-invalid @enderror capitalize mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-sky-500 focus:border-sky-500 sm:text-sm">
+                                    @error('expiration_date')
                                     <span class="invalid-feedback " role="alert">
                                         <p class="text-xs text-red-600 ml-2">{{ $message }}</p>
                                     </span>
                                 @enderror
                                 </div>
                             <div class="col-span-12 sm:col-span-6">
-                                <label for="first-name" class="block text-sm font-medium text-gray-700">Vende te lira</label>
-                                <input required type="number" name="vende" id="vende" autocomplete="given-name"
-                                    class="@error('vende') is-invalid @enderror capitalize mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-sky-500 focus:border-sky-500 sm:text-sm">
-                                    @error('vende')
+                                <label for="first-name" class="block text-sm font-medium text-gray-700">Free Places</label>
+                                <input required type="number" name="free_places" id="free_places" autocomplete="given-name"
+                                    class="@error('free_places') is-invalid @enderror capitalize mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-sky-500 focus:border-sky-500 sm:text-sm">
+                                    @error('free_places')
                                     <span class="invalid-feedback " role="alert">
                                         <p class="text-xs text-red-600 ml-2">{{ $message }}</p>
                                     </span>
                                 @enderror
                                 </div>
                         </div>
-                        <div class="mt-6 grid grid-cols-12 gap-6">
-                            <div class="col-span-12 sm:col-span-6 ">
+                        <div class="mt-6 grid lg:grid-cols-12 lg:gap-12">
+                            <div class="col-span-12 sm:col-span-12">
                                 <label for="first-name"
                                     class="block text-sm font-medium text-gray-700">Description</label>
-                                <textarea type="text" rows="4" name="pershkrimi" id="first-name" required autocomplete="given-name"
-                                    class="@error('pershkrimi') is-invalid @enderror mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-sky-500 focus:border-sky-500 sm:text-sm">
+                                <textarea type="text" rows="4" maxlength="2500" name="description" id="first-name" required autocomplete="given-name"
+                                    class="@error('description') is-invalid @enderror mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-sky-500 focus:border-sky-500 sm:text-sm">
                   </textarea>
-                  @error('pershkrimi')
+                  @error('description')
                                     <span class="invalid-feedback " role="alert">
                                         <p class="text-xs text-red-600 ml-2">{{ $message }}</p>
                                     </span>
@@ -151,7 +150,7 @@
                                 class="bg-white border border-gray-300 rounded-md shadow-sm py-2 px-4 inline-flex justify-center text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-500">Cancel</button>
                         </a>
                         <button type="submit"
-                            class="ml-5 bg-sky-700 border border-transparent rounded-md shadow-sm py-2 px-4 inline-flex justify-center text-sm font-medium text-white hover:bg-sky-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-500">Save</button>
+                            class="ml-5 bg-gray-700 border border-transparent rounded-md shadow-sm py-2 px-4 inline-flex justify-center text-sm font-medium text-white hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-500">Save</button>
                     </div>
                 </form>
             </div>

@@ -14,8 +14,7 @@
                           <div class="flex items-center">
                              <div class="flex-shrink-0">
                                 <span class="text-2xl sm:text-3xl leading-none font-bold text-gray-900">
-                                  {{ App\Models\user::get()->count() }}
-    
+                                 {{$us}}
                                 </span>
                                 <h3 class="text-base font-normal text-gray-500">All Users</h3>
                              </div>
@@ -26,7 +25,7 @@
                           <div class="flex items-center">
                              <div class="flex-shrink-0">
                                 <span class="text-2xl sm:text-3xl leading-none font-bold text-gray-900">
-                                  {{ App\Models\user::where('verifikuar','po')->get()->count() }}
+                                 {{$usAc}}
                                 </span>
                                 <h3 class="text-base font-normal text-gray-500">Verified Users</h3>
                              </div>
@@ -37,7 +36,7 @@
                           <div class="flex items-center">
                              <div class="flex-shrink-0">
                                 <span class="text-2xl sm:text-3xl leading-none font-bold text-gray-900">
-                                  {{ App\Models\user::where('verifikuar','jo')->get()->count() }}
+                                 {{$usNac}}
                                 </span>
                                 <h3 class="text-base font-normal text-gray-500">Non Verified Users</h3>
                              </div>
@@ -54,8 +53,7 @@
                           <div class="flex items-center">
                              <div class="flex-shrink-0">
                                 <span class="text-2xl sm:text-3xl leading-none font-bold text-gray-900">
-                                  {{ App\Models\blog::get()->count() }}
-    
+                                 {{$blog}}
                                 </span>
                                 <h3 class="text-base font-normal text-gray-500">All Blogs</h3>
                              </div>
@@ -66,7 +64,7 @@
                           <div class="flex items-center">
                              <div class="flex-shrink-0">
                                 <span class="text-2xl sm:text-3xl leading-none font-bold text-gray-900">
-                                  {{ App\Models\blog::where('aktive','po')->get()->count() }}
+                                 {{$blogAc}}
                                 </span>
                                 <h3 class="text-base font-normal text-gray-500">Approved Blogs</h3>
                              </div>
@@ -77,7 +75,7 @@
                           <div class="flex items-center">
                              <div class="flex-shrink-0">
                                 <span class="text-2xl sm:text-3xl leading-none font-bold text-gray-900">
-                                  {{ App\Models\blog::where('aktive','jo')->get()->count() }}
+                                 {{$blogNac}}
                                 </span>
                                 <h3 class="text-base font-normal text-gray-500">Non Approved Blogs</h3>
                              </div>
@@ -94,8 +92,7 @@
                           <div class="flex items-center">
                              <div class="flex-shrink-0">
                                 <span class="text-2xl sm:text-3xl leading-none font-bold text-gray-900">
-                                  {{ App\Models\files::get()->count() }}
-    
+                                 {{$file}}
                                 </span>
                                 <h3 class="text-base font-normal text-gray-500">All Library</h3>
                              </div>
@@ -114,8 +111,7 @@
                           <div class="flex items-center">
                              <div class="flex-shrink-0">
                                 <span class="text-2xl sm:text-3xl leading-none font-bold text-gray-900">
-                                  {{ App\Models\information::get()->count() }}
-    
+                                 {{$infos}}
                                 </span>
                                 <h3 class="text-base font-normal text-gray-500">All Informations</h3>
                              </div>
@@ -134,8 +130,7 @@
                           <div class="flex items-center">
                              <div class="flex-shrink-0">
                                 <span class="text-2xl sm:text-3xl leading-none font-bold text-gray-900">
-                                  {{ App\Models\contact::get()->count() }}
-    
+                                 {{$contact}}
                                 </span>
                                 <h3 class="text-base font-normal text-gray-500">All Informations</h3>
                              </div>

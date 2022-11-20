@@ -23,30 +23,30 @@
 
     </div>
   </div>
-  <div class="flex justify-center mt-3">
-<form class="w-3/5 " action="{{ route('file.find') }}" method="GET" role="search">   
-    <label for="default-search" class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-gray-300">Search</label>
-    <div class="relative">
-        <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
-            <svg aria-hidden="true" class="w-5 h-5 text-gray-500 dark:text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+
+<div class="m-2.5 w-full flex justify-center">
+    <form  action="{{ route('file.find') }}" method="GET" role="search">
+      <div class="max-w-xl">
+        <div class="flex space-x-4">
+          <div class="flex rounded-md overflow-hidden w-full">
+            <input type="text" name="term" class="w-full rounded-md rounded-r-none" />
+            <a href="{{route('file.find')}}" >
+            <button class="bg-[#374151] text-white px-6 text-lg font-semibold py-4 rounded-r-md">Search</button>
+            </a>
+          </div>
         </div>
-        <input type="search" name="term" id="default-search" class="block p-4 ml-2 pl-10 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="     Search title..." required="">
-        <a href="{{route('file.find')}}" >
-        <button type="submit" class="text-white absolute right-2.5 bottom-4 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Search</button>
-        </a>
-    </div>
-</form>
-</div> 
- @if (count($files)>=1)
+      </div>
+    </form>
+    <a href={{route('all.uploads')}}>
+      <button class="bg-transparent px-6 text-lg font-semibold py-4 rounded-md">Clear</button></a>
+  </div>
+ {{-- @if (count($files)>=1) --}}
 <div class="flex overflow-x-scroll p-10 hide-scroll-bar ">
     <div class="flex flex-nowrap md:ml-20  ">
         <div class="inline-flex px-3 ">
-          
-            
-          
             @foreach ($files as $f)
                 @php
-                    $cv = explode('/', $f->dokumenti);
+                    $cv = explode('/', $f->file);
                     $photo=explode('/',$f->user->img);
                 @endphp
                 <div>
@@ -58,26 +58,22 @@ ease-in-out mx-3.5 flex justify-center items-center">
                             <img class="ml-2" src="{{ asset('/noProfilePhoto/docs.png') }}" width="100px" />
                         </div>
                     </a>
-                    <h3 class="block text-center text-lg mx-4  font-bold capitalize max-w-[230px]">{{ $f->titulli }}</h3>
+                    <h3 class="block text-center text-lg mx-4  font-bold capitalize max-w-[230px]">{{ $f->title }}</h3>
                     @if ($f->user->img!="public/noProfilePhoto/nofoto.jpg")  
                     <div class="flex p-2 ml-3">
                     <img class="w-10 h-10 rounded-full object-cover"  src="/storage/img/{{$photo[2]}}" alt="Rounded avatar">
-                    <p class="capitalize mt-2 ml-1">{{$f->user->emri." ".$f->user->mbiemri}}</p>
+                    <p class="capitalize mt-2 ml-1">{{$f->user->name." ".$f->user->surname}}</p>
                     </div>
                     @else
                     <div class="flex p-2 ml-3">
                     <img class="w-10 h-10 rounded-full object-cover" src="{{asset('/noProfilePhoto/'.$photo[2])}}" alt="Rounded avatar">
-                    <p class="capitalize mt-2 ml-1">{{$f->user->emri." ".$f->user->mbiemri}}</p>
+                    <p class="capitalize mt-2 ml-1">{{$f->user->name." ".$f->user->surname}}</p>
                  </div>
                     @endif
-                    <p class="block text-justify mx-4 max-w-[230px]" id="dots{{$f->id}}">  {{substr($f->pershkrimi,0,20)}}... <button class="text-red-400" id="myBtn{{$f->id}}" onclick="myFunction({{$f->id}})">read more</button>
+                    <p class="block text-justify mx-4 max-w-[230px]" id="dots{{$f->id}}">  {{substr($f->description,0,20)}}... <button class="text-red-400" id="myBtn{{$f->id}}" onclick="myFunction({{$f->id}})">read more</button>
                     <p  class="block text-justify mx-4 max-w-[230px]" style="display:none" id="more{{$f->id}}"> 
-                    {{$f->pershkrimi}} <button class="text-red-400" id="myBtn{{$f->id}}" onclick="myFunction({{$f->id}})">read less</button>
+                    {{$f->description}} <button class="text-red-400" id="myBtn{{$f->id}}" onclick="myFunction({{$f->id}})">read less</button>
                     </p>
-            
-                    
-                  
-               
                 </div>
 
             @endforeach
@@ -85,7 +81,7 @@ ease-in-out mx-3.5 flex justify-center items-center">
         </div>
     </div>
 </div>
-@else
+{{-- @else
 <div class="grid place-items-center mt-10">
 <div class="flex items-center p-4 mb-4 text-sm text-blue-700 bg-blue-100 rounded-lg dark:bg-blue-200 dark:text-blue-800" role="alert">
     <svg aria-hidden="true" class="flex-shrink-0 inline w-5 h-5 mr-3" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path></svg>
@@ -94,7 +90,7 @@ ease-in-out mx-3.5 flex justify-center items-center">
       <span class="font-medium">Info alert!</span> Change a few things up and try submitting again.
     </div>
   </div></div>
-@endif
+@endif --}}
 <div class="flex justify-center items-center p-3">
     {{ $files->links() }}</div>
     
@@ -113,12 +109,12 @@ ease-in-out mx-3.5 flex justify-center items-center">
     
       if (dots.style.display === "none") {
         dots.style.display = "inline";
-        btnText.innerHTML = "Read more"; 
+        btnText.innerHTML = "read more"; 
         moreText.style.display = "none";
       } else {
         dots.style.display = "none";
-        btnText.innerHTML = "Read less"; 
-        moreText.style.display = "inline";
+        btnText.innerHTML = "read less"; 
+        moreText.style.display = "block";
       }
     }
     </script>

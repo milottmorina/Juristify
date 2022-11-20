@@ -11,10 +11,10 @@ return new class extends Migration
     {
         Schema::create('files', function (Blueprint $table) {
             $table->id();
-            $table->string('titulli');
-            $table->text('pershkrimi');
-            $table->text('dokumenti');
-            $table->string('status')->default('jo');
+            $table->string('title')->index();
+            $table->text('description');
+            $table->text('file');
+            $table->boolean('status')->default(0);
             $table->foreignId('user_id')
             ->references('id')->on('users')
             ->onDelete('cascade');

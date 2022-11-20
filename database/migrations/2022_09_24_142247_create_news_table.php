@@ -15,10 +15,10 @@ return new class extends Migration
     {
         Schema::create('news', function (Blueprint $table) {
             $table->id();
-            $table->String('titulli');
-            $table->text('pershkrimi');
+            $table->String('title')->index();
+            $table->text('description');
             $table->text('img');
-            $table->String('kategoria');
+            $table->String('category');
             $table->foreignId('user_id')
             ->references('id')->on('users')
             ->onDelete('cascade');

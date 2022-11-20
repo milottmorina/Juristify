@@ -21,35 +21,33 @@ class ContactController extends Controller
     public function show(){
 
         $contacts = contact::orderBy('id', 'desc')->paginate(5);
-        return view('Dashboard/all-contacts')->with(['contacts'=>$contacts]);
+        $c=$contacts->count();
+        return view('Dashboard/all-contacts')->with(['c'=>$c,'contacts'=>$contacts]);
        
     }
-
-
-
 
     public function store(Request $request)
     {  
         
         $request->validate([
-            'numriTel'=>['number', 'max:10'],
-            'mesazhi' => ['required','string','max:400']
+            'phoneNo'=>['required','max:10'],
+            'msg' => ['required','string','max:700']
         ]);
     
         contact::create([
-            'emri' => Auth::user()->emri." ".Auth::user()->mbiemri ,
+            'name' => Auth::user()->name." ".Auth::user()->surname ,
             'email' => Auth::user()->email,
-            'numriTel'=>Auth::user()->numriTel,
-            'mesazhi'=>$request['mesazhi'],
+            'phoneNo'=>$request['phoneNo'],
+            'msg'=>$request['msg'],
         ]);
-        return back()->with('msg','Mesazhi juaj u dergua me sukses!');
+        return back()->with('msg','Message sent successfully!');
     }
 
     public function destroy($id)
     {
         $file = contact::findOrFail($id);
         $file->delete();
-        return back()->with('msg','Kontakti u fshi me sukses!');
+        return back()->with('msg','Contact deleted successfully!');
     }
 
   

@@ -15,14 +15,14 @@ return new class extends Migration
     {
         Schema::create('blogs', function (Blueprint $table) {
             $table->id();
-            $table->String('titulli');
-            $table->text('pershkrimi');
+            $table->String('title')->index();
+            $table->text('description');
             $table->text('img');
-            $table->String('kategoria');
+            $table->String('category');
             $table->foreignId('user_id')
             ->references('id')->on('users')
             ->onDelete('cascade');
-            $table->String('aktive');
+            $table->boolean('active')->default(0);
             $table->timestamps();
         });
     }

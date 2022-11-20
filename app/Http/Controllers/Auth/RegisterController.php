@@ -31,14 +31,14 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'emri' => ['required', 'regex:/^[a-zA-Z]+$/u', 'string', 'max:25'],
-            'mbiemri' => ['required', 'regex:/^[a-zA-Z]+$/u', 'string', 'max:25'],
-            'dataLindjes'=>['required'],
-            'universiteti' => ['required', 'string', 'max:80'],
-            'gjinia' => ['required'],
+            'name' => ['required', 'regex:/^[a-zA-Z]+$/u', 'string', 'max:25'],
+            'surname' => ['required', 'regex:/^[a-zA-Z]+$/u', 'string', 'max:25'],
+            'birthday'=>['required'],
+            'university' => ['required', 'string', 'max:80'],
+            'gender' => ['required'],
             'email' => ['required', 'string', 'email', 'max:50', 'unique:users'],
             'password' => ['required', 'regex:/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/ ', 'confirmed', Rules\Password::defaults()],
-            'id_kartela'=>['required','mimes:pdf,png,jpg','max:2048'],
+            'id_card'=>['required','mimes:pdf,png,jpg','max:2048'],
         ]);
     }
 
@@ -47,20 +47,21 @@ class RegisterController extends Controller
    
     protected function create(array $data)
     {
-      
-            $data= User::create([
-            'emri' => $data['emri'],
-            'mbiemri' => $data['mbiemri'],
-            'dataLindjes' => $data['dataLindjes'],
-            'universiteti' => $data['universiteti'],
-            'gjinia' => $data['gjinia'],
+
+            $data = User::create([
+            'name' => $data['name'],
+            'surname' => $data['surname'],
+            'birthday' => $data['birthday'],
+            'university' => $data['university'],
+            'gender' => $data['gender'],
+            'verified'=>$data['verified'],
             'email' => $data['email'],
             'img'=>"public/noProfilePhoto/nofoto.jpg",
             'password' => Hash::make($data['password']),
         ]);
-       if(request()->hasFile('id_kartela')){
-           $file_path= request()->file('id_kartela')->store('/public/id_kartela');
-            $data->update(['id_kartela'=>$file_path]);
+       if(request()->hasFile('id_card')){
+           $file_path= request()->file('id_card')->store('/public/id_kartela');
+            $data->update(['id_card'=>$file_path]);
         }
    
         return $data;

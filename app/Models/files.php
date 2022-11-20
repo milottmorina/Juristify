@@ -12,9 +12,9 @@ class files extends Model
 
     protected $table="files";
     protected $fillable = [
-        'titulli',
-        'pershkrimi',
-        'dokumenti',
+        'title',
+        'description',
+        'file',
         'user_id',
         'status'
     ];

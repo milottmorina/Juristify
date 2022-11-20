@@ -26,16 +26,19 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        'emri',
-        'mbiemri',
-        'dataLindjes',
-        'universiteti',
-        'gjinia',
-        'verifikuar',
-        'img','role',
+        'name',
+        'surname',
+        'birthday',
+        'university',
+        'gender',
+        'verified',
+        'img',
+        'role',
         'email',
         'password',
-        'id_kartela'
+        'id_card',
+        'street',
+        'phoneNo'
     ];
 
     public function files()
