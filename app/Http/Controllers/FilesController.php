@@ -141,10 +141,11 @@ class FilesController extends Controller
             'description' => ['required','max:1000','min:10'],
             'file' => ['required','mimes:pdf,docx','max:2048'],
             ]);
+             $file = files::findOrFail($id);
             $newFile = $request->file('file');
             $file_path = $newFile->store('/public/dokumentet');
-            $file = files::findOrFail($id);
             $file->title = $request->title;
+            $file->user_id=$file->user_id;
             $file->description = $request->description;
             $file->file=$file_path;
             $file->save();
@@ -155,6 +156,8 @@ class FilesController extends Controller
             'description' => ['required','max:1000','min:10'],
         ]);
         $file = files::findOrFail($id);
+        $file->file=$file->file;
+        $file->user_id=$file->user_id;
         $file->title = $request->title;
         $file->description = $request->description;
         $file->save();
