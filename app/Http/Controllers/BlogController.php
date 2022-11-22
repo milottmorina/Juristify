@@ -192,10 +192,8 @@ class BlogController extends Controller
 
     public function updateBlogDashboard(Request $request, $id)
     {
-        $blog = $request->file('img');
-        // dd($blog);
-        if ($blog) {
-        $blog = blog::findOrFail($id);
+        $file = $request->hasFile('img');
+        if ($file) {
         $request->validate([
         'title' => ['required','max:100','min:4'],
         'description' => ['required','max:6000','min:10'],
@@ -204,6 +202,7 @@ class BlogController extends Controller
          ]);
         $newblog = $request->file('img');
         $blog_path = $newblog->store('/public/blog');
+        $blog = blog::findOrFail($id);
         $blog->user_id = $blog->user_id;
         $blog->title = $request->title;
         $blog->description = $request->description;
@@ -211,7 +210,7 @@ class BlogController extends Controller
         $blog->category=$request->category;
         $blog->active=$blog->active;
         $blog->save();
-        return back()->with('msg','Error 111');
+        return back()->with('msg','Blog updated successfully!');
     }else{
         $request->validate([
         'title' => ['required','max:100','min:4'],
@@ -226,7 +225,7 @@ class BlogController extends Controller
         $blog->img=$blog->img;
         $blog->active=$blog->active;
         $blog->save();
-        return back()->with('msg','Error');
+        return back()->with('msg','Blog updated successfully!');
     }
     }
 
