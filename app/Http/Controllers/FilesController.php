@@ -134,22 +134,22 @@ class FilesController extends Controller
     }
     public function update(Request $request, $id)
     {
-        $file = $request->hasFile('file');
-        if ($file) { 
+        $doc = $request->hasFile('file');
+        if ($doc) { 
             $request->validate([
             'title' => ['required','max:100','min:4'],
             'description' => ['required','max:1000','min:10'],
             'file' => ['required','mimes:pdf,docx','max:2048'],
             ]);
-             $file = files::findOrFail($id);
             $newFile = $request->file('file');
             $file_path = $newFile->store('/public/dokumentet');
+            $file = files::findOrFail($id);
             $file->title = $request->title;
             $file->user_id=$file->user_id;
             $file->description = $request->description;
             $file->file=$file_path;
             $file->save();
-            return back();
+            return back()->with('msg','File successfully updated!');
         }else{
         $request->validate([
             'title' => ['required','max:100','min:4'],
@@ -161,7 +161,7 @@ class FilesController extends Controller
         $file->title = $request->title;
         $file->description = $request->description;
         $file->save();
-        return back();
+        return back()->with('msg','File successfully updated!');
         }
         }
 

@@ -227,20 +227,13 @@
                         </div>
 
                         <div class="flex overflow-x-scroll p-10 hide-scroll-bar ">
-
                             <div class="flex flex-nowrap md:ml-20 mr-10 ">
-
-
                                 <div class="inline-flex px-3 ">
                                     @foreach ($blogs as $f)
                                     @php
                                     $cv = explode('/', $f->img);
                                     $link = explode('/', $f->user->img);
                                     @endphp
-
-
-
-
                                     <div>
                                         <button id="dropdownMenuIconButton"
                                             data-dropdown-toggle="dropdownDots{{ $f->id }}"
@@ -347,7 +340,8 @@
                                         </p>
                                     </div>
                                     <div id="popup-modal{{ $f->id }}" tabindex="-1"
-                                        class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 md:inset-0 h-modal md:h-full">
+                                        class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 w-fullmd:inset-0 h-modal md:h-full justify-center items-center">
+
                                         <div class="relative p-4 w-full max-w-md h-full md:h-auto">
                                             <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
                                                 <button type="button"
@@ -413,43 +407,22 @@
                                                     @csrf
                                                     <div class="p-6 space-y-6">
                                                         <div class="flex justify-center items-center w-full">
-                                                            <label for="dropzone-file"
-                                                                class="flex flex-col justify-center items-center w-full h-40 bg-gray-50 rounded-lg border-2 border-gray-300 border-dashed cursor-pointer dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
-                                                                <div
-                                                                    class="flex flex-col justify-center items-center pt-5 pb-6">
-                                                                    <svg aria-hidden="true"
-                                                                        class="mb-3 w-10 h-10 text-gray-400" fill="none"
-                                                                        stroke="currentColor" viewBox="0 0 24 24"
-                                                                        xmlns="http://www.w3.org/2000/svg">
-                                                                        <path stroke-linecap="round"
-                                                                            stroke-linejoin="round" stroke-width="2"
-                                                                            d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12">
-                                                                        </path>
-                                                                    </svg>
-                                                                    <p
-                                                                        class="mb-2 text-sm text-gray-500 dark:text-gray-400">
-                                                                        <span class="font-semibold">Click to
-                                                                            upload</span> or drag and drop
-                                                                    </p>
-                                                                    <p class="text-xs text-gray-500 dark:text-gray-400">
-                                                                        JPG OR PNG (MAX.
-                                                                        2MB)</p>
-                                                                </div>
-                                                                <input id="img" type="file" name="img"
-                                                                    class="@error('img') is-invalid @enderror hidden">
+                                                         
+                                                                <input type="file" name="img" id="dropzone-file" 
+                                                                class="@error('img') is-invalid @enderror capitalize mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-sky-500 focus:border-sky-500 sm:text-sm">
                                                                 @error('img')
                                                                 <span class="invalid-feedback " role="alert">
                                                                     <p class="text-xs text-red-600 ml-2">
                                                                         {{ $message }}</p>
                                                                 </span>
                                                                 @enderror
-                                                            </label>
+                                   
 
                                                         </div>
                                                         <div class="flex">
 
                                                             <img class="" src="{{ asset('storage/blog/' . $cv[2]) }}"
-                                                                width="100px" />
+                                                                width="50px" />
 
                                                         </div>
                                                         <div class="mt-6 grid grid-cols-12 gap-6">
@@ -461,6 +434,22 @@
                                                                     class="@error('title') is-invalid @enderror capitalize mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-sky-500 focus:border-sky-500 sm:text-sm">
 
                                                                 @error('title')
+                                                                <span class="invalid-feedback " role="alert">
+                                                                    <p class="text-xs text-red-600 ml-2">
+                                                                        {{ $message }}</p>
+                                                                </span>
+                                                                @enderror
+                                                            </div>
+                                                        </div>
+                                                        <div class="mt-6 grid grid-cols-12 gap-6">
+                                                            <div class="col-span-12 sm:col-span-12">
+                                                                <label for="first-name"
+                                                                    class="block text-sm font-medium text-gray-700">Category</label>
+                                                                <input type="text" name="category" id="category"
+                                                                    autocomplete="given-name" value="{{ $f->category }}"
+                                                                    class="@error('category') is-invalid @enderror capitalize mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-sky-500 focus:border-sky-500 sm:text-sm">
+
+                                                                @error('category')
                                                                 <span class="invalid-feedback " role="alert">
                                                                     <p class="text-xs text-red-600 ml-2">
                                                                         {{ $message }}</p>
