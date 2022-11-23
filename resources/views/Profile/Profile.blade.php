@@ -27,7 +27,7 @@
               </div>
               @if (Session::has('msg'))
               <div class=" text-center text-green-600 ">
-                 <div class="p-4 mb-4 text-sm text-green-700 bg-green-100 rounded-lg dark:bg-green-200 dark:text-green-800" role="alert">
+                 <div class="p-4 mb-4 text-sm text-green-700 bg-green-100 rounded-lg" role="alert">
                     <span class="font-medium">{!! \Session::get('msg') !!}</span> 
                   </div>
               </div>
@@ -47,7 +47,6 @@
                     @else
                     <img class="rounded-full h-full w-full"  src="/storage/img/{{$link[2]}}" alt="Rounded avatar">
                     @endif
-                        {{-- <img class="rounded-full h-full w-full" src="https://images.unsplash.com/photo-1517365830460-955ce3ccd263?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=320&h=320&q=80" alt=""> --}}
                       </div>
                       <div class="ml-5 rounded-md shadow-sm">
                         <div class="group relative border border-gray-300 rounded-md py-2 px-3 flex items-center justify-center hover:bg-gray-50 focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-sky-500">

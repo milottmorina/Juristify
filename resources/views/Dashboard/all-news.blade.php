@@ -40,7 +40,7 @@
                                   <button class="bg-white px-6 text-lg font-semibold py-4 rounded-md">Clear</button>
                                 </a>
                         <button
-                            class="ml-5 h-10 block text-white bg-[#374151] hover:bg-[#374151] focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                            class="ml-5 h-10 block text-white bg-[#374151] hover:bg-[#374151] focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
                             type="button" data-modal-toggle="defaultModal">
                             Create News
                         </button>
@@ -50,15 +50,15 @@
                             class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 w-full md:inset-0 h-modal md:h-full justify-center items-center">
                             <div class="relative p-4 w-full max-w-2xl h-full md:h-auto">
                                 <!-- Modal content -->
-                                <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+                                <div class="relative bg-white rounded-lg shadow">
                                     <!-- Modal header -->
                                     <div
-                                        class="flex justify-between items-start p-4 rounded-t border-b dark:border-gray-600">
-                                        <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
+                                        class="flex justify-between items-start p-4 rounded-t border-b">
+                                        <h3 class="text-xl font-semibold text-gray-900">
                                             Create News
                                         </h3>
                                         <button type="button"
-                                            class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white"
+                                            class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center"
                                             data-modal-toggle="defaultModal">
                                             <svg aria-hidden="true" class="w-5 h-5" fill="currentColor"
                                                 viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
@@ -79,7 +79,7 @@
                                             <div class="py-6 px-4 sm:p-6 lg:pb-8">
                                                 <div class="flex justify-center items-center w-full">
                                                     <label for="dropzone-file"
-                                                        class="flex flex-col justify-center items-center w-full h-32 bg-gray-50 rounded-lg border-2 border-gray-300 border-dashed cursor-pointer dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
+                                                        class="flex flex-col justify-center items-center w-full h-32 bg-gray-50 rounded-lg border-2 border-gray-300 border-dashed cursor-pointer">
                                                         <div
                                                             class="flex flex-col justify-center items-center pt-5 pb-6">
                                                             <svg aria-hidden="true" class="mb-3 w-10 h-10 text-gray-400"
@@ -90,10 +90,10 @@
                                                                     d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12">
                                                                 </path>
                                                             </svg>
-                                                            <p class="mb-2 text-sm text-gray-500 dark:text-gray-400">
+                                                            <p class="mb-2 text-sm text-gray-500 ">
                                                                 <span class="font-semibold">Click to upload</span> or
                                                                 drag and drop</p>
-                                                            <p class="text-xs text-gray-500 dark:text-gray-400">PNG, JPG
+                                                            <p class="text-xs text-gray-500 ">PNG, JPG
                                                                 (MAX. 2MB)</p>
                                                         </div>
                                                         <input required id="dropzone-file" type="file"
@@ -160,12 +160,12 @@
                                     </div>
                                     <!-- Modal footer -->
                                     <div
-                                        class="flex items-center p-6 space-x-2 rounded-b border-t border-gray-200 dark:border-gray-600">
+                                        class="flex items-center p-6 space-x-2 rounded-b border-t border-gray-200 ">
                                         <button data-modal-toggle="defaultModal" type="submit"
-                                            class="text-white bg-[#374151] hover:bg-[#374151] focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Create</button>
+                                            class="text-white bg-[#374151] hover:bg-[#374151] focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center ">Create</button>
                                         </form>
                                         <button data-modal-toggle="defaultModal" type="button"
-                                            class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600">Decline</button>
+                                            class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10">Decline</button>
                                     </div>
                                 </div>
                             </div>
@@ -219,15 +219,15 @@
                                     class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 w-full md:inset-0 h-modal md:h-full justify-center items-center">
                                     <div class="relative p-4 w-full max-w-2xl h-full md:h-auto">
                                         <!-- Modal content -->
-                                        <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+                                        <div class="relative bg-white rounded-lg shadow">
                                             <!-- Modal header -->
                                             <div
-                                                class="flex justify-between items-start p-4 rounded-t border-b dark:border-gray-600">
-                                                <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
+                                                class="flex justify-between items-start p-4 rounded-t border-b">
+                                                <h3 class="text-xl font-semibold text-gray-900">
                                                     {{ $n->title }}
                                                 </h3>
                                                 <button type="button"
-                                                    class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white"
+                                                    class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center"
                                                     data-modal-toggle="defaultModal{{ $n->id }}">
                                                     <svg aria-hidden="true" class="w-5 h-5" fill="currentColor"
                                                         viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
@@ -241,16 +241,16 @@
                                             <!-- Modal body -->
                                             <!-- Modal footer -->
                                             <div
-                                                class="flex items-center p-6 space-x-2 rounded-b border-t border-gray-200 dark:border-gray-600">
+                                                class="flex items-center p-6 space-x-2 rounded-b border-t border-gray-200">
                                                 <button data-modal-toggle="medium-modal{{ $n->id }}"
                                                     type="button"
-                                                    class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Edit</button>
+                                                    class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Edit</button>
                                                 <button data-modal-toggle="popup-modal{{ $n->id }}"
                                                     type="button"
-                                                    class="text-white bg-red-500 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600">Delete</button>
+                                                    class="text-white bg-red-500 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 ">Delete</button>
                                                 <button data-modal-toggle="defaultModal{{ $n->id }}"
                                                     type="button"
-                                                    class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600">Decline</button>
+                                                    class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 ">Decline</button>
                                             </div>
                                         </div>
                                     </div>
@@ -259,9 +259,9 @@
                                     class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 md:inset-0 h-modal md:h-full justify-center items-center"
                                     aria-hidden="true">
                                     <div class="relative p-4 w-full max-w-md h-full md:h-auto">
-                                        <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+                                        <div class="relative bg-white rounded-lg shadow">
                                             <button type="button"
-                                                class="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-800 dark:hover:text-white"
+                                                class="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center"
                                                 data-modal-toggle="popup-modal{{ $n->id }}">
                                                 <svg aria-hidden="true" class="w-5 h-5" fill="currentColor"
                                                     viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
@@ -273,25 +273,25 @@
                                             </button>
                                             <div class="p-6 text-center">
                                                 <svg aria-hidden="true"
-                                                    class="mx-auto mb-4 w-14 h-14 text-gray-400 dark:text-gray-200"
+                                                    class="mx-auto mb-4 w-14 h-14 text-gray-400"
                                                     fill="none" stroke="currentColor" viewBox="0 0 24 24"
                                                     xmlns="http://www.w3.org/2000/svg">
                                                     <path stroke-linecap="round" stroke-linejoin="round"
                                                         stroke-width="2"
                                                         d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                                                 </svg>
-                                                <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">
+                                                <h3 class="mb-5 text-lg font-normal text-gray-500">
                                                     Are you sure you want to delete this?</h3>
                                                 <a href="{{ route('news.delete', $n->id) }}">
                                                     <button data-modal-toggle="popup-modal{{ $n->id }}"
                                                         type="button"
-                                                        class="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center mr-2">
+                                                        class="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center mr-2">
                                                         Yes, I'm sure
                                                     </button>
                                                 </a>
                                                 <button data-modal-toggle="popup-modal{{ $n->id }}"
                                                     type="button"
-                                                    class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600">No,
+                                                    class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 ">No,
                                                     cancel</button>
                                             </div>
                                         </div>
@@ -303,16 +303,16 @@
                                     class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 w-fullmd:inset-0 h-modal md:h-full justify-center items-center">
                                     <div class="relative p-4 w-full max-w-lg h-full md:h-auto">
                                         <!-- Modal content -->
-                                        <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+                                        <div class="relative bg-white rounded-lg shadow ">
                                             <!-- Modal header -->
 
                                             <div
-                                                class="flex justify-between items-center p-5 rounded-t border-b dark:border-gray-600">
-                                                <h3 class="text-xl font-medium text-gray-900 dark:text-white">
+                                                class="flex justify-between items-center p-5 rounded-t border-b ">
+                                                <h3 class="text-xl font-medium text-gray-900 ">
                                                     {{ $n->title }}
                                                 </h3>
                                                 <button type="button"
-                                                    class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white"
+                                                    class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center "
                                                     data-modal-toggle="medium-modal{{ $n->id }}">
                                                     <svg aria-hidden="true" class="w-5 h-5" fill="currentColor"
                                                         viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
@@ -334,28 +334,28 @@
                                                         alt="Image Size 720x400">
 
                                                     <p
-                                                        class="text-base leading-relaxed text-gray-500 dark:text-gray-400">
+                                                        class="text-base leading-relaxed text-gray-500 ">
 
                                                         <label for="message"
-                                                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">Image</label>
+                                                            class="block mb-2 text-sm font-medium text-gray-900 ">Image</label>
                                                         <input name="img"
-                                                            class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                                            class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 "
                                                             type="file">
                                                         <label for="message"
-                                                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">Title</label>
+                                                            class="block mb-2 text-sm font-medium text-gray-900 ">Title</label>
                                                         <input name="title"
-                                                            class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                                            class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 "
                                                             type="text" value="{{ $n->title }}">
                                                         <label for="message"
-                                                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">category</label>
+                                                            class="block mb-2 text-sm font-medium text-gray-900 ">category</label>
                                                         <input name="category"
-                                                            class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                                            class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
                                                             type="text" value="{{ $n->category }}">
                                                         <label for="message"
-                                                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">Your
+                                                            class="block mb-2 text-sm font-medium text-gray-900">Your
                                                             Message</label>
                                                         <textarea name="description" id="message" rows="4"
-                                                            class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                                            class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 "
                                                             placeholder="Your message...">
    {{ $n->description }}
 </textarea>
@@ -365,14 +365,14 @@
                                                 </div>
                                                 <!-- Modal footer -->
                                                 <div
-                                                    class="flex items-center p-6 space-x-2 rounded-b border-t border-gray-200 dark:border-gray-600">
+                                                    class="flex items-center p-6 space-x-2 rounded-b border-t border-gray-200">
                                                     <button data-modal-toggle="medium-modal{{ $n->id }}"
                                                         type="submit"
-                                                        class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Save</button>
+                                                        class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center ">Save</button>
                                                     <form>
                                                         <button data-modal-toggle="medium-modal{{ $n->id }}"
                                                             type="button"
-                                                            class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600">Decline</button>
+                                                            class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 ">Decline</button>
                                                 </div>
                                         </div>
                                     </div>

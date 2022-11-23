@@ -24,16 +24,16 @@
                     </div>
                     <div class="overflow-x-auto relative shadow-md sm:rounded-lg mt-5 bg-white">
                         <caption
-                            class="p-5 text-lg font-semibold text-left text-gray-900 bg-white dark:text-white dark:bg-gray-800">
+                            class="p-5 text-lg font-semibold text-left text-gray-900 bg-white ">
                             <h1 class="p-3 text-lg font-semibold">Contact Us Messages</h1>
-                            <p class="mt-1 text-sm p-3 font-normal text-gray-500 dark:text-gray-400">Browse a list of
+                            <p class="mt-1 text-sm p-3 font-normal text-gray-500 ">Browse a list of
                                 Flowbite products designed to help you work and play, stay organized, get answers, keep
                                 in touch, grow your business, and more.</p>
                         </caption>
-                        <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                        <table class="w-full text-sm text-left text-gray-500 ">
 
                             <thead
-                                class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                                class="text-xs text-gray-700 uppercase bg-gray-50 ">
                                 <tr>
                                     <th scope="col" class="py-3 px-6">
                                         Full Name
@@ -55,9 +55,9 @@
                             </thead>
                             <tbody>
                                 @foreach ($contacts as $c)
-                                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                                <tr class="bg-white border-b ">
                                     <th scope="row"
-                                        class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                        class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap ">
                                         {{ $c->name }}
                                     </th>
                                     <td class="py-4 px-6">
@@ -71,7 +71,7 @@
                                     </td>
                                     <td class="py-4 px-6 overflow-clip">
                                         <button type="button" data-modal-toggle="popup-modali{{ $c->id }}"
-                                            class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800">Fshij</button>
+                                            class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 ">Delete</button>
 
                                     </td>
 
@@ -80,9 +80,9 @@
                                     class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 md:inset-0 h-modal md:h-full justify-center items-center"
                                     aria-hidden="true">
                                     <div class="relative p-4 w-full max-w-md h-full md:h-auto">
-                                        <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+                                        <div class="relative bg-white rounded-lg shadow ">
                                             <button type="button"
-                                                class="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-800 dark:hover:text-white"
+                                                class="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center "
                                                 data-modal-toggle="popup-modali{{ $c->id }}">
                                                 <svg aria-hidden="true" class="w-5 h-5" fill="currentColor"
                                                     viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
@@ -96,7 +96,7 @@
 
 
                                                 <svg aria-hidden="true"
-                                                    class="mx-auto mb-4 w-14 h-14 text-gray-400 dark:text-gray-200"
+                                                    class="mx-auto mb-4 w-14 h-14 text-gray-400 "
                                                     fill="none" stroke="currentColor" viewBox="0 0 24 24"
                                                     xmlns="http://www.w3.org/2000/svg">
                                                     <path stroke-linecap="round" stroke-linejoin="round"
@@ -104,16 +104,16 @@
                                                         d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z">
                                                     </path>
                                                 </svg>
-                                                <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">
+                                                <h3 class="mb-5 text-lg font-normal text-gray-500 ">
                                                     Are you sure you want to delete this?</h3>
                                                 <a href="{{ route('contact.delete', $c->id) }}">
                                                     <button data-modal-toggle="popup-modali{{ $c->id }}" type="submit"
-                                                        class="text-white bg-green-600 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center mr-2">
+                                                        class="text-white bg-green-600 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center mr-2">
                                                         Yes
                                                     </button>
                                                 </a>
                                                 <button data-modal-toggle="popup-modali{{ $c->id }}" type="button"
-                                                    class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600">No</button>
+                                                    class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 ">No</button>
                                             </div>
                                         </div>
                                     </div>

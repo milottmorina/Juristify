@@ -30,7 +30,7 @@ class ContactController extends Controller
     {  
         
         $request->validate([
-            'phoneNo'=>['required','max:10'],
+            'phoneNo'=>['required','max:20'],
             'msg' => ['required','string','max:700']
         ]);
     

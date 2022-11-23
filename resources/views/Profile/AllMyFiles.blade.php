@@ -30,7 +30,7 @@
                     </div>
                     @if (Session::has('msg'))
                     <div class=" text-center text-green-600 ">
-                        <div class="p-4 mb-4 text-sm text-green-700 bg-green-100 rounded-lg dark:bg-green-200 dark:text-green-800"
+                        <div class="p-4 mb-4 text-sm text-green-700 bg-green-100 rounded-lg"
                             role="alert">
                             <span class="font-medium">{!! \Session::get('msg') !!}</span>
                         </div>
@@ -68,7 +68,7 @@
 
                                 <div>
                                     <button id="dropdownMenuIconButton" data-dropdown-toggle="dropdownDots{{$f->id}}"
-                                        class="ml-3 inline-flex items-center p-2 text-sm font-medium text-center text-gray-900 bg-white rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none dark:text-white focus:ring-gray-50 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
+                                        class="ml-3 inline-flex items-center p-2 text-sm font-medium text-center text-gray-900 bg-white rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none"
                                         type="button">
                                         <svg class="w-6 h-6" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20"
                                             xmlns="http://www.w3.org/2000/svg">
@@ -80,15 +80,15 @@
 
                                     <!-- Dropdown menu -->
                                     <div id="dropdownDots{{$f->id}}"
-                                        class="hidden z-10 w-44 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600">
-                                        <ul class="py-1 text-sm text-gray-700 dark:text-gray-200"
+                                        class="hidden z-10 w-44 bg-white rounded divide-y divide-gray-100 shadow">
+                                        <ul class="py-1 text-sm text-gray-700"
                                             aria-labelledby="dropdownMenuIconButton">
                                             <li>
                                                 <a data-modal-toggle="defaultModal{{$f->id}}"
-                                                    class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Edit</a>
+                                                    class="block py-2 px-4 hover:bg-gray-100">Edit</a>
                                             </li>
                                             <li>
-                                                <a class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                                                <a class="block py-2 px-4 hover:bg-gray-100"
                                                     type="button" data-modal-toggle="popup-modal{{$f->id}}">
                                                     Delete
                                                 </a>
@@ -128,9 +128,9 @@
                                 <div id="popup-modal{{$f->id}}" tabindex="-1"
                                     class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 md:inset-0 h-modal md:h-full">
                                     <div class="relative p-4 w-full max-w-md h-full md:h-auto">
-                                        <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+                                        <div class="relative bg-white rounded-lg shadow">
                                             <button type="button"
-                                                class="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-800 dark:hover:text-white"
+                                                class="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center"
                                                 data-modal-toggle="popup-modal{{$f->id}}">
                                                 <svg aria-hidden="true" class="w-5 h-5" fill="currentColor"
                                                     viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
@@ -142,22 +142,22 @@
                                             </button>
                                             <div class="p-6 text-center">
                                                 <svg aria-hidden="true"
-                                                    class="mx-auto mb-4 w-14 h-14 text-gray-400 dark:text-gray-200"
+                                                    class="mx-auto mb-4 w-14 h-14 text-gray-400"
                                                     fill="none" stroke="currentColor" viewBox="0 0 24 24"
                                                     xmlns="http://www.w3.org/2000/svg">
                                                     <path stroke-linecap="round" stroke-linejoin="round"
                                                         stroke-width="2"
                                                         d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                                                 </svg>
-                                                <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">
+                                                <h3 class="mb-5 text-lg font-normal text-gray-500">
                                                     Are you sure you want to delete this?</h3>
                                                 <a href="{{ route('file.destroy', $f->id) }}">
                                                     <button data-modal-toggle="popup-modal{{$f->id}}" type="button"
-                                                        class="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center mr-2">
+                                                        class="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center mr-2">
                                                         Yes, I'm sure
                                                     </button></a>
                                                 <button data-modal-toggle="popup-modal{{$f->id}}" type="button"
-                                                    class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600">No,
+                                                    class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 ">No,
                                                     cancel</button>
                                             </div>
                                         </div>
@@ -172,15 +172,15 @@
                                     class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 w-full md:inset-0 h-modal md:h-full justify-center items-center">
                                     <div class="relative p-4 w-full max-w-2xl h-full md:h-auto">
                                         <!-- Modal content -->
-                                        <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+                                        <div class="relative bg-white rounded-lg shadow">
                                             <!-- Modal header -->
                                             <div
-                                                class="flex justify-between items-start p-4 rounded-t border-b dark:border-gray-600">
-                                                <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
+                                                class="flex justify-between items-start p-4 rounded-t border-b">
+                                                <h3 class="text-xl font-semibold text-gray-900">
                                                     Edit
                                                 </h3>
                                                 <button type="button"
-                                                    class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white"
+                                                    class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center"
                                                     data-modal-toggle="defaultModal{{$f->id}}">
                                                     <svg aria-hidden="true" class="w-5 h-5" fill="currentColor"
                                                         viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
@@ -198,7 +198,7 @@
                                                 <div class="p-6 space-y-6">
                                                     <div class="flex justify-center items-center w-full">
                                                         <label for="dropzone-file"
-                                                            class="flex flex-col justify-center items-center w-full h-40 bg-gray-50 rounded-lg border-2 border-gray-300 border-dashed cursor-pointer dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
+                                                            class="flex flex-col justify-center items-center w-full h-40 bg-gray-50 rounded-lg border-2 border-gray-300 border-dashed cursor-pointer">
                                                             <div
                                                                 class="flex flex-col justify-center items-center pt-5 pb-6">
                                                                 <svg aria-hidden="true"
@@ -211,10 +211,10 @@
                                                                     </path>
                                                                 </svg>
                                                                 <p
-                                                                    class="mb-2 text-sm text-gray-500 dark:text-gray-400">
+                                                                    class="mb-2 text-sm text-gray-500">
                                                                     <span class="font-semibold">Click to upload</span>
                                                                     or drag and drop</p>
-                                                                <p class="text-xs text-gray-500 dark:text-gray-400">PDF
+                                                                <p class="text-xs text-gray-500">PDF
                                                                     OR DOCX (MAX.
                                                                     2MB)</p>
                                                             </div>
@@ -270,11 +270,11 @@
                                                 </div>
                                                 <!-- Modal footer -->
                                                 <div
-                                                    class="flex items-center p-6 space-x-2 rounded-b border-t border-gray-200 dark:border-gray-600">
+                                                    class="flex items-center p-6 space-x-2 rounded-b border-t border-gray-200">
                                                     <button data-modal-toggle="defaultModal{{$f->id}}" type="submit"
-                                                        class="text-white bg-gray-700 hover:bg-gray-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Update</button>
+                                                        class="text-white bg-gray-700 hover:bg-gray-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Update</button>
                                                     <button data-modal-toggle="defaultModal{{$f->id}}" type="button"
-                                                        class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600">Decline</button>
+                                                        class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10">Decline</button>
                                                 </div>
                                             </form>
                                         </div>

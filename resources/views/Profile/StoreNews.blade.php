@@ -30,7 +30,7 @@
                         </div>
                         @if (Session::has('msg'))
                             <div class=" text-center text-green-600 ">
-                                <div class="p-4 mb-4 text-sm text-green-700 bg-green-100 rounded-lg dark:bg-green-200 dark:text-green-800"
+                                <div class="p-4 mb-4 text-sm text-green-700 bg-green-100 rounded-lg"
                                     role="alert">
                                     <span class="font-medium">{!! \Session::get('msg') !!}</span>
                                 </div>
@@ -38,7 +38,7 @@
                         @endif
                         @if (Session::has('error'))
                         <div class=" text-center text-red-600 ">
-                            <div class="p-4 mb-4 text-sm text-red-700 bg-red-100 rounded-lg dark:bg-red-200 dark:text-red-800"
+                            <div class="p-4 mb-4 text-sm text-red-700 bg-red-100 rounded-lg"
                                 role="alert">
                                 <span class="font-medium">{!! \Session::get('error') !!}</span>
                             </div>
@@ -48,7 +48,7 @@
 
                         <div class="flex justify-center items-center w-full">
                             <label for="dropzone-file"
-                                class="flex flex-col justify-center items-center w-full h-64 bg-gray-50 rounded-lg border-2 border-gray-300 border-dashed cursor-pointer dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
+                                class="flex flex-col justify-center items-center w-full h-64 bg-gray-50 rounded-lg border-2 border-gray-300 border-dashed cursor-pointer">
                                 <div class="flex flex-col justify-center items-center pt-5 pb-6">
                                     <svg aria-hidden="true" class="mb-3 w-10 h-10 text-gray-400" fill="none"
                                         stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -56,9 +56,9 @@
                                             d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12">
                                         </path>
                                     </svg>
-                                    <p class="mb-2 text-sm text-gray-500 dark:text-gray-400"><span
+                                    <p class="mb-2 text-sm text-gray-500"><span
                                             class="font-semibold">Click to upload</span> or drag and drop</p>
-                                    <p class="text-xs text-gray-500 dark:text-gray-400">PNG, JPG (MAX. 2MB)</p>
+                                    <p class="text-xs text-gray-500">PNG, JPG (MAX. 2MB)</p>
                                 </div>
                                 <input required id="dropzone-file" type="file" class="@error('img') is-invalid @enderror hidden" name="img">
                                 

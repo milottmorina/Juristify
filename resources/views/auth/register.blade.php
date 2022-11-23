@@ -22,7 +22,7 @@
         <div class="flex flex-wrap -mx-3 mb-6">
             @if (Session::has('msg'))
                 <div class="alert alert-success text-center text-green-600 ml-1 ">
-                    <div class="p-4 mb-4 text-sm text-green-700 bg-green-100 rounded-lg dark:bg-green-200 dark:text-green-800"
+                    <div class="p-4 mb-4 text-sm text-green-700 bg-green-100 rounded-lg"
                         role="alert">
                         <span class="font-medium">{!! \Session::get('msg') !!}</span>
                     </div>
@@ -138,10 +138,10 @@
 
             </div>
             <div class="w-full md:w-full px-7 mb-6">
-                <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300" for="file_input">Upload
+                <label class="block mb-2 text-sm font-medium text-gray-900 " for="file_input">Upload
                     University ID Card</label>
                 <input
-                    class=" @error('id_card') is-invalid @enderror block w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 cursor-pointer dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
+                    class=" @error('id_card') is-invalid @enderror block w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 cursor-pointer "
                     aria-describedby="id_kartela" name="id_card" id="id_card" type="file" >
                     @error('id_card')
                     <span class="invalid-feedback" role="alert">
@@ -149,7 +149,7 @@
                     </span>
                 @enderror
                 <input type="hidden" name="verified" id="verified" value="0">
-                <p class="mt-1 text-sm text-gray-500 dark:text-gray-300" id="file_input_help">PNG or JPG</p>
+                <p class="mt-1 text-sm text-gray-500" id="file_input_help">PNG or JPG</p>
 
             </div>
 
