@@ -111,7 +111,7 @@
              <div class="bg-white relative rounded-lg p-8 sm:p-12 shadow-lg">
                @if (Session::has('msg'))
             <div class="text-center text-green-600 ">
-               <div class="p-4 mb-4 text-sm text-green-700 bg-green-100 rounded-lg dark:bg-green-200 dark:text-green-800" role="alert">
+               <div class="p-4 mb-4 text-sm text-green-700 bg-green-100 rounded-lg " role="alert">
                   <span class="font-medium">{!! \Session::get('msg') !!}</span> 
                 </div>
             </div>
