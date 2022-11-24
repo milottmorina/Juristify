@@ -37,9 +37,9 @@ class BlogController extends Controller
 
     public function showAll(){
         $blogs = blog::with('user')->orderBy('id', 'desc')->paginate(5);
-        $allBlogs=$blogs->count();
-        $NonAcBlogs=$blogs->where('active',0)->count();
-        $AcBlogs=$blogs->where('active',1)->count();
+        $allBlogs=blog::count();
+        $NonAcBlogs=blog::where('active',0)->count();
+        $AcBlogs=blog::where('active',1)->count();
         return view('dashboard/all-blogs')->with(['AcBlogs'=>$AcBlogs,'NonAcBlogs'=>$NonAcBlogs,'blogs'=>$blogs,'allBlogs'=>$allBlogs]);
     }
     public function cverifiko($id){

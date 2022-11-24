@@ -21,7 +21,7 @@ class ContactController extends Controller
     public function show(){
 
         $contacts = contact::orderBy('id', 'desc')->paginate(5);
-        $c=$contacts->count();
+        $c=contact::count();
         return view('Dashboard/all-contacts')->with(['c'=>$c,'contacts'=>$contacts]);
        
     }

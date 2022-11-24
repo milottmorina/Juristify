@@ -26,9 +26,9 @@ class FilesController extends Controller
 
     public function showAll(){
         $files = files::with('user')->orderBy('id', 'desc')->paginate(5);
-        $allFiles=$files->count();
-        $allAcFiles=$files->where('status',1)->count();
-        $allNacFiles=$files->where('status',0)->count();
+        $allFiles=files::count();
+        $allAcFiles=files::where('status',1)->count();
+        $allNacFiles=files::where('status',0)->count();
         return view('dashboard/all-files')->with(['allNacFiles'=>$allNacFiles,'allAcFiles'=>$allAcFiles,'allFiles'=>$allFiles,'files'=>$files]);
     }
 
