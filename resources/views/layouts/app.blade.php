@@ -6,21 +6,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/fontawesome.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/solid.min.css" integrity="sha512-uj2QCZdpo8PSbRGL/g5mXek6HM/APd7k/B5Hx/rkVFPNOxAQMXD+t+bG4Zv8OAdUpydZTU3UHmyjjiHv2Ww0PA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/regular.min.css" integrity="sha512-aNH2ILn88yXgp/1dcFPt2/EkSNc03f9HBFX0rqX3Kw37+vjipi1pK3L9W08TZLhMg4Slk810sPLdJlNIjwygFw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    {{-- <link href="https://fonts.bunny.net/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet"> --}}
     <title>Juristify</title>
-    @vite(['resources/sass/app.scss', 'resources/js/app.js'])
-    {{-- @vite('resources/js/app.js')  --}}
+    <link rel="stylesheet" href="{{ asset('build/assets/app.f06e8bcd.css') }}"> 
+  
 </head>
 <body>
-  <style>
-    body {
-        font-family: 'Nunito', sans-serif !important;
-    }
-</style>
   <nav class="bg-gray-700  px-2 sm:px-4 ">
     <div class="container flex flex-wrap justify-between items-center mx-auto py-3">
     <a href="/home" class="flex items-center">
@@ -97,7 +90,7 @@
     </div>
 
   </nav>
-
+  <script src="{{ asset('build/assets/app.4c1df604.js') }}"></script>
 <script src="https://unpkg.com/flowbite@1.5.3/dist/flowbite.js"></script>
 </body>
 </html>

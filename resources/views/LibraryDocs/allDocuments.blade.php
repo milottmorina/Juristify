@@ -86,11 +86,6 @@ ease-in-out mx-3.5 flex justify-center items-center">
     
 @include('layouts.footer')
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<script type="text/javascript">
-    $(function() {
-        $("#query").load("allDocuments.blade.php");
-    });
-</script>
 <script>
     function myFunction(id) {
       var dots = document.getElementById("dots"+id);
