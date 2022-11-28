@@ -96,7 +96,7 @@ class User extends Controller
     }
     }
     public function index(){
-        return view('Profile/profile');
+        return view('Profile/Profile');
     }
     public function changePas(){
         return view('Profile/password');
