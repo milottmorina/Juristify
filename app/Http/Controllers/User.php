@@ -29,7 +29,7 @@ class User extends Controller
         $usAc=ModelsUser::where('verified',1)->count();
         $usNac=ModelsUser::where('verified',0)->count();
         $users = ModelsUser::select(['id','name','surname','birthday','university','gender','phoneNo','street','verified','email','img','id_card','role'])->latest()->paginate(5);
-        return view('Dashboard/users')->with(['users'=>$users,'us'=>$us,'usAc'=>$usAc,'usNac'=>$usNac]);
+        return view('Dashboard/Users')->with(['users'=>$users,'us'=>$us,'usAc'=>$usAc,'usNac'=>$usNac]);
         }else{
             return redirect('/home');
         }
