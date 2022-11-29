@@ -29,7 +29,7 @@ class FilesController extends Controller
         $allFiles=files::count();
         $allAcFiles=files::where('status',true)->count();
         $allNacFiles=files::where('status',false)->count();
-        return view('Dashboard/All-files')->with(['allNacFiles'=>$allNacFiles,'allAcFiles'=>$allAcFiles,'allFiles'=>$allFiles,'files'=>$files]);
+        return view('Dashboard/all-files')->with(['allNacFiles'=>$allNacFiles,'allAcFiles'=>$allAcFiles,'allFiles'=>$allFiles,'files'=>$files]);
     }
 
     public function cverifiko($id){
@@ -130,7 +130,7 @@ class FilesController extends Controller
     $allFiles=files::count();
     $allAcFiles=files::where('status',true)->count();
     $allNacFiles=files::where('status',false)->count();
-    return view('Dashboard/All-files')->with(['allNacFiles'=>$allNacFiles,'allAcFiles'=>$allAcFiles,'allFiles'=>$allFiles,'files'=>$files]);
+    return view('Dashboard/all-files')->with(['allNacFiles'=>$allNacFiles,'allAcFiles'=>$allAcFiles,'allFiles'=>$allFiles,'files'=>$files]);
     }
     public function update(Request $request, $id)
     {
