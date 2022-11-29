@@ -25,7 +25,7 @@ class InformationController extends Controller
     public function allInfos()
     {
         $infos = information::with('user')->orderBy('id', 'desc')->paginate(6);
-        return view('Dashboard/All-informations')->with(['infos'=>$infos]);
+        return view('Dashboard/all-informations')->with(['infos'=>$infos]);
     }
 
     public function create()
@@ -94,7 +94,7 @@ class InformationController extends Controller
                     ->orWhere('category', 'LIKE', '%'.$term.'%');
                 }  
     }]])->paginate(6);
-    return view('Dashboard/All-informations')->with(['infos'=>$infos]);
+    return view('Dashboard/all-informations')->with(['infos'=>$infos]);
     }
 
     public function update(Request $request, $id)
