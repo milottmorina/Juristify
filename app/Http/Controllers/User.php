@@ -24,10 +24,10 @@ class User extends Controller
         $this->middleware('auth');
     }
     public function allUsers(){
-        if(Auth::user() && Auth::user()->role===1){
+        if(Auth::user() && Auth::user()->role===true){
         $us=ModelsUser::count();
-        $usAc=ModelsUser::where('verified',1)->count();
-        $usNac=ModelsUser::where('verified',0)->count();
+        $usAc=ModelsUser::where('verified',true)->count();
+        $usNac=ModelsUser::where('verified',false)->count();
         $users = ModelsUser::select(['id','name','surname','birthday','university','gender','phoneNo','street','verified','email','img','id_card','role'])->latest()->paginate(5);
         return view('Dashboard/Users')->with(['users'=>$users,'us'=>$us,'usAc'=>$usAc,'usNac'=>$usNac]);
         }else{
@@ -36,8 +36,8 @@ class User extends Controller
     }
     public function findUser(Request $request){
         $us=ModelsUser::count();
-        $usAc=ModelsUser::where('verified',1)->count();
-        $usNac=ModelsUser::where('verified',0)->count();
+        $usAc=ModelsUser::where('verified',true)->count();
+        $usNac=ModelsUser::where('verified',false)->count();
         $users=ModelsUser::orderBy('id', 'asc')->where([
             ['name', '!=' , Null],
             ['surname', '!=' , Null],
@@ -53,40 +53,40 @@ class User extends Controller
     public function getVerifiedUsers(){
         
         $us=ModelsUser::count();
-        $usAc=ModelsUser::where('verified',1)->count();
-        $usNac=ModelsUser::where('verified',0)->count();
-        $users = ModelsUser::orderBy('id', 'asc')->where('verified',1)->paginate(5);
+        $usAc=ModelsUser::where('verified',true)->count();
+        $usNac=ModelsUser::where('verified',false)->count();
+        $users = ModelsUser::orderBy('id', 'asc')->where('verified',true)->paginate(5);
         return view('Dashboard/Users')->with(['users'=>$users,'us'=>$us,'usAc'=>$usAc,'usNac'=>$usNac]);
     }
     public function getNonVerifiedUsers(){
         $us=ModelsUser::count();
-        $usAc=ModelsUser::where('verified',1)->count();
-        $usNac=ModelsUser::where('verified',0)->count();
-        $users = ModelsUser::orderBy('id', 'asc')->where('verified',0)->paginate(5);
+        $usAc=ModelsUser::where('verified',true)->count();
+        $usNac=ModelsUser::where('verified',false)->count();
+        $users = ModelsUser::orderBy('id', 'asc')->where('verified',false)->paginate(5);
         return view('Dashboard/Users')->with(['users'=>$users,'us'=>$us,'usAc'=>$usAc,'usNac'=>$usNac]);
     }
     public function getAdmin(){
         $us=ModelsUser::count();
-        $usAc=ModelsUser::where('verified',1)->count();
-        $usNac=ModelsUser::where('verified',0)->count();
-        $users = ModelsUser::orderBy('id', 'asc')->where('role',1)->paginate(5);
+        $usAc=ModelsUser::where('verified',true)->count();
+        $usNac=ModelsUser::where('verified',false)->count();
+        $users = ModelsUser::orderBy('id', 'asc')->where('role',true)->paginate(5);
         return view('Dashboard/Users')->with(['users'=>$users,'us'=>$us,'usAc'=>$usAc,'usNac'=>$usNac]);
     }
     public function getDefaultUsers(){
         $us=ModelsUser::count();
-        $usAc=ModelsUser::where('verified',1)->count();
-        $usNac=ModelsUser::where('verified',0)->count();
-        $users = ModelsUser::orderBy('id', 'asc')->where('role',0)->paginate(5);
+        $usAc=ModelsUser::where('verified',true)->count();
+        $usNac=ModelsUser::where('verified',false)->count();
+        $users = ModelsUser::orderBy('id', 'asc')->where('role',false)->paginate(5);
         return view('Dashboard/Users')->with(['users'=>$users,'us'=>$us,'usAc'=>$usAc,'usNac'=>$usNac]);
     }
     public function dashboard(){
-        if(Auth::user() && Auth::user()->role===1){
+        if(Auth::user() && Auth::user()->role===true){
             $us=ModelsUser::count();
-            $usAc=ModelsUser::where('verified',1)->count();
-            $usNac=ModelsUser::where('verified',0)->count();
+            $usAc=ModelsUser::where('verified',true)->count();
+            $usNac=ModelsUser::where('verified',false)->count();
             $blog=Blog::count();
-            $blogAc=Blog::where('active',1)->count();
-            $blogNac=Blog::where('active',0)->count();
+            $blogAc=Blog::where('active',true)->count();
+            $blogNac=Blog::where('active',false)->count();
             $files=files::count();
             $infos=information::count();
             $contact=contact::count();
@@ -109,7 +109,7 @@ class User extends Controller
     }
     public function verifiko($id){
         $user = ModelsUser::findOrFail($id);
-        $user->verified=1;
+        $user->verified=true;
         $user->save();
         $email=ModelsUser::select('email')->where('id',$id)->get();
         Mail::to($email)->send(new UserVerification($email));
@@ -117,19 +117,19 @@ class User extends Controller
     }
     public function makeAdmin($id){
         $user = ModelsUser::findOrFail($id);
-        $user->role=1;
+        $user->role=true;
         $user->save();
         return back()->with('msg','User has access of admin!');
     }
     public function makeDefault($id){
         $user = ModelsUser::findOrFail($id);
-        $user->role=0;
+        $user->role=false;
         $user->save();
         return back()->with('msg','User is now default user!');
     }
     public function cverifiko($id){
         $user = ModelsUser::findOrFail($id);
-        $user->verified=0;
+        $user->verified=false;
         $user->save();
         $email=ModelsUser::select('email')->where('id',$id)->get();
         Mail::to($email)->send(new UserDeactivated($email));
