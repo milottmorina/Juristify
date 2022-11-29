@@ -23,7 +23,7 @@ class UserSeeder extends Seeder
             'email'=>'florian'.'@gmail.com',
             'role'=>1,
             'verified'=>1,
-            'password'=>'$2y$10$Aqp2QETtd4sIr9QfIk2Vcunbp5lqSzi8BWw6i5VFfS66l8Wj3h8VK',
+            'password'=>'$2y$10$7C5PBBU/emlNDqftzPKjJepifqdcKv1zc4YlI8znTXl8OlW9y3gXS',
             'gender'=>'Mashkull',
             'university'=>'UBT',
             'birthday'=>'2002-10-30',
