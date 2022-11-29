@@ -22,7 +22,7 @@ class BlogController extends Controller
     public function index()
     {
         $blogs = blog::with('user')->active(1)->orderBy('id', 'desc')->paginate(9);
-        return view('Blog/blog')->with(['blogs'=>$blogs]);
+        return view('Blog/Blog')->with(['blogs'=>$blogs]);
     }
 
     public function myBlogs(){
@@ -40,7 +40,7 @@ class BlogController extends Controller
         $allBlogs=blog::count();
         $NonAcBlogs=blog::where('active',0)->count();
         $AcBlogs=blog::where('active',1)->count();
-        return view('dashboard/all-blogs')->with(['AcBlogs'=>$AcBlogs,'NonAcBlogs'=>$NonAcBlogs,'blogs'=>$blogs,'allBlogs'=>$allBlogs]);
+        return view('Dashboard/All-blogs')->with(['AcBlogs'=>$AcBlogs,'NonAcBlogs'=>$NonAcBlogs,'blogs'=>$blogs,'allBlogs'=>$allBlogs]);
     }
     public function cverifiko($id){
         $blog = blog::findOrFail($id);
@@ -122,7 +122,7 @@ class BlogController extends Controller
                     $query->where('title', 'LIKE', '%'.$term.'%');
                 }   
     }]])->paginate(5);
-    return view('Blog/blog')->with(['blogs'=>$blogs]);
+    return view('Blog/Blog')->with(['blogs'=>$blogs]);
     }
     
     public function findMyBlog(Request $request){
@@ -148,7 +148,7 @@ class BlogController extends Controller
     $allBlogs=blog::count();
     $NonAcBlogs=blog::where('active',0)->count();
     $AcBlogs=blog::where('active',1)->count();
-    return view('dashboard/all-blogs')->with(['AcBlogs'=>$AcBlogs,'NonAcBlogs'=>$NonAcBlogs,'allBlogs'=>$allBlogs,'blogs'=>$blogs]);
+    return view('Dashboard/All-blogs')->with(['AcBlogs'=>$AcBlogs,'NonAcBlogs'=>$NonAcBlogs,'allBlogs'=>$allBlogs,'blogs'=>$blogs]);
     }
   
      public function update(Request $request, $id)
