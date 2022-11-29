@@ -27,14 +27,14 @@ class FilesController extends Controller
     public function showAll(){
         $files = files::with('user')->orderBy('id', 'desc')->paginate(5);
         $allFiles=files::count();
-        $allAcFiles=files::where('status',1)->count();
-        $allNacFiles=files::where('status',0)->count();
+        $allAcFiles=files::where('status',true)->count();
+        $allNacFiles=files::where('status',false)->count();
         return view('Dashboard/All-files')->with(['allNacFiles'=>$allNacFiles,'allAcFiles'=>$allAcFiles,'allFiles'=>$allFiles,'files'=>$files]);
     }
 
     public function cverifiko($id){
         $files = files::findOrFail($id);
-        $files->status=0;
+        $files->status=false;
         $files->save();
         $email=UserModel::select('email')->where('id',$files->user_id)->get();
         Mail::to($email)->send(new LibraryDeactivated($email));   
@@ -42,7 +42,7 @@ class FilesController extends Controller
     }
     public function verifiko($id){
         $files = files::findOrFail($id);
-        $files->status=1;
+        $files->status=true;
         $files->save();
         $email=UserModel::select('email')->where('id',$files->user_id)->get();
         Mail::to($email)->send(new LibraryActivated($email));  
@@ -53,7 +53,7 @@ class FilesController extends Controller
     {
       
         $file = $request->hasFile('file');
-        if ($file && Auth::user()->role===1) {
+        if ($file && Auth::user()->role===true) {
         
         $request->validate([
             'title' => ['required','max:100','min:4'],
@@ -67,7 +67,7 @@ class FilesController extends Controller
                 'description' => $request['description'],
                 'file' => $file_path,
                 'user_id' => Auth::user()->id,
-                'status'=>1
+                'status'=>true
             ]);
         return back()->with('msg','Document has been successfully stored!');
         }else{
@@ -83,7 +83,7 @@ class FilesController extends Controller
                     'description' => $request['description'],
                     'file' => $file_path,
                     'user_id' => Auth::user()->id,
-                    'status'=>0
+                    'status'=>false
                 ]);
                 return back()->with('msg','Document has been successfully stored, please be patient until we approve the file!');
         }
@@ -92,7 +92,7 @@ class FilesController extends Controller
 
     public function show()
     {
-        $files = files::with('user')->where('status',1)->orderBy('id', 'desc')->paginate(10);
+        $files = files::with('user')->where('status',true)->orderBy('id', 'desc')->paginate(10);
 
         return view('LibraryDocs/allDocuments')->with(['files'=>$files]);
     }
@@ -116,7 +116,7 @@ class FilesController extends Controller
                 if(($term=$request->term)){
                     $query->where('title', 'LIKE', '%'.$term.'%');
                 }   
-    }]])->where('status',1)->paginate(5);
+    }]])->where('status',true)->paginate(5);
     return view('LibraryDocs/allDocuments')->with(['files'=>$files]);
     }
     public function findFileDashboard(Request $request){
@@ -128,8 +128,8 @@ class FilesController extends Controller
                 }   
     }]])->paginate(5);
     $allFiles=files::count();
-    $allAcFiles=files::where('status',1)->count();
-    $allNacFiles=files::where('status',0)->count();
+    $allAcFiles=files::where('status',true)->count();
+    $allNacFiles=files::where('status',false)->count();
     return view('Dashboard/All-files')->with(['allNacFiles'=>$allNacFiles,'allAcFiles'=>$allAcFiles,'allFiles'=>$allFiles,'files'=>$files]);
     }
     public function update(Request $request, $id)
