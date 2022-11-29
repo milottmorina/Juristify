@@ -22,7 +22,7 @@ class ContactController extends Controller
 
         $contacts = contact::orderBy('id', 'desc')->paginate(5);
         $c=contact::count();
-        return view('Dashboard/all-contacts')->with(['c'=>$c,'contacts'=>$contacts]);
+        return view('Dashboard/All-contacts')->with(['c'=>$c,'contacts'=>$contacts]);
        
     }
 
