@@ -117,7 +117,7 @@ class FilesController extends Controller
                     $query->where('title', 'LIKE', '%'.$term.'%');
                 }   
     }]])->where('status',1)->paginate(5);
-    return view('LibraryDocs/allDocuments')->with(['files'=>$files]);
+    return view('LibraryDocs/AllDocuments')->with(['files'=>$files]);
     }
     public function findFileDashboard(Request $request){
         $files=files::with('user')->orderBy('id', 'asc')->where([
