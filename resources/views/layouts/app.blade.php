@@ -43,7 +43,7 @@
             <li>
               <a href="{{route('user.index')}}" class="block text-center py-2 px-4 text-sm text-gray-700 hover:bg-gray-100">Profile</a>
             </li>
-            @if (Auth::user()->role===1)
+            @if (Auth::user()->role===true)
             <li>
               <a href="{{route('dashboard.view')}}" class="block text-center py-2 px-4 text-sm text-gray-700 hover:bg-gray-100">Dashboard</a>
             </li>
