@@ -40,7 +40,7 @@ class BlogController extends Controller
         $allBlogs=blog::count();
         $NonAcBlogs=blog::where('active',false)->count();
         $AcBlogs=blog::where('active',true)->count();
-        return view('Dashboard/All-blogs')->with(['AcBlogs'=>$AcBlogs,'NonAcBlogs'=>$NonAcBlogs,'blogs'=>$blogs,'allBlogs'=>$allBlogs]);
+        return view('Dashboard/all-blogs')->with(['AcBlogs'=>$AcBlogs,'NonAcBlogs'=>$NonAcBlogs,'blogs'=>$blogs,'allBlogs'=>$allBlogs]);
     }
     public function cverifiko($id){
         $blog = blog::findOrFail($id);
@@ -148,7 +148,7 @@ class BlogController extends Controller
     $allBlogs=blog::count();
     $NonAcBlogs=blog::where('active',false)->count();
     $AcBlogs=blog::where('active',true)->count();
-    return view('Dashboard/All-blogs')->with(['AcBlogs'=>$AcBlogs,'NonAcBlogs'=>$NonAcBlogs,'allBlogs'=>$allBlogs,'blogs'=>$blogs]);
+    return view('Dashboard/all-blogs')->with(['AcBlogs'=>$AcBlogs,'NonAcBlogs'=>$NonAcBlogs,'allBlogs'=>$allBlogs,'blogs'=>$blogs]);
     }
   
      public function update(Request $request, $id)
