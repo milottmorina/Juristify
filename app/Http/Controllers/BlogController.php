@@ -122,7 +122,7 @@ class BlogController extends Controller
                     $query->where('title', 'LIKE', '%'.$term.'%');
                 }   
     }]])->paginate(5);
-    return view('Blog/Blog')->with(['blogs'=>$blogs]);
+    return view('Blog/blog')->with(['blogs'=>$blogs]);
     }
     
     public function findMyBlog(Request $request){
