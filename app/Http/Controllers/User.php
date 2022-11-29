@@ -48,7 +48,7 @@ class User extends Controller
                 }
                 
     }]])->paginate(5);
-    return view('Dashboard/users')->with(['users'=>$users,'us'=>$us,'usAc'=>$usAc,'usNac'=>$usNac]);
+    return view('Dashboard/Users')->with(['users'=>$users,'us'=>$us,'usAc'=>$usAc,'usNac'=>$usNac]);
     }
     public function getVerifiedUsers(){
         
@@ -56,28 +56,28 @@ class User extends Controller
         $usAc=ModelsUser::where('verified',1)->count();
         $usNac=ModelsUser::where('verified',0)->count();
         $users = ModelsUser::orderBy('id', 'asc')->where('verified',1)->paginate(5);
-        return view('Dashboard/users')->with(['users'=>$users,'us'=>$us,'usAc'=>$usAc,'usNac'=>$usNac]);
+        return view('Dashboard/Users')->with(['users'=>$users,'us'=>$us,'usAc'=>$usAc,'usNac'=>$usNac]);
     }
     public function getNonVerifiedUsers(){
         $us=ModelsUser::count();
         $usAc=ModelsUser::where('verified',1)->count();
         $usNac=ModelsUser::where('verified',0)->count();
         $users = ModelsUser::orderBy('id', 'asc')->where('verified',0)->paginate(5);
-        return view('Dashboard/users')->with(['users'=>$users,'us'=>$us,'usAc'=>$usAc,'usNac'=>$usNac]);
+        return view('Dashboard/Users')->with(['users'=>$users,'us'=>$us,'usAc'=>$usAc,'usNac'=>$usNac]);
     }
     public function getAdmin(){
         $us=ModelsUser::count();
         $usAc=ModelsUser::where('verified',1)->count();
         $usNac=ModelsUser::where('verified',0)->count();
         $users = ModelsUser::orderBy('id', 'asc')->where('role',1)->paginate(5);
-        return view('Dashboard/users')->with(['users'=>$users,'us'=>$us,'usAc'=>$usAc,'usNac'=>$usNac]);
+        return view('Dashboard/Users')->with(['users'=>$users,'us'=>$us,'usAc'=>$usAc,'usNac'=>$usNac]);
     }
     public function getDefaultUsers(){
         $us=ModelsUser::count();
         $usAc=ModelsUser::where('verified',1)->count();
         $usNac=ModelsUser::where('verified',0)->count();
         $users = ModelsUser::orderBy('id', 'asc')->where('role',0)->paginate(5);
-        return view('Dashboard/users')->with(['users'=>$users,'us'=>$us,'usAc'=>$usAc,'usNac'=>$usNac]);
+        return view('Dashboard/Users')->with(['users'=>$users,'us'=>$us,'usAc'=>$usAc,'usNac'=>$usNac]);
     }
     public function dashboard(){
         if(Auth::user() && Auth::user()->role===1){
@@ -90,7 +90,7 @@ class User extends Controller
             $files=files::count();
             $infos=information::count();
             $contact=contact::count();
-        return view('dashboard/dashboard')->with(['contact'=>$contact,'infos'=>$infos,'us'=>$us,'usAc'=>$usAc,'usNac'=>$usNac,'blog'=>$blog,'blogAc'=>$blogAc,'blogNac'=>$blogNac,'file'=>$files]);
+        return view('Dashboard/Dashboard')->with(['contact'=>$contact,'infos'=>$infos,'us'=>$us,'usAc'=>$usAc,'usNac'=>$usNac,'blog'=>$blog,'blogAc'=>$blogAc,'blogNac'=>$blogNac,'file'=>$files]);
     }else{
         return redirect('/home');
     }
@@ -99,7 +99,7 @@ class User extends Controller
         return view('Profile/Profile');
     }
     public function changePas(){
-        return view('Profile/password');
+        return view('Profile/Password');
     }
     public function recentUploads(){
         return view('Profile/AllMyFiles');
