@@ -48,7 +48,7 @@ class NewsController extends Controller
                     $query->where('title', 'LIKE', '%'.$term.'%');
                 }   
     }]])->paginate(5);
-    return view('Dashboard/All-news')->with(['news'=>$news,'nw'=>$nw]);
+    return view('Dashboard/all-news')->with(['news'=>$news,'nw'=>$nw]);
     }
 
     
