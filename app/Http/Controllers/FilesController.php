@@ -21,7 +21,7 @@ class FilesController extends Controller
     public function index()
     {
         $files = files::with('user')->where('user_id',Auth::user()->id)->orderBy('id', 'desc')->paginate(5);
-        return view('profile/AllMyFiles')->with(['files'=>$files]);
+        return view('Profile/AllMyFiles')->with(['files'=>$files]);
     }
 
     public function showAll(){
@@ -29,7 +29,7 @@ class FilesController extends Controller
         $allFiles=files::count();
         $allAcFiles=files::where('status',1)->count();
         $allNacFiles=files::where('status',0)->count();
-        return view('dashboard/all-files')->with(['allNacFiles'=>$allNacFiles,'allAcFiles'=>$allAcFiles,'allFiles'=>$allFiles,'files'=>$files]);
+        return view('Dashboard/All-files')->with(['allNacFiles'=>$allNacFiles,'allAcFiles'=>$allAcFiles,'allFiles'=>$allFiles,'files'=>$files]);
     }
 
     public function cverifiko($id){
@@ -94,7 +94,7 @@ class FilesController extends Controller
     {
         $files = files::with('user')->where('status',1)->orderBy('id', 'desc')->paginate(10);
 
-        return view('LibraryDocs/allDocuments')->with(['files'=>$files]);
+        return view('LibraryDocs/AllDocuments')->with(['files'=>$files]);
     }
 
     public function findMyFile(Request $request){
@@ -106,7 +106,7 @@ class FilesController extends Controller
                 }  
             }]
         ])->where('user_id',Auth::user()->id)->paginate(5);
-        return view('profile/AllMyFiles')->with(['files'=>$files]);
+        return view('Profile/AllMyFiles')->with(['files'=>$files]);
     }
 
     public function findFile(Request $request){
@@ -130,7 +130,7 @@ class FilesController extends Controller
     $allFiles=files::count();
     $allAcFiles=files::where('status',1)->count();
     $allNacFiles=files::where('status',0)->count();
-    return view('dashboard/all-files')->with(['allNacFiles'=>$allNacFiles,'allAcFiles'=>$allAcFiles,'allFiles'=>$allFiles,'files'=>$files]);
+    return view('Dashboard/All-files')->with(['allNacFiles'=>$allNacFiles,'allAcFiles'=>$allAcFiles,'allFiles'=>$allFiles,'files'=>$files]);
     }
     public function update(Request $request, $id)
     {
