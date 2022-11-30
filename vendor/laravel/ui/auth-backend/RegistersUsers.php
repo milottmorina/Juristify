@@ -35,7 +35,7 @@ trait RegistersUsers
         {
         $this->guard()->login($user);
         }else{
-            return back()->with('msg','You have been registered but please be patient until we verify your account!');
+            return back()->with('msg','You have been registered, but please be patient until we verify your account!');
         }
 
         if ($response = $this->registered($request, $user)) {
