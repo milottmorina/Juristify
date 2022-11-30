@@ -30,10 +30,14 @@ trait RegistersUsers
     public function register(Request $request)
     {
         $this->validator($request->all())->validate();
-
+        dd($request->all());
         event(new Registered($user = $this->create($request->all())));
-
+        if($request->verified===true)
+        {
         $this->guard()->login($user);
+        }else{
+            return back()->with('msg','You have been registered but please be patient until we verify your account!');
+        }
 
         if ($response = $this->registered($request, $user)) {
             return $response;
