@@ -25,7 +25,7 @@ class NewsController extends Controller
     {
         $news = news::with('user')->orderBy('id', 'desc')->paginate(9);
         $nw=news::count();
-        return view('dashboard/all-news')->with(['news'=>$news,'nw'=>$nw]);
+        return view('Dashboard/all-news')->with(['news'=>$news,'nw'=>$nw]);
     }
     public function findNews(Request $request){
         $news=news::orderBy('id', 'desc')->where([
@@ -48,7 +48,7 @@ class NewsController extends Controller
                     $query->where('title', 'LIKE', '%'.$term.'%');
                 }   
     }]])->paginate(5);
-    return view('dashboard/all-news')->with(['news'=>$news,'nw'=>$nw]);
+    return view('Dashboard/all-news')->with(['news'=>$news,'nw'=>$nw]);
     }
 
     
@@ -91,7 +91,7 @@ class NewsController extends Controller
     public function show($id)
     {
         $news = news::with('user')->findOrFail($id);
-        return view('News/Single')->with(['news'=>$news]);
+        return view('News/single')->with(['news'=>$news]);
     }
   
     public function update(Request $request, $id)
