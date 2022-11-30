@@ -91,7 +91,7 @@ class NewsController extends Controller
     public function show($id)
     {
         $news = news::with('user')->findOrFail($id);
-        return view('News/Single')->with(['news'=>$news]);
+        return view('News/single')->with(['news'=>$news]);
     }
   
     public function update(Request $request, $id)
