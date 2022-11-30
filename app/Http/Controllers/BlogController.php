@@ -111,7 +111,7 @@ class BlogController extends Controller
         if($blogs->active!==true){
             return redirect('/blog');
         }
-        return view('Blog/Single')->with(['blogs'=>$blogs,'comments'=>$comments]);
+        return view('Blog/single')->with(['blogs'=>$blogs,'comments'=>$comments]);
     }
 
     public function findBlog(Request $request){
