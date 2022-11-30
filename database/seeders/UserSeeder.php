@@ -16,20 +16,21 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
-        for($i=0;$i<50000;$i++){
+      
             DB::table('users')->insert([
-            'name'=>Str::random(12),
-            'surname'=>Str::random(12),
-            'email'=>Str::random(12).'@gmail.com',
-            'role'=>rand(0,1),
-            'verified'=>rand(0,1),
-            'password'=>'$2y$10$Aqp2QETtd4sIr9QfIk2Vcunbp5lqSzi8BWw6i5VFfS66l8Wj3h8VK',
+            'name'=>'Florian',
+            'surname'=>'Murseli',
+            'email'=>'florian'.'@gmail.com',
+            'role'=>1,
+            'verified'=>1,
+            'password'=>'$2y$10$7C5PBBU/emlNDqftzPKjJepifqdcKv1zc4YlI8znTXl8OlW9y3gXS',
             'gender'=>'Mashkull',
             'university'=>'UBT',
-            'birthday'=>'2022-10-30',
-            'img'=>'public/noProfilePhoto/nofoto.jpg'
+            'birthday'=>'2002-10-30',
+            'img'=>'public/noProfilePhoto/nofoto.jpg',
+             'id_card'=>'public/id_kartela/LmEEd5z8RfqWjfQ0SW5siIOKsG7bYHfPKWTqpJEG.png'
         ]);
-        }
+     
         
     }
 }

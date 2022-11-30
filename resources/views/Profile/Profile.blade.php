@@ -14,7 +14,7 @@
     <div class="max-w-screen-xl mx-auto pb-6 px-4 sm:px-6 lg:pb-16 lg:px-8">
       <div class="bg-white rounded-lg shadow overflow-hidden">
         <div class="divide-y divide-gray-200 lg:grid lg:grid-cols-12 lg:divide-y-0 lg:divide-x">
-          @include('profile/aside')
+          @include('Profile/aside')
           <form class="divide-y divide-gray-200 lg:col-span-9" 
           action="{{route('user.update',Auth::user()->id)}}" 
           method="POST" enctype='multipart/form-data'>

@@ -21,7 +21,7 @@ class BlogController extends Controller
    
     public function index()
     {
-        $blogs = blog::with('user')->active(1)->orderBy('id', 'desc')->paginate(9);
+        $blogs = blog::with('user')->active(true)->orderBy('id', 'desc')->paginate(9);
         return view('Blog/blog')->with(['blogs'=>$blogs]);
     }
 
@@ -38,13 +38,13 @@ class BlogController extends Controller
     public function showAll(){
         $blogs = blog::with('user')->orderBy('id', 'desc')->paginate(5);
         $allBlogs=blog::count();
-        $NonAcBlogs=blog::where('active',0)->count();
-        $AcBlogs=blog::where('active',1)->count();
-        return view('dashboard/all-blogs')->with(['AcBlogs'=>$AcBlogs,'NonAcBlogs'=>$NonAcBlogs,'blogs'=>$blogs,'allBlogs'=>$allBlogs]);
+        $NonAcBlogs=blog::where('active',false)->count();
+        $AcBlogs=blog::where('active',true)->count();
+        return view('Dashboard/all-blogs')->with(['AcBlogs'=>$AcBlogs,'NonAcBlogs'=>$NonAcBlogs,'blogs'=>$blogs,'allBlogs'=>$allBlogs]);
     }
     public function cverifiko($id){
         $blog = blog::findOrFail($id);
-        $blog->active=0;
+        $blog->active=false;
         $blog->save();
         $email=UserModel::select('email')->where('id',$blog->user_id)->get();
         Mail::to($email)->send(new BlogDeactivated($email));    
@@ -52,7 +52,7 @@ class BlogController extends Controller
     }
     public function verifiko($id){
         $blog = blog::findOrFail($id);
-        $blog->active=1;
+        $blog->active=true;
         $blog->save();
         $email=UserModel::select('email')->where('id',$blog->user_id)->get();
         Mail::to($email)->send(new BlogActivate($email));    
@@ -62,7 +62,7 @@ class BlogController extends Controller
     public function store(Request $request)
     {
         $blog = $request->hasFile('img');
-        if ($blog && Auth::user()->role===0) {
+        if ($blog && Auth::user()->role===false) {
             $request->validate([
                 'title' => ['required','max:100','min:4'],
                 'description' => ['required','max:6000','min:10'],
@@ -77,7 +77,7 @@ class BlogController extends Controller
                 'img' => $blog_path,
                 'category'=>$request['category'],
                 'user_id' => Auth::user()->id,
-                'active'=>0
+                'active'=>false
             ]);
        return back()->with('msg','Blog is stored succesfully, please be patient until we verify!');
         }else{
@@ -96,7 +96,7 @@ class BlogController extends Controller
                 'img' => $blog_path,
                 'category'=>$request['category'],
                 'user_id' => Auth::user()->id,
-                'active'=>1
+                'active'=>true
             ]);
             return back()->with('msg','Blog is stored successfully!');
         }
@@ -108,14 +108,14 @@ class BlogController extends Controller
     {
         $blogs = blog::with('user')->findOrFail($id);
         $comments = Comment::with('user','blog')->where('blog_id',$id)->orderBy('id', 'desc')->paginate(10);
-        if($blogs->active!==1){
+        if($blogs->active!==true){
             return redirect('/blog');
         }
-        return view('Blog/Single')->with(['blogs'=>$blogs,'comments'=>$comments]);
+        return view('Blog/single')->with(['blogs'=>$blogs,'comments'=>$comments]);
     }
 
     public function findBlog(Request $request){
-        $blogs=blog::active(1)->with('user')->orderBy('id', 'desc')->where([
+        $blogs=blog::active(true)->with('user')->orderBy('id', 'desc')->where([
             ['title', '!=' , Null],
             [function ($query) use ($request){
                 if(($term=$request->term)){
@@ -146,9 +146,9 @@ class BlogController extends Controller
                 }   
     }]])->paginate(5);
     $allBlogs=blog::count();
-    $NonAcBlogs=blog::where('active',0)->count();
-    $AcBlogs=blog::where('active',1)->count();
-    return view('dashboard/all-blogs')->with(['AcBlogs'=>$AcBlogs,'NonAcBlogs'=>$NonAcBlogs,'allBlogs'=>$allBlogs,'blogs'=>$blogs]);
+    $NonAcBlogs=blog::where('active',false)->count();
+    $AcBlogs=blog::where('active',true)->count();
+    return view('Dashboard/all-blogs')->with(['AcBlogs'=>$AcBlogs,'NonAcBlogs'=>$NonAcBlogs,'allBlogs'=>$allBlogs,'blogs'=>$blogs]);
     }
   
      public function update(Request $request, $id)
