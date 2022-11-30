@@ -112,12 +112,18 @@ trait AuthenticatesUsers
         $this->clearLoginAttempts($request);
 
         if ($response = $this->authenticated($request, $this->guard()->user())) {
+        
             return $response;
         }
-
-        return $request->wantsJson()
+        if(Auth::user()->verified!=true){
+            Auth::logout();
+            return back()->with('msg','You are registered, but please be patient until we verify your account!');
+        }else{
+                return $request->wantsJson()
                     ? new JsonResponse([], 204)
                     : redirect()->intended($this->redirectPath());
+        }
+    
     }
 
     /**
