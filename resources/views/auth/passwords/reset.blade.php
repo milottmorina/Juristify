@@ -1,7 +1,6 @@
 <title>Reset Password</title>
 <script src="https://cdn.tailwindcss.com"></script>
-<link href="{{ asset('css/app.css') }}" rel="stylesheet">
-@vite(['resources/sass/app.scss', 'resources/js/app.js'])
+<link rel="stylesheet" href="{{ asset('build/assets/app.f06e8bcd.css') }}"> 
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
