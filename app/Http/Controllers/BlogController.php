@@ -130,7 +130,7 @@ class BlogController extends Controller
             ['title', '!=' , Null],
             [function ($query) use ($request){
                 if(($term=$request->term)){
-                    $query->where('title', 'LIKE', '%'.$term.'%');
+                    $query->where('title', 'ILIKE', '%'.$term.'%');
                 }  
             }]
         ])->where('user_id',Auth::user()->id)->paginate(9);
@@ -142,7 +142,7 @@ class BlogController extends Controller
             ['title', '!=' , Null],
             [function ($query) use ($request){
                 if(($term=$request->term)){
-                    $query->where('title', 'LIKE', '%'.$term.'%');
+                    $query->where('title', 'ILIKE', '%'.$term.'%');
                 }   
     }]])->paginate(5);
     $allBlogs=blog::count();
