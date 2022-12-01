@@ -119,7 +119,7 @@ class BlogController extends Controller
             ['title', '!=' , Null],
             [function ($query) use ($request){
                 if(($term=$request->term)){
-                    $query->where('title', 'LIKE', '%'.$term.'%');
+                    $query->where('title', 'ILIKE', '%'.$term.'%');
                 }   
     }]])->paginate(5);
     return view('Blog/blog')->with(['blogs'=>$blogs]);
