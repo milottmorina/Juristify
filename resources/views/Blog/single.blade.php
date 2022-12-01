@@ -97,10 +97,12 @@
             </div>
             <div class="flex">
             <div class="text-sm ml-4 mt-0.5 text-gray-500 ">{{$c->created_at}}</div>
-            @if (Auth::user() && Auth::user()->id===$c->user_id || Auth::user()->role===true)
+            @if (Auth::user() && Auth::user()->id===$c->user_id)
             <div class="text-sm ml-4 mt-0.5 text-gray-500 "><a data-modal-toggle="defaultModal{{$c->id}}" class="text-primary">Edit</a></div>
+            @endif
+             @if (Auth::user() && Auth::user()->id===$c->user_id || Auth::user()->role===true)
             <div class="text-sm ml-4 mt-0.5 "><a data-modal-toggle="popup-modal{{$c->id}}" class="text-red-600 hover:text-red-900">Delete</a></div>
-          @endif
+            @endif
           </div>
            
           </div>
