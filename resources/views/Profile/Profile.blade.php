@@ -33,50 +33,21 @@
               </div>
               @endif
               @php
-              $link = explode('/', Auth::user()->img);
               $link2 = explode('/', Auth::user()->id_card);
               @endphp
-              <div class="mt-6 flex flex-col lg:flex-row">
-                <div class="mt-6 flex-grow lg:mt-0 lg:ml-6 lg:flex-grow-0 lg:flex-shrink-0">
-                  <p class="text-sm font-medium text-gray-700" aria-hidden="true">Click on photo to change it</p>
-                  <div class="mt-1 lg:hidden">
-                    <div class="flex items-center">
-                      <div class="flex-shrink-0 inline-block rounded-full overflow-hidden h-12 w-12" aria-hidden="true">
-                        @if (Auth::user()->img==="public/noProfilePhoto/nofoto.jpg")  
-                    <img class="rounded-full h-full w-full" src="{{asset('/noProfilePhoto/'.$link[2])}}" alt="">
-                    @else
-                    <img class="rounded-full h-full w-full"  src="/storage/img/{{$link[2]}}" alt="Rounded avatar">
-                    @endif
-                      </div>
-                      <div class="ml-5 rounded-md shadow-sm">
-                        <div class="group relative border border-gray-300 rounded-md py-2 px-3 flex items-center justify-center hover:bg-gray-50 focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-sky-500">
-                          <label for="mobile-user-photo" class="relative text-sm leading-4 font-medium text-gray-700 pointer-events-none">
-                            <span>Change</span>
-                            <span class="sr-only"> user photo</span>
-                          </label>
-                          <input id="mobile-user-photo" name="img" type="file" class="absolute w-full h-full opacity-0 cursor-pointer border-gray-300 rounded-md">
-                        </div>
-                      </div>
+              <div class="flex flex-col flex-row">
+                  <div class="mt-6 flex flex-col lg:flex-row">
+                    <div class="border-2 rounded mt-6 flex-grow lg:mt-0 lg:ml-6 lg:flex-grow-0 lg:flex-shrink-0">
+                      <p class="text-sm font-medium text-gray-700" aria-hidden="true">Click here to change the profile photo</p>
+                      <input type="file" id="desktop-user-photo" name="img" class="inset-0 w-full h-full opacity-0 cursor-pointer border-gray-300 rounded-md">
                     </div>
-                  </div>
-                  <div class="hidden relative rounded-full overflow-hidden lg:block">
-                    @if (Auth::user()->img==="public/noProfilePhoto/nofoto.jpg")  
-                    <img class="relative rounded-full w-40 h-40 object-cover" src="{{asset('/noProfilePhoto/'.$link[2])}}" alt="">
-                    @else
-                    <img class="relative rounded-full w-40 h-40 object-cover"  src="/storage/img/{{$link[2]}}" alt="Rounded avatar">
-                    @endif
-                    <label for="desktop-user-photo" class="absolute inset-0 w-full h-full bg-black bg-opacity-75 flex items-center justify-center text-sm font-medium text-white opacity-0 hover:opacity-100 focus-within:opacity-100">
-                      <span>Change</span>
-                      <span class="sr-only"> user photo</span>
-                      <input type="file" id="desktop-user-photo" name="img" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer border-gray-300 rounded-md">
-                    </label>
                   </div>
                   <div class="mt-6 grid grid-cols-12 gap-6">
                     <div class="col-span-12 sm:col-span-6">
                       <label for="first-name" class="block text-sm font-medium text-gray-700">Your ID</label>
                   <img class="relative  w-40 h-40 object-cover"  src="/storage/id_kartela/{{$link2[2]}}" alt="Rounded avatar">
                     </div></div>
-                </div>
+               
               </div>
               <div class="mt-6 grid grid-cols-12 gap-6">
                 <div class="col-span-12 sm:col-span-6">
