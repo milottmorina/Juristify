@@ -102,7 +102,7 @@ class FilesController extends Controller
             ['title', '!=' , Null],
             [function ($query) use ($request){
                 if(($term=$request->term)){
-                    $query->where('title', 'LIKE', '%'.$term.'%');
+                    $query->where('title', 'ILIKE', '%'.$term.'%');
                 }  
             }]
         ])->where('user_id',Auth::user()->id)->paginate(5);
@@ -114,7 +114,7 @@ class FilesController extends Controller
             ['title', '!=' , Null],
             [function ($query) use ($request){
                 if(($term=$request->term)){
-                    $query->where('title', 'LIKE', '%'.$term.'%');
+                    $query->where('title', 'ILIKE', '%'.$term.'%');
                 }   
     }]])->where('status',true)->paginate(5);
     return view('LibraryDocs/allDocuments')->with(['files'=>$files]);
@@ -124,7 +124,7 @@ class FilesController extends Controller
             ['title', '!=' , Null],
             [function ($query) use ($request){
                 if(($term=$request->term)){
-                    $query->where('title', 'LIKE', '%'.$term.'%');
+                    $query->where('title', 'ILIKE', '%'.$term.'%');
                 }   
     }]])->paginate(5);
     $allFiles=files::count();
