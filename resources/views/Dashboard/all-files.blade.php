@@ -241,7 +241,7 @@
                                                     <a
                                                         class="block py-2 px-4 hover:bg-gray-100 ">
 
-                                                        @if ($f->status!=1)
+                                                        @if ($f->status!=true)
                                                         <button
                                                             class="block text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
                                                             type="button" data-modal-toggle="p-modal{{$f->id}}">
@@ -276,7 +276,7 @@
                                         </div>
 
                                         <p class="block text-center font-bold">{{$f->title}}</p>
-                                        @if ($f->status===1)
+                                        @if ($f->status===true)
                                         <div class="text-center w-[20%] ml-5">
                                             <h3
                                                 class="w-50 tracking-widest rounded  bg-green-400 text-white p-1 text-xs font-medium title-font">
