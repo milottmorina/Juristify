@@ -107,7 +107,7 @@ class BlogController extends Controller
     public function show($id)
     {
         $blogs = blog::with('user')->findOrFail($id);
-        $comments = Comment::with('user','blog')->where('blog_id',$id)->orderBy('id', 'desc')->paginate(10);
+        $comments = Comment::with('user','blog')->where('blog_id',$id)->orderBy('id', 'desc')->paginate(20);
         if($blogs->active!==true){
             return redirect('/blog');
         }
