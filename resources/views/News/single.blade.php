@@ -6,7 +6,6 @@
 
     <!-- header ends here -->
     @php
-    $link = explode('/', $news->img);
     $linkUser=explode('/',$news->user->img);
 @endphp
     <main class="">
@@ -14,7 +13,7 @@
       <div class="mb-4 md:mb-0 w-full max-w-screen-md mx-auto relative" style="height: 24em;">
         <div class="absolute left-0 bottom-0 w-full h-full z-10"
           style="background-image: linear-gradient(180deg,transparent,rgba(0,0,0,.7));"></div>
-        <img src="{{ asset('storage/news/' . $link[2]) }}" class="absolute left-0 top-0 w-full h-full z-0 object-contain" />
+        <img src="{{$news->img }}" class="absolute left-0 top-0 w-full h-full z-0 object-contain" />
         <div class="p-4 absolute bottom-0 left-0 z-20">
 
           <h2 class="text-4xl font-semibold text-gray-100 leading-tight">
@@ -22,7 +21,7 @@
           </h2>
           <div class="flex mt-3">
             @if ($news->user->img!="public/noProfilePhoto/nofoto.jpg")  
-            <img class="h-10 w-10 rounded-full mr-2 object-cover"  src="/storage/img/{{$linkUser[2]}}" alt="Rounded avatar">
+            <img class="h-10 w-10 rounded-full mr-2 object-cover"  src="{{$news->user->img}}" alt="Rounded avatar">
             @else
             <img class="h-10 w-10 rounded-full mr-2 object-cover" src="{{asset('/noProfilePhoto/'.$linkUser[2])}}" alt="Rounded avatar">
           

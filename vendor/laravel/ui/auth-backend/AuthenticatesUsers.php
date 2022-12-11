@@ -115,7 +115,7 @@ trait AuthenticatesUsers
         
             return $response;
         }
-        if(Auth::user()->verified!=true){
+        if(Auth::user()->verified!=1){
             Auth::logout();
             return back()->with('msg','You are registered, but please be patient until we verify your account!');
         }else{

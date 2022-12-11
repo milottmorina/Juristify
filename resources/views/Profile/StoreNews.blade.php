@@ -28,6 +28,7 @@
                         <div>
                             <h2 class="text-lg leading-6 font-medium text-gray-900">Upload File</h2>
                         </div>
+                        <div id="msg">
                         @if (Session::has('msg'))
                             <div class=" text-center text-green-600 ">
                                 <div class="p-4 mb-4 text-sm text-green-700 bg-green-100 rounded-lg"
@@ -36,6 +37,7 @@
                                 </div>
                             </div>
                         @endif
+                    </div>
                         @if (Session::has('error'))
                         <div class=" text-center text-red-600 ">
                             <div class="p-4 mb-4 text-sm text-red-700 bg-red-100 rounded-lg"
@@ -58,7 +60,7 @@
                                     </svg>
                                     <p class="mb-2 text-sm text-gray-500"><span
                                             class="font-semibold">Click to upload</span> or drag and drop</p>
-                                    <p class="text-xs text-gray-500">PNG, JPG (MAX. 2MB)</p>
+                                    <p class="text-xs text-gray-500">PNG, JPG (MAX. 4MB)</p>
                                 </div>
                                 <input required id="dropzone-file" type="file" class="@error('img') is-invalid @enderror hidden" name="img">
                                 
@@ -126,5 +128,10 @@
         </div>
     </div>
 </main>
-
+<script>
+    setTimeout(() => {
+const msg = document.getElementById('msg');
+msg.style.display = 'none';
+}, 4000);
+</script>
 @include('layouts.footer')

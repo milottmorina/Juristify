@@ -31,7 +31,7 @@ trait RegistersUsers
     {
         $this->validator($request->all())->validate();
         event(new Registered($user = $this->create($request->all())));
-        if($request->verified===true)
+        if($request->verified===1)
         {
         $this->guard()->login($user);
         }else{

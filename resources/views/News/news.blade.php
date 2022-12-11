@@ -39,22 +39,15 @@
           </form>
            <a href={{route('news.view')}}>
                 <button class="bg-transparent px-6 text-lg font-semibold py-4 rounded-md">Clear</button></a>
-        </div>
-        {{-- @if (count($news)>=1) --}}
-          
+        </div>          
        
-      <div class="flex flex-wrap">
+      <div class="flex flex-wrap mx-[20px]">
     
         @foreach ($news as $n)
-        @php
-        $link = explode('/', $n->img);
-        
-    @endphp
-
         <div class="xl:w-1/3 md:w-1/2 p-4"> 
-           <a href="{{route('news.show',$n->id)}}/?{{$n->title}}">
+           <a href="{{route('news.show',$n->id)}}">
           <div class="bg-white p-6 rounded-lg shadow-xl">
-            <img class="lg:h-60 xl:h-56 md:h-64 sm:h-72 xs:h-72 h-72  rounded w-full  object-contain object-center mb-6" src="{{ asset('storage/news/' . $link[2]) }}" alt="Image Size 720x400">
+            <img class="lg:h-60 xl:h-56 md:h-64 sm:h-72 xs:h-72 h-72  rounded w-full  object-contain object-center mb-6" src="{{$n->img }}" alt="Image Size 720x400">
             <h3 class="tracking-widest text-[#d8b64b] text-xs font-medium title-font ">{{$n->category}} / {{date('d F, Y', strtotime($n->created_at))}}</h3>
             <h2 class="text-lg text-gray-900 font-medium title-font mb-4"> @if (strlen($n->title)>=37)
               {{substr($n->title,0,37)}}... 

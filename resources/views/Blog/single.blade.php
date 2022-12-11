@@ -14,7 +14,7 @@
       <div class="mb-4 md:mb-0 w-full max-w-screen-md mx-auto relative" style="height: 24em;">
         <div class="absolute left-0 bottom-0 w-full h-full z-10"
           style="background-image: linear-gradient(180deg,transparent,rgba(0,0,0,.7));"></div>
-        <img src="{{ asset('storage/blog/' . $link[2]) }}" class="absolute left-0 top-0 w-full h-full z-0 object-cover" />
+        <img src="{{ $blogs->img}}" class="absolute left-0 top-0 w-full h-full z-0 object-cover" />
         <div class="p-4 absolute bottom-0 left-0 z-20">
           <p 
             class="px-4 py-1 bg-black text-gray-200 inline-flex items-center text-[#d8b64b] justify-center mb-2">{{$blogs->category}}</p>
@@ -23,7 +23,7 @@
           </h2>
           <div class="flex mt-3">
             @if ($blogs->user->img!="public/noProfilePhoto/nofoto.jpg")  
-            <img class="h-10 w-10 rounded-full mr-2 object-cover"  src="/storage/img/{{$linkUser[2]}}" alt="Rounded avatar">
+            <img class="h-10 w-10 rounded-full mr-2 object-cover"  src="{{$blogs->user->img}}" alt="Rounded avatar">
             @else
             <img class="h-10 w-10 rounded-full mr-2 object-cover" src="{{asset('/noProfilePhoto/'.$linkUser[2])}}" alt="Rounded avatar">
           
@@ -58,20 +58,10 @@
   <div class="flex items-start py-2 bg-gray-50 rounded-lg ">
     <input type="number" class="hidden" name="blog_id" value="{{$blogs->id}}" />
       <textarea id="chat" name="pershkrimi" rows="1" class="block mx-4 p-2.5 w-full text-sm text-gray-900 bg-white rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 " placeholder="Your message..."></textarea>
-      @if (Auth::user())    
       <button type="submit" class="inline-flex justify-center p-2 text-blue-600 rounded-full cursor-pointer hover:bg-blue-100 ">
           <svg aria-hidden="true" class="w-6 h-6 rotate-90" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M10.894 2.553a1 1 0 00-1.788 0l-7 14a1 1 0 001.169 1.409l5-1.429A1 1 0 009 15.571V11a1 1 0 112 0v4.571a1 1 0 00.725.962l5 1.428a1 1 0 001.17-1.408l-7-14z"></path></svg>
           <span class="sr-only">Send message</span>
       </button>
-      @else
-  
-      <button data-tooltip-target="tooltip-default" type="button" class="text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center ">Comment</button>
-      <div id="tooltip-default" role="tooltip" class="inline-block absolute invisible z-10 py-2 px-3 text-sm font-medium text-white bg-gray-900 rounded-lg shadow-sm opacity-0 transition-opacity duration-300 tooltip" style="position: absolute; inset: 0px auto auto 0px; margin: 0px; transform: translate3d(0px, 408px, 0px);" data-popper-reference-hidden="" data-popper-escaped="" data-popper-placement="bottom">
-          You cannot comment without being loged in!
-          <div class="tooltip-arrow" data-popper-arrow="" style="position: absolute; left: 0px; transform: translate3d(0px, 0px, 0px);"></div>
-      </div>
-      
-        @endif
   </div>
 </form>
 @foreach ($comments as $c)
@@ -83,7 +73,7 @@
 
         <div class=" text-black  p-4 antialiased flex ">
           @if ($c->user->img!="public/noProfilePhoto/nofoto.jpg")  
-                  <img class="h-10 w-10 rounded-full mr-2 object-cover"  src="/storage/img/{{$linkUser[2]}}" alt="Rounded avatar">
+                  <img class="h-10 w-10 rounded-full mr-2 object-cover"  src="{{$c->user->img}}" alt="Rounded avatar">
   @else
           <img class="rounded-full h-8 w-8 mr-2 mt-1 " src="{{asset('/noProfilePhoto/'.$linkCommenter[2])}}"/>
 
@@ -92,14 +82,18 @@
             <div class="bg-gray-100  rounded-3xl px-4 pt-2 pb-2.5">
               <div class="font-semibold text-sm leading-relaxed capitalize">{{$c->user->name." ".$c->user->surname}}</div>
               <div class="text-normal leading-snug md:leading-normal">
-                {{$c->pershkrimi}}
+                {{$c->description}}
             </div>
             </div>
             <div class="flex">
-            <div class="text-sm ml-4 mt-0.5 text-gray-500 ">{{$c->created_at}}</div>
-            @if (Auth::user() && Auth::user()->id===$c->user_id)
+            <div class="text-sm ml-4 mt-0.5 text-gray-500 ">{{$c->created_at->format('d/m/Y')}}</div>
+            @if (Auth::user()->id==$c->user_id)
             <div class="text-sm ml-4 mt-0.5 text-gray-500 "><a data-modal-toggle="defaultModal{{$c->id}}" class="text-primary">Edit</a></div>
             <div class="text-sm ml-4 mt-0.5 "><a data-modal-toggle="popup-modal{{$c->id}}" class="text-red-600 hover:text-red-900">Delete</a></div>
+          @elseif(Auth::user()->role==1)
+          <div class="text-sm ml-4 mt-0.5 "><a data-modal-toggle="popup-modal{{$c->id}}" class="text-red-600 hover:text-red-900">Delete</a></div>
+         @else
+         
           @endif
           </div>
            
@@ -132,7 +126,7 @@
                 <!-- Modal header -->
                 <div class="flex justify-between items-start p-4 rounded-t border-b ">
                     <h3 class="text-xl font-semibold text-gray-900 ">
-                        Terms of Service
+                      Edit Comment
                     </h3>
                     <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center " data-modal-toggle="defaultModal{{$c->id}}">
                         <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
@@ -152,10 +146,7 @@
               <textarea id="comment" name="pershkrimi" rows="4" class="px-0 w-full text-sm text-gray-900 bg-white border-0  focus:ring-0 " placeholder="Write a comment..." required="">{{$c->pershkrimi}}</textarea>
           </div>
           
-      </div>
-    
-    <p class="ml-auto text-xs text-gray-500 ">Remember, contributions to this topic should follow our <a href="#" class="text-blue-600  hover:underline">Community Guidelines</a>.</p>
-    
+      </div>    
                 </div>
                 <!-- Modal footer -->
                 <div class="flex items-center p-6 space-x-2 rounded-b border-t border-gray-200 ">
@@ -177,7 +168,4 @@
 
    
   </div>
-
-
-
 @include('layouts.footer')

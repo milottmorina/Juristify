@@ -28,6 +28,7 @@
                         <div>
                             <h2 class="text-lg leading-6 font-medium text-gray-900">Upload File</h2>
                         </div>
+                        <div id="msg">
                         @if (Session::has('msg'))
                             <div class=" text-center text-green-600 ">
                                 <div class="p-4 mb-4 text-sm text-green-700 bg-green-100 rounded-lg"
@@ -36,6 +37,7 @@
                                 </div>
                             </div>
                         @endif
+                    </div>
 
 
                         <div class="flex justify-center items-center w-full">
@@ -51,7 +53,7 @@
                                     <p class="mb-2 text-sm text-gray-500"><span
                                             class="font-semibold">Click to upload</span> or drag and drop</p>
                                     <p class="text-xs text-gray-500">PNG, JPG (MAX.
-                                        2MB)</p>
+                                        4MB)</p>
                                 </div>
                                 <input required id="dropzone-file" type="file" class="@error('img') is-invalid @enderror hidden" name="img">
                                
@@ -91,7 +93,7 @@
                             <div class="col-span-12 sm:col-span-12 ">
                                 <label for="first-name"
                                     class="block text-sm font-medium text-gray-700">Description</label>
-                                <textarea required type="text" maxlength="2500" rows="12" name="description" id="first-name" autocomplete="given-name"
+                                <textarea required type="text" maxlength="2500" rows="12" name="description" id="editor" autocomplete="given-name"
                                     class="@error('description') is-invalid @enderror mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-sky-500 focus:border-sky-500 sm:text-sm">
                   </textarea>
                   @error('description')
@@ -118,5 +120,10 @@
         </div>
     </div>
 </main>
-
+<script>
+    setTimeout(() => {
+    const msg = document.getElementById('msg');
+    msg.style.display = 'none';
+    }, 4000);
+</script>
 @include('layouts.footer')

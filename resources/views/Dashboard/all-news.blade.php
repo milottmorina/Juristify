@@ -94,7 +94,7 @@
                                                                 <span class="font-semibold">Click to upload</span> or
                                                                 drag and drop</p>
                                                             <p class="text-xs text-gray-500 ">PNG, JPG
-                                                                (MAX. 2MB)</p>
+                                                                (MAX. 4MB)</p>
                                                         </div>
                                                         <input required id="dropzone-file" type="file"
                                                             class="@error('img') is-invalid @enderror hidden"
@@ -191,7 +191,7 @@
                                     <a data-modal-toggle="defaultModal{{ $n->id }}">
                                         <div class="bg-white p-6 rounded-lg">
                                             <img class="lg:h-60 xl:h-56 md:h-64 sm:h-72 xs:h-72 h-72  rounded w-full object-cover object-center mb-6"
-                                                src="{{ asset('storage/news/' . $link[2]) }}"
+                                                src="{{ $n->img }}"
                                                 alt="Image Size 720x400">
                                             <h3 class="tracking-widest text-[#d9b64c] text-xs font-medium title-font ">
                                                 {{ $n->category }} / {{ date('d F, Y', strtotime($n->created_at)) }}
@@ -330,7 +330,7 @@
                                                 @csrf
                                                 <div class="p-6 space-y-6">
                                                     <img class="lg:h-20 xl:h-30 md:h-30  xs:h-30  rounded  object-cover object-center mb-6"
-                                                        src="{{ asset('storage/news/' . $link[2]) }}"
+                                                        src="{{ $n->img }}"
                                                         alt="Image Size 720x400">
 
                                                     <p

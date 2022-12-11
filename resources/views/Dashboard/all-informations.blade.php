@@ -154,7 +154,6 @@
   <div class="grid lg:grid-cols-2 gap-4 mt-5 p-3">   
     @foreach ($infos as $i) 
     @php
-    $link = explode('/', $i->img);
     $rand = array('0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f');
     $color = '#'.$rand[rand(0,15)].$rand[rand(0,15)].$rand[rand(0,15)].$rand[rand(0,15)].$rand[rand(0,15)].$rand[rand(0,15)];
     date_default_timezone_set("Europe/Belgrade");
@@ -163,7 +162,7 @@
     $pos_diff = $earlier->diff($later)->format("%r%a");
     @endphp
     <a data-modal-toggle="defaultModal{{$i->id}}" class="flex flex-col items-center bg-white rounded-lg border shadow-md md:flex-row md:max-w hover:bg-gray-100">
-        <img class="object-cover w-full h-96 rounded-t-lg md:h-auto md:w-48 md:rounded-none md:rounded-l-lg" src="{{ asset('storage/info/' . $link[2]) }}" alt="">
+        <img class="object-cover w-full h-96 rounded-t-lg md:h-auto md:w-48 md:rounded-none md:rounded-l-lg" src="{{$i->img}}" alt="">
         <div class="flex flex-col justify-between p-4 leading-normal">
             <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900">{{ substr($i->title, 0, 12) }}... </h5>
             <span class="flex justify-between bg-[{{$color}}] text-white p-2 rounded">
@@ -299,7 +298,7 @@
                           <input type="file" name="img" id="img" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" >
                       </div>
                   
-                      <img class="object-cover w-5 h-5 rounded-t-lg " src="{{ asset('storage/info/' . $link[2]) }}" alt="">
+                      <img class="object-cover w-5 h-5 rounded-t-lg " src="{{ $i->img }}" alt="">
   
                         <button type="submit" class="w-full text-white bg-[#374151] hover:bg-[#374151] focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Save</button>
                         

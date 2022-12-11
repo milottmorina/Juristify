@@ -8,10 +8,8 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/fontawesome.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/solid.min.css" integrity="sha512-uj2QCZdpo8PSbRGL/g5mXek6HM/APd7k/B5Hx/rkVFPNOxAQMXD+t+bG4Zv8OAdUpydZTU3UHmyjjiHv2Ww0PA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/regular.min.css" integrity="sha512-aNH2ILn88yXgp/1dcFPt2/EkSNc03f9HBFX0rqX3Kw37+vjipi1pK3L9W08TZLhMg4Slk810sPLdJlNIjwygFw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <title>Juristify</title>
     <link rel="stylesheet" href="{{ asset('build/assets/app.f06e8bcd.css') }}"> 
-  
+  <title>JURISTIFY</title>
 </head>
 <body>
   <nav class="bg-gray-700  px-2 sm:px-4 ">
@@ -22,13 +20,14 @@
     </a>
     @if (Auth::user())  
     <div class="flex items-center md:order-2">
+      <button class="text-white mr-2 font-semibold" id="user-menu-button"  aria-expanded="false" data-dropdown-toggle="user-dropdown" data-dropdown-placement="bottom">Profile</button>
        <button type="button" class="flex mr-3 text-sm bg-gray-800 rounded-full md:mr-0 focus:ring-4 focus:ring-gray-300" id="user-menu-button" aria-expanded="false" data-dropdown-toggle="user-dropdown" data-dropdown-placement="bottom">
           <span class="sr-only">Open user menu</span>
           @php
           $link = explode('/', Auth::user()->img);
           @endphp
           @if (Auth::user()->img!="public/noProfilePhoto/nofoto.jpg")  
-          <img class="w-10 h-10 rounded-full object-cover"  src="/storage/img/{{$link[2]}}" alt="Rounded avatar">
+          <img class="w-10 h-10 rounded-full object-cover"  src="{{Auth::user()->img}}" alt="Rounded avatar">
           @else
           <img class="w-10 h-10 rounded-full object-cover" src="{{asset('/noProfilePhoto/'.$link[2])}}" alt="Rounded avatar">
           @endif
@@ -41,24 +40,24 @@
           </div>
           <ul class="py-1" aria-labelledby="user-menu-button">
             <li>
-              <a href="{{route('user.index')}}" class="block text-center py-2 px-4 text-sm text-gray-700 hover:bg-gray-100">Profile</a>
+              <a href="{{route('user.index')}}" class="block text-center py-2 px-4 text-sm text-gray-700">Profile</a>
             </li>
-            @if (Auth::user()->role===true)
+            @if (Auth::user()->role==1)
             <li>
-              <a href="{{route('dashboard.view')}}" class="block text-center py-2 px-4 text-sm text-gray-700 hover:bg-gray-100">Dashboard</a>
+              <a href="{{route('dashboard.view')}}" class="block text-center py-2 px-4 text-sm text-gray-700">Dashboard</a>
             </li>
             @endif
             <li>
               <form  method="POST" action="{{ route('logout') }}">
               @csrf
-                <button class="w-full py-2 px-4 text-sm text-gray-700 hover:bg-gray-100" type="submit" >
+                <button class="w-full py-2 px-4 text-sm text-gray-700" type="submit" >
                 Logout
               </button>
             </form>
             </li>
           </ul>
         </div>      
-        <button data-collapse-toggle="mobile-menu-2" type="button" class="inline-flex items-center p-2 ml-1 text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200" aria-controls="mobile-menu-2" aria-expanded="false">
+        <button data-collapse-toggle="mobile-menu-2" type="button" class="inline-flex items-center p-2 ml-1 text-sm text-gray-500 rounded-lg md:hidden  focus:outline-none focus:ring-2 focus:ring-gray-200" aria-controls="mobile-menu-2" aria-expanded="false">
           <span class="sr-only">Open main menu</span>
           <svg class="w-6 h-6" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clip-rule="evenodd"></path></svg>
       </button>
@@ -66,22 +65,22 @@
     <div class="hidden justify-between items-center  w-full md:flex md:w-auto md:order-1" id="mobile-menu-2">
       <ul class="flex flex-col p-4  rounded-lg   md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium md:border-0 md:bg-gray-700 bg-gray-700 md:bg-gray-700 ">
         <li >
-          <a href="/home" class="text-base font-bold block pr-4 pl-3 text-white  rounded md:bg-transparent md:p-0" aria-current="page">Home</a>
+          <a href="/home" class="text-base font-semibold block pr-4 pl-3 text-white  rounded md:bg-transparent md:p-0" aria-current="page">Home</a>
         </li>
         <li>
-          <a href="{{route('all.uploads')}}" class="text-base font-bold  block pr-4 pl-3 text-white rounded hover:bg-gray-100 md:hover:bg-transparent md:p-0 ">Library</a>
+          <a href="{{route('all.uploads')}}" class="text-base font-semibold  block pr-4 pl-3 text-white rounded  md:hover:bg-transparent md:p-0 ">Library</a>
         </li>
         <li>
-          <a href="{{route('blog.view')}}" class="text-base font-bold block pr-4 pl-3 text-white rounded hover:bg-gray-100 md:hover:bg-transparent md:p-0">Blog</a>
+          <a href="{{route('blog.view')}}" class="text-base font-semibold block pr-4 pl-3 text-white rounded  md:hover:bg-transparent md:p-0">Blog</a>
         </li>
         <li>
-          <a href="{{route('infos.view')}}" class="text-base font-bold block  pr-4 pl-3 text-white rounded hover:bg-gray-100 md:hover:bg-transparent md:p-0">Information</a>
+          <a href="{{route('infos.view')}}" class="text-base font-semibold block  pr-4 pl-3 text-white rounded  md:hover:bg-transparent md:p-0">Information</a>
         </li>
         <li>
-          <a href="{{route('news.view')}}" class="text-base font-bold block  pr-4 pl-3 text-white rounded hover:bg-gray-100 md:hover:bg-transparent md:p-0 ">News</a>
+          <a href="{{route('news.view')}}" class="text-base font-semibold block  pr-4 pl-3 text-white rounded  md:hover:bg-transparent md:p-0 ">News</a>
         </li>
         <li>
-          <a href="{{route('contact.index')}}" class="text-base font-bold block  pr-4 pl-3 text-white rounded hover:bg-gray-100 md:hover:bg-transparent  md:p-0 ">Contact</a>
+          <a href="{{route('contact.index')}}" class="text-base font-semibold block  pr-4 pl-3 text-white rounded  md:hover:bg-transparent  md:p-0 ">Contact</a>
         </li>
         
       </ul>
@@ -92,5 +91,10 @@
   </nav>
   <script src="{{ asset('build/assets/app.4c1df604.js') }}"></script>
 <script src="https://unpkg.com/flowbite@1.5.3/dist/flowbite.js"></script>
+<script>
+  function myFunction(x) {
+    x.classList.toggle("fa-arrow-up");
+  }
+  </script>
 </body>
 </html>

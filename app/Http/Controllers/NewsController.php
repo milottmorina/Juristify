@@ -6,6 +6,8 @@ use App\Models\News;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use Aws\S3\S3Client;
+use Illuminate\Support\Str;
 
 
 class NewsController extends Controller
@@ -66,16 +68,30 @@ class NewsController extends Controller
             $request->validate([
                 'title' => ['required','max:100','min:4'],
                 'description' => ['required','max:7500','min:10'],
-                'img' => ['required','mimes:jpeg,png','max:2048'],
+                'img' => ['required','mimes:jpeg,png','max:4096'],
                 'category' => ['required','max:50'],
 
             ]);
-            $newFile = $request->file('img');
-            $file_path = $newFile->store('/public/news');
+            $newImg = $request->file('img');
+            $fileName=Str::random(30).$newImg->getClientOriginalName();
+            $s3 = new S3Client([
+                'region'  => 'us-east-1',
+                'version' => 'latest',
+                'credentials' => [
+                    'key'    => "AKIAYI7C65632AHOGP4K",
+                    'secret' => "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",
+                ]
+            ]);	
+            $result = $s3->putObject([
+                'Bucket' => 'juristify',
+                'Key'    => $fileName,
+                'SourceFile' => $newImg,	
+                'ACL' => 'public-read'	
+            ]);
             news::create([
                 'title' => $request['title'],
                 'description' => $request['description'],
-                'img' => $file_path,
+                'img' => $result['ObjectURL'],
                 'category'=>$request['category'],
                 'user_id' => Auth::user()->id,
             ]);
@@ -105,11 +121,25 @@ class NewsController extends Controller
                 'category' => ['required','max:20'],
 
             ]);
-        $newFile = $request->file('img');
-        $file_path = $newFile->store('/public/news');
+        $newImg = $request->file('img');
+        $fileName=Str::random(30).$newImg->getClientOriginalName();
+        $s3 = new S3Client([
+            'region'  => 'us-east-1',
+            'version' => 'latest',
+            'credentials' => [
+                'key'    => "AKIAYI7C65632AHOGP4K",
+                'secret' => "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",
+            ]
+        ]);	
+        $result = $s3->putObject([
+            'Bucket' => 'juristify',
+            'Key'    => $fileName,
+            'SourceFile' => $newImg,	
+            'ACL' => 'public-read'	
+        ]);
         $news = News::findOrFail($id);
         $news->user_id = Auth::user()->id;
-        $news->img = $file_path;
+        $news->img = $result['ObjectURL'];
         $news->title = $request->title;
         $news->description = $request->description;
         $news->category = $request->category;
@@ -136,8 +166,6 @@ class NewsController extends Controller
     public function destroy($id)
     {
         $news = news::findOrFail($id);
-        Storage::delete($news->img);
-        Storage::delete("storage/app/".$news->img);
         $news->delete();
         return back();
     }
