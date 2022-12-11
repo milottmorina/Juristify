@@ -1,5 +1,5 @@
 <title>Regjistrohu</title>
-@vite('resources/css/app.css')
+<link rel="stylesheet" href="{{ asset('build/assets/app.f06e8bcd.css') }}"> 
 
 <!-- component -->
 <div class="text-center mt-24">
@@ -19,7 +19,7 @@
     <form class="w-full max-w-xl bg-white rounded-lg shadow-md p-6 drop-shadow-md" method="POST"
         action="{{ route('register') }}" enctype="multipart/form-data">
         @csrf
-        <div class="flex flex-wrap -mx-3 mb-6">
+        <div class="flex flex-wrap mb-6">
             @if (Session::has('msg'))
                 <div class="alert alert-success text-center text-green-600 ml-1 ">
                     <div class="p-4 mb-4 text-sm text-green-700 bg-green-100 rounded-lg"
@@ -160,3 +160,4 @@
         </div>
     </form>
 </div>
+<script src="{{ asset('build/assets/app.4c1df604.js') }}"></script>

@@ -28,6 +28,7 @@
                                 careful what you share.</p>
                         </div>
                     </div>
+                    <div id="msg">
                     @if (Session::has('msg'))
                         <div class=" text-center text-green-600 ">
                             <div class="p-4 mb-4 text-sm text-green-700 bg-green-100 rounded-lg"
@@ -36,6 +37,7 @@
                             </div>
                         </div>
                     @endif
+                </div>
                     <div class="p-4 w-full flex justify-center">
                         <form action="{{ route('blog.findMyBlog') }}" method="GET" role="search">
                           <div class="max-w-xl">
@@ -60,9 +62,9 @@
 
                             <div class="inline-flex px-3 ">
                                 @foreach ($blogs as $b)
-                                    @php
+                                    {{-- @php
                                         $link = explode('/', $b->img);
-                                    @endphp
+                                    @endphp --}}
 
 
 
@@ -107,7 +109,7 @@
 
                                             <div class="bg-white p-6 rounded-lg mb-4">
                                                 <img class="lg:h-60 xl:h-56 md:h-64 sm:h-72 xs:h-72 h-72  rounded w-full object-cover object-center mb-6"
-                                                    src="{{ asset('storage/blog/' . $link[2]) }}"
+                                                    src="{{ $b->img }}"
                                                     alt="Image Size 720x400">
                                                 <div class="flex justify-between">
                                                     <div class="flex justify-start">
@@ -115,7 +117,7 @@
                                                     class="capitalize tracking-widest  text-[#d8b64b] text-xs font-medium title-font">
                                                     {{ $b->category }}</h3>
                                                 </div>
-                                                    @if ($b->active===1)
+                                                    @if ($b->active==1)
                                                     <div class="flex justify-end">
                                                           <h3
                                                     class="tracking-widest rounded  bg-green-400 text-white p-1 text-xs font-medium title-font">
@@ -196,7 +198,7 @@
                                                     <div class="p-6 space-y-6">
                                                         <div class="flex">
                                                             <img class="lg:h-20 xl:h-10 md:h-10 sm:h-10 xs:h-10  rounded object-cover object-center "
-                                                        src="{{ asset('storage/blog/' . $link[2]) }}"
+                                                        src="{{$b->img}}"
                                                         alt="Image Size 720x400">  
                                                        </div>
                                                     <div class="justify-center items-center w-full">
@@ -275,5 +277,10 @@
         </div>
     </div>
 </main>
-
+<script>
+    setTimeout(() => {
+const msg = document.getElementById('msg');
+msg.style.display = 'none';
+}, 4000);
+</script>
 @include('layouts.footer')

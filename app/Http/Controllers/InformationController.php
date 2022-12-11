@@ -6,6 +6,8 @@ use App\Models\information;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use Aws\S3\S3Client;
+use Illuminate\Support\Str;
 
 class InformationController extends Controller
 {   
@@ -41,19 +43,33 @@ class InformationController extends Controller
             $request->validate([
                 'title' => ['required','max:100','min:5'],
                 'description' => ['required','max:5000','min:10'],
-                'img' => ['required','mimes:jpeg,png','max:2048'],
+                'img' => ['required','mimes:jpeg,png','max:4096'],
                 'free_places' => ['required'],
                 'expiration_date'=>['required'],
                 'location' => ['required','max:100','min:4'],
                 'category' => ['required','max:50','min:2'],
                 'company_name' => ['required','max:80','min:3']
             ]);
-            $newFile = $request->file('img');
-            $file_path = $newFile->store('/public/info');
+            $newImg = $request->file('img');
+            $fileName=Str::random(30).$newImg->getClientOriginalName();
+            $s3 = new S3Client([
+                'region'  => 'us-east-1',
+                'version' => 'latest',
+                'credentials' => [
+                    'key'    => "AKIAYI7C65632AHOGP4K",
+                    'secret' => "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",
+                ]
+            ]);	
+            $result = $s3->putObject([
+                'Bucket' => 'juristify',
+                'Key'    => $fileName,
+                'SourceFile' => $newImg,	
+                'ACL' => 'public-read'	
+            ]);
             information::create([
                 'title' => $request['title'],
                 'description' => $request['description'],
-                'img' => $file_path,
+                'img' => $result['ObjectURL'],
                 'free_places'=>$request['free_places'],
                 'expiration_date'=>$request['expiration_date'],
                 'location'=>$request['location'],
@@ -111,11 +127,25 @@ class InformationController extends Controller
                 'category' => ['required','max:50','min:2'],
                 'company_name' => ['required','max:80','min:3'] 
             ]);
-        $newFile = $request->file('img');
-        $file_path = $newFile->store('/public/info');
+        $newImg = $request->file('img');
+        $fileName=Str::random(30).$newImg->getClientOriginalName();
+        $s3 = new S3Client([
+            'region'  => 'us-east-1',
+            'version' => 'latest',
+            'credentials' => [
+                'key'    => "AKIAYI7C65632AHOGP4K",
+                'secret' => "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",
+            ]
+        ]);	
+        $result = $s3->putObject([
+            'Bucket' => 'juristify',
+            'Key'    => $fileName,
+            'SourceFile' => $newImg,	
+            'ACL' => 'public-read'	
+        ]);
         $file = information::findOrFail($id);
         $file->user_id = Auth::user()->id;
-        $file->img = $file_path;
+        $file->img = $result['ObjectURL'];
         $file->title = $request->title;
         $file->description = $request->description;
         $file->category = $request->category;
@@ -153,8 +183,6 @@ class InformationController extends Controller
     public function destroy($id)
     {
         $infos = information::findOrFail($id);
-        Storage::delete($infos->img);
-        Storage::delete("storage/app/".$infos->img);
         $infos->delete();
         return back();
     }

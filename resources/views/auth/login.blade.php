@@ -1,6 +1,6 @@
 <title>Kycu</title>
 
-@vite('resources/css/app.css')
+<link rel="stylesheet" href="{{ asset('build/assets/app.f06e8bcd.css') }}"> 
 <div class="lg:flex">
    <div class="lg:w-1/2 xl:max-w-screen-sm">
        <div class="py-12 bg-gray-200 lg:bg-white flex justify-center lg:justify-start lg:px-12">
@@ -69,9 +69,9 @@
    </div>
    <div class="hidden lg:flex items-center justify-center bg-[#d9b64c] flex-1 h-screen">
        <div class="max-w-xs transform duration-200 hover:scale-110 cursor-pointer">
-           {{--  --}}
-           <img src="{{asset('storyset/login-amico.png')}}" >
+          <img src="{{asset('storyset/login-amico.png')}}" >
 
        </div>
    </div>
 </div>
+<script src="{{ asset('build/assets/app.4c1df604.js') }}"></script>

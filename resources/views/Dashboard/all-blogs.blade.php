@@ -262,7 +262,7 @@
                                                     <a
                                                         class="block py-2 px-4 hover:bg-gray-100 ">
 
-                                                        @if ($f->active != true)
+                                                        @if ($f->active != 1)
                                                         <button
                                                             class="block text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center "
                                                             type="button" data-modal-toggle="p-modal{{ $f->id }}">
@@ -289,7 +289,7 @@
                   ease-in-out mx-3.5 flex justify-center items-center">
 
                                             <a>
-                                                <img class="" src="{{ asset('storage/blog/' . $cv[2]) }}"
+                                                <img class="" src="{{$f->img }}"
                                                     width="100px" />
 
                                             </a>
@@ -297,7 +297,7 @@
                                         </div>
 
                                         <p class="block text-center font-bold">{{ $f->title }}</p>
-                                        @if ($f->active === true)
+                                        @if ($f->active == 1)
                                         <div class="text-center w-[20%] ml-5">
                                             <h3
                                                 class="w-50 tracking-widest rounded  bg-green-400 text-white p-1 text-xs font-medium title-font">
@@ -313,12 +313,12 @@
                                         <div class="flex">
 
                                             <div class="ml-3">
-                                                @if ($f->user->img === 'public/noProfilePhoto/nofoto.jpg')
+                                                @if ($f->user->img == 'public/noProfilePhoto/nofoto.jpg')
                                                 <img class="relative rounded-full w-10 h-10 bottom-[-7px] object-cover"
                                                     src="{{ asset('/noProfilePhoto/' . $link[2]) }}" alt="">
                                                 @else
                                                 <img class="relative rounded-full w-10 h-10 bottom-[-7px] object-cover"
-                                                    src="/storage/img/{{ $link[2] }}" alt="Rounded avatar">
+                                                    src="{{$f->user->img }}" alt="Rounded avatar">
                                                 @endif
                                             </div>
                                             <div>
@@ -421,7 +421,7 @@
                                                         </div>
                                                         <div class="flex">
 
-                                                            <img class="" src="{{ asset('storage/blog/' . $cv[2]) }}"
+                                                            <img class="" src="{{ $f->img }}"
                                                                 width="50px" />
 
                                                         </div>

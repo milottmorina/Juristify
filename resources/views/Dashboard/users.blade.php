@@ -215,7 +215,7 @@
                                         <div class="p-6 space-y-6">
                                             <div class="flex flex-col items-center ">
                                                 @if ($u->img!="public/noProfilePhoto/nofoto.jpg")  
-                                                <img class="mb-3 w-24 h-24 rounded-full shadow-lg object-cover"  src="/storage/img/{{$link[2]}}" alt="Rounded avatar">
+                                                <img class="mb-3 w-24 h-24 rounded-full shadow-lg object-cover"  src="{{$u->img}}" alt="Rounded avatar">
                                                 @else
                                                 <img class="mb-3 w-24 h-24 rounded-full shadow-lg object-cover" src="{{asset('/noProfilePhoto/'.$link[2])}}" alt="Rounded avatar">
                                               
@@ -245,7 +245,7 @@
                                                         @endif</span></div>
                                                         <span>ID Card:</span>
 
-                                                        <img src="/storage/id_kartela/{{$linkId[2]}}" width="150px" alt="" alt="id">
+                                                        <img src="{{$u->id_card}}" width="150px" alt="" alt="id">
                                             
                                         
                                                     

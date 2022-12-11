@@ -4,11 +4,12 @@
        <div class="flex flex-wrap lg:justify-between -mx-4">
           <div class="w-full lg:w-1/2 xl:w-6/12 px-4">
              <div class="max-w-[570px] mb-12 lg:mb-0">
-                <span class="block mb-4 text-base text-[#d9b64c] font-semibold">
-                Contact Us
-                </span>
+               <span class="px-5 block mb-4 text-base text-[#d9b64c] font-semibold">
+                  Contact Us
+                  </span>
                 <h2
                    class="
+                   px-5
                    text-dark
                    mb-6
                    uppercase
@@ -21,11 +22,9 @@
                    >
                    GET IN TOUCH WITH US
                 </h2>
-                <p class="text-base text-body-color leading-relaxed mb-9">
-                   Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                   eius tempor incididunt ut labore et dolore magna aliqua. Ut enim
-                   adiqua minim veniam quis nostrud exercitation ullamco
-                </p>
+                  <p class="text-base text-dark leading-relaxed mb-9 px-5">
+                 Për çdo pyetje tuajën, ne jemi këtu për t'ju mbështetur.
+                  </p>
                 <div class="flex mb-8 max-w-[370px] w-full">
                    <div
                       class="
@@ -49,7 +48,7 @@
                    <div class="w-full">
                       <h4 class="font-bold text-dark text-xl mb-1">Our Location</h4>
                       <p class="text-base text-body-color">
-                         Rruga Isa Boletini - Prishtine
+                        Rr. Nëna Terezë, Fakulteti i Arteve, Kati -1, Zyra nr.IV(kampusi i UP-së)
                       </p>
                    </div>
                 </div>
@@ -75,7 +74,7 @@
                    </div>
                    <div class="w-full">
                       <h4 class="font-bold text-dark text-xl mb-1">Phone Number</h4>
-                      <p class="text-base text-body-color">(+383)81 414 257 9980</p>
+                      <p class="text-base text-body-color">(+383)43 840 808</p>
                    </div>
                 </div>
                 <div class="flex mb-8 max-w-[370px] w-full">
@@ -102,7 +101,7 @@
                       <h4 class="font-bold text-dark text-xl mb-1">
                          Email Address
                       </h4>
-                      <p class="text-base text-body-color">juristify@gmail.com</p>
+                      <p class="text-base text-body-color">info@juristify.net</p>
                    </div>
                 </div>
              </div>

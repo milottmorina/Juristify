@@ -11,7 +11,7 @@
           
           @endphp
           @if (Auth::user()->img!="public/noProfilePhoto/nofoto.jpg")  
-          <img class="w-10 h-10 rounded-full object-cover"  src="/storage/img/{{$link[2]}}" alt="Rounded avatar">
+          <img class="w-10 h-10 rounded-full object-cover"  src="{{Auth::user()->img}}" alt="Rounded avatar">
           @else
           <img class="w-10 h-10 rounded-full object-cover" src="{{asset('/noProfilePhoto/'.$link[2])}}" alt="Rounded avatar">
         

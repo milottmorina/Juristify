@@ -10,6 +10,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Mail;
 use App\Models\User as UserModel;
+use Aws\S3\S3Client;
+use Illuminate\Support\Str;
 
 class FilesController extends Controller
 {
@@ -27,14 +29,14 @@ class FilesController extends Controller
     public function showAll(){
         $files = files::with('user')->orderBy('id', 'desc')->paginate(5);
         $allFiles=files::count();
-        $allAcFiles=files::where('status',true)->count();
-        $allNacFiles=files::where('status',false)->count();
+        $allAcFiles=files::where('status',1)->count();
+        $allNacFiles=files::where('status',0)->count();
         return view('Dashboard/all-files')->with(['allNacFiles'=>$allNacFiles,'allAcFiles'=>$allAcFiles,'allFiles'=>$allFiles,'files'=>$files]);
     }
 
     public function cverifiko($id){
         $files = files::findOrFail($id);
-        $files->status=false;
+        $files->status=0;
         $files->save();
         $email=UserModel::select('email')->where('id',$files->user_id)->get();
         Mail::to($email)->send(new LibraryDeactivated($email));   
@@ -42,7 +44,7 @@ class FilesController extends Controller
     }
     public function verifiko($id){
         $files = files::findOrFail($id);
-        $files->status=true;
+        $files->status=1;
         $files->save();
         $email=UserModel::select('email')->where('id',$files->user_id)->get();
         Mail::to($email)->send(new LibraryActivated($email));  
@@ -53,21 +55,35 @@ class FilesController extends Controller
     {
       
         $file = $request->hasFile('file');
-        if ($file && Auth::user()->role===true) {
+        if ($file && Auth::user()->role==1) {
         
         $request->validate([
             'title' => ['required','max:100','min:4'],
             'description' => ['required','max:1000','min:10'],
             'file' => ['required','mimes:pdf,docx','max:2048'],
         ]);
-            $newFile = $request->file('file');
-            $file_path = $newFile->store('/public/dokumentet');
+            $newImg = $request->file('file');
+            $fileName=Str::random(30).$newImg->getClientOriginalName();
+            $s3 = new S3Client([
+                'region'  => 'us-east-1',
+                'version' => 'latest',
+                'credentials' => [
+                    'key'    => "AKIAYI7C65632AHOGP4K",
+                    'secret' => "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",
+                ]
+            ]);	
+            $result = $s3->putObject([
+                'Bucket' => 'juristify',
+                'Key'    => $fileName,
+                'SourceFile' => $newImg,	
+                'ACL' => 'public-read'	
+            ]);
             files::create([
                 'title' => $request['title'],
                 'description' => $request['description'],
-                'file' => $file_path,
+                'file' => $result['ObjectURL'],
                 'user_id' => Auth::user()->id,
-                'status'=>true
+                'status'=>1
             ]);
         return back()->with('msg','Document has been successfully stored!');
         }else{
@@ -76,14 +92,28 @@ class FilesController extends Controller
                 'description' => ['required','max:1000','min:10'],
                 'file' => ['required','mimes:pdf,docx','max:2048'],
             ]);
-                $newFile = $request->file('file');
-                $file_path = $newFile->store('/public/dokumentet');
+            $newImg = $request->file('file');
+            $fileName=Str::random(30).$newImg->getClientOriginalName();
+            $s3 = new S3Client([
+                'region'  => 'us-east-1',
+                'version' => 'latest',
+                'credentials' => [
+                    'key'    => "AKIAYI7C65632AHOGP4K",
+                    'secret' => "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",
+                ]
+            ]);	
+            $result = $s3->putObject([
+                'Bucket' => 'juristify',
+                'Key'    => $fileName,
+                'SourceFile' => $newImg,	
+                'ACL' => 'public-read'	
+            ]);
                 files::create([
                     'title' => $request['title'],
                     'description' => $request['description'],
-                    'file' => $file_path,
+                    'file' => $result['ObjectURL'],
                     'user_id' => Auth::user()->id,
-                    'status'=>false
+                    'status'=>0
                 ]);
                 return back()->with('msg','Document has been successfully stored, please be patient until we approve the file!');
         }
@@ -92,7 +122,7 @@ class FilesController extends Controller
 
     public function show()
     {
-        $files = files::with('user')->where('status',true)->orderBy('id', 'desc')->paginate(10);
+        $files = files::with('user')->where('status',1)->orderBy('id', 'desc')->paginate(10);
 
         return view('LibraryDocs/allDocuments')->with(['files'=>$files]);
     }
@@ -116,7 +146,7 @@ class FilesController extends Controller
                 if(($term=$request->term)){
                     $query->where('title', 'ILIKE', '%'.$term.'%');
                 }   
-    }]])->where('status',true)->paginate(5);
+    }]])->where('status',1)->paginate(5);
     return view('LibraryDocs/allDocuments')->with(['files'=>$files]);
     }
     public function findFileDashboard(Request $request){
@@ -128,8 +158,8 @@ class FilesController extends Controller
                 }   
     }]])->paginate(5);
     $allFiles=files::count();
-    $allAcFiles=files::where('status',true)->count();
-    $allNacFiles=files::where('status',false)->count();
+    $allAcFiles=files::where('status',1)->count();
+    $allNacFiles=files::where('status',0)->count();
     return view('Dashboard/all-files')->with(['allNacFiles'=>$allNacFiles,'allAcFiles'=>$allAcFiles,'allFiles'=>$allFiles,'files'=>$files]);
     }
     public function update(Request $request, $id)
@@ -139,15 +169,29 @@ class FilesController extends Controller
             $request->validate([
             'title' => ['required','max:100','min:4'],
             'description' => ['required','max:1000','min:10'],
-            'file' => ['required','mimes:pdf,docx','max:2048'],
+            'file' => ['required','mimes:pdf,docx','max:4096'],
             ]);
-            $newFile = $request->file('file');
-            $file_path = $newFile->store('/public/dokumentet');
+            $newImg = $request->file('file');
+            $fileName=Str::random(30).$newImg->getClientOriginalName();
+            $s3 = new S3Client([
+                'region'  => 'us-east-1',
+                'version' => 'latest',
+                'credentials' => [
+                    'key'    => "AKIAYI7C65632AHOGP4K",
+                    'secret' => "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",
+                ]
+            ]);	
+            $result = $s3->putObject([
+                'Bucket' => 'juristify',
+                'Key'    => $fileName,
+                'SourceFile' => $newImg,	
+                'ACL' => 'public-read'	
+            ]);
             $file = files::findOrFail($id);
             $file->title = $request->title;
             $file->user_id=$file->user_id;
             $file->description = $request->description;
-            $file->file=$file_path;
+            $file->file=$result['ObjectURL'];
             $file->save();
             return back()->with('msg','File successfully updated!');
         }else{
@@ -169,8 +213,6 @@ class FilesController extends Controller
     public function destroy($id)
     {
         $file = files::findOrFail($id);
-        Storage::delete($file->file);
-        Storage::delete("storage/app/".$file->file);
         $file->delete();
         return back()->with('msg','File deleted successfully!');
     }

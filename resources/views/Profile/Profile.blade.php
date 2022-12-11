@@ -25,16 +25,14 @@
                 <h2 class="text-lg leading-6 font-medium text-gray-900">Profile</h2>
                 <p class="mt-1 text-sm text-gray-500">This information will be displayed publicly so be careful what you share.</p>
               </div>
+              <div id="msg">
               @if (Session::has('msg'))
-              <div class=" text-center text-green-600 ">
+              <div class="text-center text-green-600 ">
                  <div class="p-4 mb-4 text-sm text-green-700 bg-green-100 rounded-lg" role="alert">
                     <span class="font-medium">{!! \Session::get('msg') !!}</span> 
                   </div>
               </div>
-              @endif
-              @php
-              $link2 = explode('/', Auth::user()->id_card);
-              @endphp
+              @endif</div>
               <div class="flex flex-col flex-row">
                   <div class="mt-6 flex flex-col lg:flex-row">
                     <div class="border-2 rounded mt-6 flex-grow lg:mt-0 lg:ml-6 lg:flex-grow-0 lg:flex-shrink-0">
@@ -45,7 +43,7 @@
                   <div class="mt-6 grid grid-cols-12 gap-6">
                     <div class="col-span-12 sm:col-span-6">
                       <label for="first-name" class="block text-sm font-medium text-gray-700">Your ID</label>
-                  <img class="relative  w-40 h-40 object-cover"  src="/storage/id_kartela/{{$link2[2]}}" alt="Rounded avatar">
+                  <img class="relative  w-40 h-40 object-cover"  src="{{Auth::user()->id_card}}" alt="Rounded avatar">
                     </div></div>
                
               </div>
@@ -100,5 +98,10 @@
       </div>
     </div>
   </main>
-
+<script>
+      setTimeout(() => {
+    const msg = document.getElementById('msg');
+    msg.style.display = 'none';
+    }, 4000);
+</script>
 @include('layouts.footer')

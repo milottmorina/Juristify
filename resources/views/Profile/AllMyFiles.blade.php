@@ -28,6 +28,7 @@
                                 careful what you share.</p>
                         </div>
                     </div>
+                    <div id="msg">
                     @if (Session::has('msg'))
                     <div class=" text-center text-green-600 ">
                         <div class="p-4 mb-4 text-sm text-green-700 bg-green-100 rounded-lg"
@@ -36,6 +37,7 @@
                         </div>
                     </div>
                     @endif
+                </div>
                     <div class="p-4 w-full flex justify-center">
                         <form action="{{ route('file.findMyFile') }}" method="GET" role="search">
                           <div class="max-w-xl">
@@ -97,17 +99,14 @@
                                         </ul>
 
                                     </div>
-
-
                                     <div class="w-64 h-64 max-w-xs overflow-hidden rounded-lg shadow-md
                hover:shadow-xl transition-shadow duration-300
               ease-in-out mx-3.5 flex justify-center items-center">
-
-                                        <a href="/storage/dokumentet/{{ $cv[2] }}" download>
+                                        <a href="{{ $f->file}}" download>
                                             <img class="ml-2 justify-center"
                                                 src="{{ asset('/noProfilePhoto/docs.png') }}" width="100px" />
-                                            <p class="block text-center">{{$f->title}}</p>
-                                            @if ($f->status===1)
+                                            <p class="block text-center">{{substr($f->title,0,6)}}...</p>
+                                            @if ($f->status==1)
                                             <div class="text-center">
                                                 <h3
                                                     class="tracking-widest rounded  bg-green-400 text-white p-1 text-xs font-medium title-font">
@@ -232,7 +231,7 @@
                                                     <div class="flex">
                                                         <i class="fa-solid fa-file text-[#d8b64b] mr-1 fs-4"></i><a
                                                             class="fs-4 underline text-[#d8b64b]"
-                                                            href="/storage/dokumentet/{{ $cv[2] }}"
+                                                            href="{{$f->file}}"
                                                             download>{{$f->title}}</a>
 
                                                     </div>
@@ -290,5 +289,10 @@
             </div>
         </div>
 </main>
-
+<script>
+    setTimeout(() => {
+const msg = document.getElementById('msg');
+msg.style.display = 'none';
+}, 4000);
+</script>
 @include('layouts.footer')
