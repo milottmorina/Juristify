@@ -90,9 +90,9 @@ class InformationController extends Controller
             ['category', '!=' , Null],
             [function ($query) use ($request){
                 if(($term=$request->term)){
-                    $query->where('title', 'LIKE', '%'.$term.'%')
-                    ->orWhere('location', 'LIKE', '%'.$term.'%')
-                    ->orWhere('category', 'LIKE', '%'.$term.'%');
+                    $query->where('title', 'ILIKE', '%'.$term.'%')
+                    ->orWhere('location', 'ILIKE', '%'.$term.'%')
+                    ->orWhere('category', 'ILIKE', '%'.$term.'%');
                 }
     }]])->where('expiration_date','>',$date)->paginate(12);
     return view('Information/information')->with(['infos'=>$infos]);
@@ -105,9 +105,9 @@ class InformationController extends Controller
             ['category', '!=' , Null],
             [function ($query) use ($request){
                 if(($term=$request->term)){
-                    $query->where('title', 'LIKE', '%'.$term.'%')
-                    ->orWhere('location', 'LIKE', '%'.$term.'%')
-                    ->orWhere('category', 'LIKE', '%'.$term.'%');
+                    $query->where('title', 'ILIKE', '%'.$term.'%')
+                    ->orWhere('location', 'ILIKE', '%'.$term.'%')
+                    ->orWhere('category', 'ILIKE', '%'.$term.'%');
                 }  
     }]])->paginate(6);
     return view('Dashboard/all-informations')->with(['infos'=>$infos]);

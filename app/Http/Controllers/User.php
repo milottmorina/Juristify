@@ -45,8 +45,8 @@ class User extends Controller
             ['surname', '!=' , Null],
             [function ($query) use ($request){
                 if(($term=$request->term)){
-                    $query->where('name', 'LIKE', '%'.$term.'%')
-                    ->orWhere(DB::raw('CONCAT(name," ",surname)'), 'LIKE', '%' . $term . '%');
+                    $query->where('name', 'ILIKE', '%'.$term.'%')
+                    ->orWhere('surname', 'ILIKE', '%' . $term . '%');
                 }
                 
     }]])->paginate(5);

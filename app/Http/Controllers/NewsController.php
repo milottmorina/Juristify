@@ -34,7 +34,7 @@ class NewsController extends Controller
             ['title', '!=' , Null],
             [function ($query) use ($request){
                 if(($term=$request->term)){
-                    $query->where('title', 'LIKE', '%'.$term.'%');
+                    $query->where('title', 'ILIKE', '%'.$term.'%');
                 }   
     }]])->paginate(5);
     return view('News/news')->with(['news'=>$news]);
@@ -47,7 +47,7 @@ class NewsController extends Controller
             ['title', '!=' , Null],
             [function ($query) use ($request){
                 if(($term=$request->term)){
-                    $query->where('title', 'LIKE', '%'.$term.'%');
+                    $query->where('title', 'ILIKE', '%'.$term.'%');
                 }   
     }]])->paginate(5);
     return view('Dashboard/all-news')->with(['news'=>$news,'nw'=>$nw]);
