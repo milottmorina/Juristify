@@ -43,7 +43,10 @@
                   <div class="mt-6 grid grid-cols-12 gap-6">
                     <div class="col-span-12 sm:col-span-6">
                       <label for="first-name" class="block text-sm font-medium text-gray-700">Your ID</label>
-                  <img class="relative  w-40 h-40 object-cover"  src="{{Auth::user()->id_card}}" alt="Rounded avatar">
+                      @php 
+                    $link = explode('/', Auth::user()->id_card);
+                      @endphp
+                  <img class="relative  w-40 h-40 object-cover"  src="/storage/id_card/{{ $link[2] }}" alt="Rounded avatar">
                     </div></div>
                
               </div>

@@ -32,4 +32,11 @@
             </a>
         </div>
     </div>
+    <div class="py-6 px-4 bg-gray-800 md:flex md:items-center md:justify-center">
+        <div class="flex mt-4 space-x-6 justify-center md:mt-0">
+            <a href="http://www.reetech.ch/" class="text-white hover:text-white-900 ml-1">Powered by:
+                <img class="relative right-[12px]"  src="{{asset('sponsorLogos/reetech.png')}}" alt="reetech" width="120px">
+            </a> 
+        </div>
+    </div>
 </footer>

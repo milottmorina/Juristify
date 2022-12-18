@@ -62,9 +62,9 @@
 
                             <div class="inline-flex px-3 ">
                                 @foreach ($blogs as $b)
-                                    {{-- @php
+                                    @php
                                         $link = explode('/', $b->img);
-                                    @endphp --}}
+                                    @endphp
 
 
 
@@ -109,7 +109,7 @@
 
                                             <div class="bg-white p-6 rounded-lg mb-4">
                                                 <img class="lg:h-60 xl:h-56 md:h-64 sm:h-72 xs:h-72 h-72  rounded w-full object-cover object-center mb-6"
-                                                    src="{{ $b->img }}"
+                                                    src="/storage/blog/{{ $link[2] }}"
                                                     alt="Image Size 720x400">
                                                 <div class="flex justify-between">
                                                     <div class="flex justify-start">
@@ -198,7 +198,7 @@
                                                     <div class="p-6 space-y-6">
                                                         <div class="flex">
                                                             <img class="lg:h-20 xl:h-10 md:h-10 sm:h-10 xs:h-10  rounded object-cover object-center "
-                                                        src="{{$b->img}}"
+                                                        src="/storage/blog/{{ $link[2] }}"
                                                         alt="Image Size 720x400">  
                                                        </div>
                                                     <div class="justify-center items-center w-full">

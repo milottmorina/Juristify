@@ -14,16 +14,16 @@
       <div class="mb-4 md:mb-0 w-full max-w-screen-md mx-auto relative" style="height: 24em;">
         <div class="absolute left-0 bottom-0 w-full h-full z-10"
           style="background-image: linear-gradient(180deg,transparent,rgba(0,0,0,.7));"></div>
-        <img src="{{ $blogs->img}}" class="absolute left-0 top-0 w-full h-full z-0 object-cover" />
+        <img src="/storage/blog/{{ $link[2] }}" class="absolute left-0 top-0 w-full h-full z-0 object-cover" />
         <div class="p-4 absolute bottom-0 left-0 z-20">
           <p 
             class="px-4 py-1 bg-black text-gray-200 inline-flex items-center text-[#d8b64b] justify-center mb-2">{{$blogs->category}}</p>
-          <h2 class="text-4xl font-semibold text-gray-100 leading-tight">
+          <h2 class="text-2xl font-semibold text-gray-100 leading-tight">
             {{$blogs->title}}
           </h2>
           <div class="flex mt-3">
             @if ($blogs->user->img!="public/noProfilePhoto/nofoto.jpg")  
-            <img class="h-10 w-10 rounded-full mr-2 object-cover"  src="{{$blogs->user->img}}" alt="Rounded avatar">
+            <img class="h-10 w-10 rounded-full mr-2 object-cover"  src="/storage/img/{{ $linkUser[2] }}" alt="Rounded avatar">
             @else
             <img class="h-10 w-10 rounded-full mr-2 object-cover" src="{{asset('/noProfilePhoto/'.$linkUser[2])}}" alt="Rounded avatar">
           
@@ -73,16 +73,15 @@
 
         <div class=" text-black  p-4 antialiased flex ">
           @if ($c->user->img!="public/noProfilePhoto/nofoto.jpg")  
-                  <img class="h-10 w-10 rounded-full mr-2 object-cover"  src="{{$c->user->img}}" alt="Rounded avatar">
-  @else
+                  <img class="h-10 w-10 rounded-full mr-2 object-cover"  src="/storage/img/{{ $linkCommenter[2] }}" alt="Rounded avatar">
+          @else
           <img class="rounded-full h-8 w-8 mr-2 mt-1 " src="{{asset('/noProfilePhoto/'.$linkCommenter[2])}}"/>
-
           @endif
           <div>
             <div class="bg-gray-100  rounded-3xl px-4 pt-2 pb-2.5">
               <div class="font-semibold text-sm leading-relaxed capitalize">{{$c->user->name." ".$c->user->surname}}</div>
               <div class="text-normal leading-snug md:leading-normal">
-                {{$c->description}}
+                {{$c->pershkrimi}}
             </div>
             </div>
             <div class="flex">
@@ -90,9 +89,6 @@
             @if (Auth::user()->id==$c->user_id)
             <div class="text-sm ml-4 mt-0.5 text-gray-500 "><a data-modal-toggle="defaultModal{{$c->id}}" class="text-primary">Edit</a></div>
             <div class="text-sm ml-4 mt-0.5 "><a data-modal-toggle="popup-modal{{$c->id}}" class="text-red-600 hover:text-red-900">Delete</a></div>
-          @elseif(Auth::user()->role==1)
-          <div class="text-sm ml-4 mt-0.5 "><a data-modal-toggle="popup-modal{{$c->id}}" class="text-red-600 hover:text-red-900">Delete</a></div>
-         @else
          
           @endif
           </div>
@@ -108,7 +104,7 @@
                   </button>
                   <div class="p-6 text-center">
                       <svg aria-hidden="true" class="mx-auto mb-4 w-14 h-14 text-gray-400 " fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                      <h3 class="mb-5 text-lg font-normal text-gray-500 ">Are you sure you want to delete this product?</h3>
+                      <h3 class="mb-5 text-lg font-normal text-gray-500 ">Are you sure you want to delete this comment?</h3>
                       <a href="{{route('comment.delete',$c->id)}}">
                       <button data-modal-toggle="popup-modal{{$c->id}}" type="submit" class="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center mr-2">
                           Yes, I'm sure

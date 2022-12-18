@@ -121,7 +121,7 @@
                 </div>
                 <div class="w-full">
                    <h4 class="font-bold text-white text-xl mb-1">Phone Number</h4>
-                   <p class="text-base text-white">(+383)43 840 808</p>
+                   <p class="text-base text-white">(+383)43 840 808 <br> (+383) 45 260 465</p>
                 </div>
              </div>
              <div class="flex mb-8 max-w-[370px] w-full">
