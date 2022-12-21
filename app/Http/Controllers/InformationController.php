@@ -51,11 +51,25 @@ class InformationController extends Controller
                 'company_name' => ['required','max:80','min:3']
             ]);
             $newImg = $request->file('img');
-            $file_path = $newImg->store('/public/info');
+            $fileName=Str::random(30).$newImg->getClientOriginalName();
+            $s3 = new S3Client([
+                'region'  => 'us-east-1',
+                'version' => 'latest',
+                'credentials' => [
+                    'key'    => "AKIAYI7C65632AHOGP4K",
+                    'secret' => "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",
+                ]
+            ]);	
+            $result = $s3->putObject([
+                'Bucket' => 'juristify',
+                'Key'    => $fileName,
+                'SourceFile' => $newImg,	
+                'ACL' => 'public-read'	
+            ]);
             information::create([
                 'title' => $request['title'],
                 'description' => $request['description'],
-                'img' => $file_path,
+                'img' => $result['ObjectURL'],
                 'free_places'=>$request['free_places'],
                 'expiration_date'=>$request['expiration_date'],
                 'location'=>$request['location'],
@@ -76,9 +90,9 @@ class InformationController extends Controller
             ['category', '!=' , Null],
             [function ($query) use ($request){
                 if(($term=$request->term)){
-                    $query->where('title', 'LIKE', '%'.$term.'%')
-                    ->orWhere('location', 'LIKE', '%'.$term.'%')
-                    ->orWhere('category', 'LIKE', '%'.$term.'%');
+                    $query->where('title', 'ILIKE', '%'.$term.'%')
+                    ->orWhere('location', 'ILIKE', '%'.$term.'%')
+                    ->orWhere('category', 'ILIKE', '%'.$term.'%');
                 }
     }]])->where('expiration_date','>',$date)->paginate(12);
     return view('Information/information')->with(['infos'=>$infos]);
@@ -91,9 +105,9 @@ class InformationController extends Controller
             ['category', '!=' , Null],
             [function ($query) use ($request){
                 if(($term=$request->term)){
-                    $query->where('title', 'LIKE', '%'.$term.'%')
-                    ->orWhere('location', 'LIKE', '%'.$term.'%')
-                    ->orWhere('category', 'LIKE', '%'.$term.'%');
+                    $query->where('title', 'ILIKE', '%'.$term.'%')
+                    ->orWhere('location', 'ILIKE', '%'.$term.'%')
+                    ->orWhere('category', 'ILIKE', '%'.$term.'%');
                 }  
     }]])->paginate(6);
     return view('Dashboard/all-informations')->with(['infos'=>$infos]);
@@ -114,10 +128,24 @@ class InformationController extends Controller
                 'company_name' => ['required','max:80','min:3'] 
             ]);
         $newImg = $request->file('img');
-        $file_path = $newImg->store('/public/info');
+        $fileName=Str::random(30).$newImg->getClientOriginalName();
+        $s3 = new S3Client([
+            'region'  => 'us-east-1',
+            'version' => 'latest',
+            'credentials' => [
+                'key'    => "AKIAYI7C65632AHOGP4K",
+                'secret' => "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",
+            ]
+        ]);	
+        $result = $s3->putObject([
+            'Bucket' => 'juristify',
+            'Key'    => $fileName,
+            'SourceFile' => $newImg,	
+            'ACL' => 'public-read'	
+        ]);
         $file = information::findOrFail($id);
         $file->user_id = Auth::user()->id;
-        $file->img = $file_path;
+        $file->img = $result['ObjectURL'];
         $file->title = $request->title;
         $file->description = $request->description;
         $file->category = $request->category;

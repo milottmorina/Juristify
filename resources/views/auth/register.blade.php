@@ -83,15 +83,8 @@
                 <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for='Password'>University</label>
                 <select name="university"
                     class="@error('university') is-invalid @enderror appearance-none block w-full bg-white text-gray-900 font-medium border border-gray-400 rounded-lg py-3 px-3 leading-tight focus:outline-none"
-                    id="grid-state"> 
-                    <option value="Universiteti i Prishtines">Universiteti i Prishtines</option>
-                    <option value="Universiteti Hasan Prishtina">Universiteti "Hasan Prishtina"</option>
-                    <option value="Universiteti Ukshin Hoti">Universiteti "Ukshin Hoti"</option>
-                    <option value="Universiteti Haxhi Zeka">Universiteti "Haxhi Zeka"</option>
-                    <option value="Universiteti Fehmi Agani">Universiteti "Fehmi Agani"</option>
-                    <option value="Universiteti Kadri Zeka">Universiteti "Kadri Zeka"</option>
-                    <option value="Universiteti Isa Boletini">Universiteti "Isa Boletini"</option>
-                    <option value="Kolegj Privat">Kolegj Privat</option>
+                    id="grid-state">
+                    <option>Universiteti i Prishtines</option>
                 </select>
                 @error('university')
                     <span class="invalid-feedback" role="alert">

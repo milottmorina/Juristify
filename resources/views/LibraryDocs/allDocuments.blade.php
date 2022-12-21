@@ -147,11 +147,9 @@
             @foreach ($files as $f)
                 @php
                     $photo=explode('/',$f->user->img);
-                    $link = explode('/', $f->file);
                 @endphp
                 <div>
-                    <a href="/storage/files/{{ $link[2] }}" download>
-                        
+                    <a href="{{$f->file}}" download>
                         <div
                             class="w-64 h-64 max-w-xs overflow-hidden rounded-lg shadow-md
 hover:shadow-xl transition-shadow duration-300
@@ -162,7 +160,7 @@ ease-in-out mx-3.5 flex justify-center items-center">
                     <h3 class="block text-center text-lg mx-4  font-bold capitalize max-w-[230px]">{{ $f->title }}</h3>
                     @if ($f->user->img!="public/noProfilePhoto/nofoto.jpg")  
                     <div class="flex p-2 ml-3">
-                    <img class="w-10 h-10 rounded-full object-cover"  src="/storage/img/{{ $photo[2] }}" alt="Rounded avatar">
+                    <img class="w-10 h-10 rounded-full object-cover"  src="{{$f->user->img}}" alt="Rounded avatar">
                     <p class="capitalize mt-2 ml-1">{{$f->user->name." ".$f->user->surname}}</p>
                     </div>
                     @else

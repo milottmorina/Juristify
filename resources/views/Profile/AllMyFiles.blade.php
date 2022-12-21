@@ -62,8 +62,12 @@
                             <div class="inline-flex px-3 ">
                                 @foreach ($files as $f)
                                 @php
-                                $link = explode('/', $f->file);
+                                $cv = explode('/', $f->file);
                                 @endphp
+
+
+
+
                                 <div>
                                     <button id="dropdownMenuIconButton" data-dropdown-toggle="dropdownDots{{$f->id}}"
                                         class="ml-3 inline-flex items-center p-2 text-sm font-medium text-center text-gray-900 bg-white rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none"
@@ -98,7 +102,7 @@
                                     <div class="w-64 h-64 max-w-xs overflow-hidden rounded-lg shadow-md
                hover:shadow-xl transition-shadow duration-300
               ease-in-out mx-3.5 flex justify-center items-center">
-                                        <a href="/storage/files/{{ $link[2] }}" download>
+                                        <a href="{{ $f->file}}" download>
                                             <img class="ml-2 justify-center"
                                                 src="{{ asset('/noProfilePhoto/docs.png') }}" width="100px" />
                                             <p class="block text-center">{{substr($f->title,0,6)}}...</p>
@@ -227,7 +231,7 @@
                                                     <div class="flex">
                                                         <i class="fa-solid fa-file text-[#d8b64b] mr-1 fs-4"></i><a
                                                             class="fs-4 underline text-[#d8b64b]"
-                                                            href="/storage/files/{{ $link[2] }}"
+                                                            href="{{$f->file}}"
                                                             download>{{$f->title}}</a>
 
                                                     </div>

@@ -62,11 +62,24 @@ class RegisterController extends Controller
             'img'=>"public/noProfilePhoto/nofoto.jpg",
             'password' => Hash::make($data['password']),
         ]);
-        $id_card = request()->hasFile('id_card');
-        if($id_card){
-            $newFile = request()->file('id_card');
-            $file_path = $newFile->store('/public/id_card');
-            $data->update(['id_card'=>$file_path]);
+       if(request()->hasFile('id_card')){
+        $s3 = new S3Client([
+            'region'  => 'us-east-1',
+            'version' => 'latest',
+            'credentials' => [
+                'key'    => "AKIAYI7C65632AHOGP4K",
+                'secret' => "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",
+            ]
+        ]);	 
+        $newImg = request()->file('id_card');
+        $fileName=Str::random(30).$newImg->getClientOriginalName();
+        $result = $s3->putObject([
+            'Bucket' => 'juristify',
+            'Key'    => $fileName,
+            'SourceFile' => $newImg,	
+            'ACL' => 'public-read'	
+        ]);
+            $data->update(['id_card'=>$result['ObjectURL']]);
         }
    
         return $data;

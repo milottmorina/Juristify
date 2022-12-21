@@ -187,7 +187,7 @@
         <a href="{{ route('blog.show', $b->id) }}">
           <div class="bg-white p-6 rounded-lg shadow-xl">
             <img class="lg:h-60 xl:h-56 md:h-64 sm:h-72 xs:h-72 h-72  rounded w-full object-cover object-center mb-6"
-              src="/storage/blog/{{ $link[2] }}" alt="Image Size 720x400">
+              src="{{$b->img}}" alt="Image Size 720x400">
             <h3 class="tracking-widest  text-[#d8b64b] text-xs font-medium title-font">
               {{ $b->category }}</h3>
             <h2 class="text-lg text-gray-900 font-medium title-font mb-4">{{ $b->title }}</h2>

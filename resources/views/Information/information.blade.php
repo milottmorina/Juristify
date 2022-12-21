@@ -45,10 +45,9 @@ date_default_timezone_set("Europe/Belgrade");
 $earlier = new DateTime(date("Y-m-d"));
 $later = new DateTime($i->expiration_date);
 $pos_diff = $earlier->diff($later)->format("%r%a");
-$link=explode('/',$i->img);
 @endphp
 <a data-modal-toggle="defaultModal{{$i->id}}" class="flex flex-col items-center bg-white rounded-lg border shadow-md md:flex-row md:max-w hover:bg-gray-100">
-    <img class="object-cover w-full h-96 rounded-t-lg md:h-auto md:w-48 md:rounded-none md:rounded-l-lg" src="/storage/info/{{ $link[2] }}" alt="">
+    <img class="object-cover w-full h-96 rounded-t-lg md:h-auto md:w-48 md:rounded-none md:rounded-l-lg" src="{{ $i->img }}" alt="">
     <div class="flex flex-col justify-between p-4 leading-normal">
         <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900">{{ substr($i->title, 0, 12) }}... </h5>
         <span class="flex justify-between bg-[{{$color}}] text-white p-2 rounded">

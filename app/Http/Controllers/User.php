@@ -45,8 +45,8 @@ class User extends Controller
             ['surname', '!=' , Null],
             [function ($query) use ($request){
                 if(($term=$request->term)){
-                    $query->where('name', 'LIKE', '%'.$term.'%')
-                    ->orWhere('surname', 'LIKE', '%' . $term . '%');
+                    $query->where('name', 'ILIKE', '%'.$term.'%')
+                    ->orWhere('surname', 'ILIKE', '%' . $term . '%');
                 }
                 
     }]])->paginate(5);
@@ -148,13 +148,27 @@ class User extends Controller
         $user = ModelsUser::findOrFail($id);
 
         if ($img) {
-            $request->validate(['img'=>'mimes:jpeg,png','max:4096']);	 
+            $request->validate(['img'=>'mimes:jpeg,png','max:4096']);
+            $s3 = new S3Client([
+                'region'  => 'us-east-1',
+                'version' => 'latest',
+                'credentials' => [
+                    'key'    => "AKIAYI7C65632AHOGP4K",
+                    'secret' => "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",
+                ]
+            ]);	 
             $newImg = $request->file('img');
-            $file_path = $newImg->store('/public/img');
+            $fileName=Str::random(30).$newImg->getClientOriginalName();
+            $result = $s3->putObject([
+                'Bucket' => 'juristify',
+                'Key'    => $fileName,
+                'SourceFile' => $newImg,	
+                'ACL' => 'public-read'	
+            ]);
             $user->street = $request->street;
             $user->phoneNo = $request->phoneNo;
             $user->email = $request->email;
-            $user->img = $file_path;
+            $user->img = $result['ObjectURL'];
         
             $user->save();
             return back()->with('msg','Your profile data has been successfully updated!');

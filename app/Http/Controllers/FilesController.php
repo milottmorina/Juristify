@@ -63,11 +63,25 @@ class FilesController extends Controller
             'file' => ['required','mimes:pdf,docx','max:2048'],
         ]);
             $newImg = $request->file('file');
-            $file_path = $newImg->store('/public/files');
+            $fileName=Str::random(30).$newImg->getClientOriginalName();
+            $s3 = new S3Client([
+                'region'  => 'us-east-1',
+                'version' => 'latest',
+                'credentials' => [
+                    'key'    => "AKIAYI7C65632AHOGP4K",
+                    'secret' => "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",
+                ]
+            ]);	
+            $result = $s3->putObject([
+                'Bucket' => 'juristify',
+                'Key'    => $fileName,
+                'SourceFile' => $newImg,	
+                'ACL' => 'public-read'	
+            ]);
             files::create([
                 'title' => $request['title'],
                 'description' => $request['description'],
-                'file' => $file_path,
+                'file' => $result['ObjectURL'],
                 'user_id' => Auth::user()->id,
                 'status'=>1
             ]);
@@ -79,11 +93,25 @@ class FilesController extends Controller
                 'file' => ['required','mimes:pdf,docx','max:2048'],
             ]);
             $newImg = $request->file('file');
-            $file_path = $newImg->store('/public/files');
+            $fileName=Str::random(30).$newImg->getClientOriginalName();
+            $s3 = new S3Client([
+                'region'  => 'us-east-1',
+                'version' => 'latest',
+                'credentials' => [
+                    'key'    => "AKIAYI7C65632AHOGP4K",
+                    'secret' => "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",
+                ]
+            ]);	
+            $result = $s3->putObject([
+                'Bucket' => 'juristify',
+                'Key'    => $fileName,
+                'SourceFile' => $newImg,	
+                'ACL' => 'public-read'	
+            ]);
                 files::create([
                     'title' => $request['title'],
                     'description' => $request['description'],
-                    'file' => $file_path,
+                    'file' => $result['ObjectURL'],
                     'user_id' => Auth::user()->id,
                     'status'=>0
                 ]);
@@ -104,7 +132,7 @@ class FilesController extends Controller
             ['title', '!=' , Null],
             [function ($query) use ($request){
                 if(($term=$request->term)){
-                    $query->where('title', 'LIKE', '%'.$term.'%');
+                    $query->where('title', 'ILIKE', '%'.$term.'%');
                 }  
             }]
         ])->where('user_id',Auth::user()->id)->paginate(5);
@@ -116,7 +144,7 @@ class FilesController extends Controller
             ['title', '!=' , Null],
             [function ($query) use ($request){
                 if(($term=$request->term)){
-                    $query->where('title', 'LIKE', '%'.$term.'%');
+                    $query->where('title', 'ILIKE', '%'.$term.'%');
                 }   
     }]])->where('status',1)->paginate(5);
     return view('LibraryDocs/allDocuments')->with(['files'=>$files]);
@@ -126,7 +154,7 @@ class FilesController extends Controller
             ['title', '!=' , Null],
             [function ($query) use ($request){
                 if(($term=$request->term)){
-                    $query->where('title', 'LIKE', '%'.$term.'%');
+                    $query->where('title', 'ILIKE', '%'.$term.'%');
                 }   
     }]])->paginate(5);
     $allFiles=files::count();
@@ -144,12 +172,26 @@ class FilesController extends Controller
             'file' => ['required','mimes:pdf,docx','max:4096'],
             ]);
             $newImg = $request->file('file');
-            $file_path = $newImg->store('/public/files');
+            $fileName=Str::random(30).$newImg->getClientOriginalName();
+            $s3 = new S3Client([
+                'region'  => 'us-east-1',
+                'version' => 'latest',
+                'credentials' => [
+                    'key'    => "AKIAYI7C65632AHOGP4K",
+                    'secret' => "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",
+                ]
+            ]);	
+            $result = $s3->putObject([
+                'Bucket' => 'juristify',
+                'Key'    => $fileName,
+                'SourceFile' => $newImg,	
+                'ACL' => 'public-read'	
+            ]);
             $file = files::findOrFail($id);
             $file->title = $request->title;
             $file->user_id=$file->user_id;
             $file->description = $request->description;
-            $file->file=$file_path;
+            $file->file=$result['ObjectURL'];
             $file->save();
             return back()->with('msg','File successfully updated!');
         }else{

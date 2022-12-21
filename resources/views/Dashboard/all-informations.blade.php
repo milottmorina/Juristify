@@ -22,7 +22,7 @@
                   <a href={{route('informations.view')}}>
                       <button class="bg-white px-6 text-lg font-semibold py-4 rounded-md">Clear</button>
                     </a>
-                    <button class="ml-5 h-10 block text-white bg-[#374151] hover:bg-[#374151] focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" type="button" data-modal-toggle="modalJuristify">
+                    <button class="ml-5 h-10 block text-white bg-[#374151] hover:bg-[#374151] focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center" type="button" data-modal-toggle="modalJuristify">
  Create Information
   </button>
               </div>
@@ -32,13 +32,13 @@
   <div id="modalJuristify" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 w-full md:inset-0 h-modal md:h-full justify-center items-center">
       <div class="relative p-4 w-full max-w-2xl h-full md:h-auto">
           <!-- Modal content -->
-          <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+          <div class="relative bg-white rounded-lg shadow">
               <!-- Modal header -->
-              <div class="flex justify-between items-start p-4 rounded-t border-b dark:border-gray-600">
-                  <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
+              <div class="flex justify-between items-start p-4 rounded-t border-b">
+                  <h3 class="text-xl font-semibold text-gray-900">
                       Create Information
                   </h3>
-                  <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-toggle="modalJuristify">
+                  <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center " data-modal-toggle="modalJuristify">
                       <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
                       <span class="sr-only">Close modal</span>
                   </button>
@@ -51,8 +51,8 @@
                         <div class="flex justify-center items-center w-full">
                           
 
-                            <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300" for="file_input">Upload IMG</label>
-                            <input class="@error('img') is-invalid @enderror block w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 cursor-pointer dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" id="file_input" name="img" type="file">
+                            <label class="block mb-2 text-sm font-medium text-gray-900 " for="file_input">Upload IMG</label>
+                            <input class="@error('img') is-invalid @enderror block w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 cursor-pointer" id="file_input" name="img" type="file">
                             
                             @error('img')
                                 <span class="invalid-feedback " role="alert">
@@ -143,7 +143,7 @@
                             </div>
                         </div>
                     </div>
-                    <button type="submit" class="ml-5 h-10 mt-6 block text-white bg-[#374151] hover:bg-[#374151] focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Create</button>
+                    <button type="submit" class="ml-5 h-10 mt-6 block text-white bg-[#374151] hover:bg-[#374151] focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Create</button>
                 </form>
               </div>
               <!-- Modal footer -->
@@ -154,7 +154,6 @@
   <div class="grid lg:grid-cols-2 gap-4 mt-5 p-3">   
     @foreach ($infos as $i) 
     @php
-    $link = explode('/', $i->img);
     $rand = array('0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f');
     $color = '#'.$rand[rand(0,15)].$rand[rand(0,15)].$rand[rand(0,15)].$rand[rand(0,15)].$rand[rand(0,15)].$rand[rand(0,15)];
     date_default_timezone_set("Europe/Belgrade");
@@ -163,9 +162,9 @@
     $pos_diff = $earlier->diff($later)->format("%r%a");
     @endphp
     <a data-modal-toggle="defaultModal{{$i->id}}" class="flex flex-col items-center bg-white rounded-lg border shadow-md md:flex-row md:max-w hover:bg-gray-100">
-        <img class="object-cover w-full h-96 rounded-t-lg md:h-auto md:w-48 md:rounded-none md:rounded-l-lg" src="{{ asset('storage/info/' . $link[2]) }}" alt="">
+        <img class="object-cover w-full h-96 rounded-t-lg md:h-auto md:w-48 md:rounded-none md:rounded-l-lg" src="{{$i->img}}" alt="">
         <div class="flex flex-col justify-between p-4 leading-normal">
-            <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{{ substr($i->title, 0, 12) }}... </h5>
+            <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900">{{ substr($i->title, 0, 12) }}... </h5>
             <span class="flex justify-between bg-[{{$color}}] text-white p-2 rounded">
                 <span class="flex">
                   <i class="fa-solid fa-tag bg-[{{$color}}] ml-2  mt-1 mr-1  text-white"></i>{{' '.$i->category}}
@@ -179,19 +178,19 @@
                   
                 </span>
             </span>
-            <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">{{ substr($i->description, 0, 100) }}...<span class="font-bold text-[#374151]">read more</span> </p>
+            <p class="mb-3 font-normal text-gray-700 ">{{ substr($i->description, 0, 100) }}...<span class="font-bold text-[#374151]">read more</span> </p>
         </div>
     </a>
     <div id="defaultModal{{$i->id}}" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 md:inset-0 h-modal md:h-full justify-center items-center">
         <div class="relative p-4 w-full max-w-2xl h-full md:h-auto">
             <!-- Modal content -->
-            <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+            <div class="relative bg-white rounded-lg shadow ">
                 <!-- Modal header -->
-                <div class="flex justify-between items-start p-4 rounded-t border-b dark:border-gray-600">
-                    <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
+                <div class="flex justify-between items-start p-4 rounded-t border-b ">
+                    <h3 class="text-xl font-semibold text-gray-900 ">
                        {{$i->title}}
                     </h3>
-                    <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-toggle="defaultModal{{$i->id}}">
+                    <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center " data-modal-toggle="defaultModal{{$i->id}}">
                         <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
                         <span class="sr-only">Close modal</span>
                     </button>
@@ -222,7 +221,7 @@
                     <button data-modal-toggle="popup-modal{{$i->id}}" type="button" class="text-white bg-red-400 hover:bg-red-600 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Delete</button>
                     <button data-modal-toggle="authentication-modal{{$i->id}}"  type="button" class="text-white bg-blue-400 hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Edit</button>
                    </div> 
-                   <button data-modal-toggle="defaultModal{{$i->id}}" type="button" class="w-full text-white bg-[#374151] focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">CLOSE</button>          
+                   <button data-modal-toggle="defaultModal{{$i->id}}" type="button" class="w-full text-white bg-[#374151] focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center ">CLOSE</button>          
                     
                 </div>
          </div>
@@ -230,20 +229,20 @@
     </div>
     <div id="popup-modal{{$i->id}}" tabindex="-1" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 md:inset-0 h-modal md:h-full justify-center items-center" aria-hidden="true">
         <div class="relative p-4 w-full max-w-md h-full md:h-auto">
-            <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
-                <button type="button" class="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-800 dark:hover:text-white" data-modal-toggle="popup-modal{{$i->id}}">
+            <div class="relative bg-white rounded-lg shadow ">
+                <button type="button" class="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center " data-modal-toggle="popup-modal{{$i->id}}">
                     <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
                     <span class="sr-only">Close modal</span>
                 </button>
                 <div class="p-6 text-center">
-                    <svg aria-hidden="true" class="mx-auto mb-4 w-14 h-14 text-gray-400 dark:text-gray-200" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                    <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">Are you sure you want to delete this?</h3>
+                    <svg aria-hidden="true" class="mx-auto mb-4 w-14 h-14 text-gray-400 " fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                    <h3 class="mb-5 text-lg font-normal text-gray-500 ">Are you sure you want to delete this?</h3>
                     <a href={{route('info.delete',$i->id)}}>
-                    <button data-modal-toggle="popup-modal{{$i->id}}" type="submit" class="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center mr-2">
+                    <button data-modal-toggle="popup-modal{{$i->id}}" type="submit" class="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300  font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center mr-2">
                         Yes, I'm sure
                     </button>
                     </a>
-                    <button data-modal-toggle="popup-modal{{$i->id}}" type="button" class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600">No, cancel</button>
+                    <button data-modal-toggle="popup-modal{{$i->id}}" type="button" class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 ">No, cancel</button>
                 </div>
             </div>
         </div>
@@ -251,8 +250,8 @@
     <div id="authentication-modal{{$i->id}}" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 w-full md:inset-0 h-modal md:h-full justify-center items-center">
         <div class="relative p-4 w-full max-w-md h-full md:h-auto">
             <!-- Modal content -->
-            <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
-                <button type="button" class="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-800 dark:hover:text-white" data-modal-toggle="authentication-modal{{$i->id}}">
+            <div class="relative bg-white rounded-lg shadow ">
+                <button type="button" class="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center" data-modal-toggle="authentication-modal{{$i->id}}">
                     <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
                     <span class="sr-only">Close modal</span>
                 </button>
@@ -261,47 +260,47 @@
                       @csrf
                       <div class="flex">
                         <div class="m-1">
-                            <label for="title" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Title</label>
-                            <input type="text" value="{{$i->title}}" name="title" id="title" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"  required="">
+                            <label for="title" class="block mb-2 text-sm font-medium text-gray-900 ">Title</label>
+                            <input type="text" value="{{$i->title}}" name="title" id="title" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "  required="">
                         </div>
                         <div class="m-1">
-                            <label for="company_name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Company Name</label>
-                            <input type="text" value="{{$i->company_name}}" name="company_name" id="company_name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"  required="">
+                            <label for="company_name" class="block mb-2 text-sm font-medium text-gray-900 ">Company Name</label>
+                            <input type="text" value="{{$i->company_name}}" name="company_name" id="company_name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "  required="">
                         </div>
                       </div>
                         <div class="flex">
                         <div class="m-1">
-                          <label for="category" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Category</label>
-                          <input type="text" name="category" id="category" value="{{$i->category}}" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" required="">
+                          <label for="category" class="block mb-2 text-sm font-medium text-gray-900 ">Category</label>
+                          <input type="text" name="category" id="category" value="{{$i->category}}" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 " required="">
                       </div>
                       <div class="m-1">
-                          <label for="location" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Location</label>
-                          <input type="text" name="location" id="location" value="{{$i->location}}" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" required="">
+                          <label for="location" class="block mb-2 text-sm font-medium text-gray-900">Location</label>
+                          <input type="text" name="location" id="location" value="{{$i->location}}" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 " required="">
                       </div>
                         </div>
                       <div class="flex">
                       <div class="m-1">
-                          <label for="expiration_date" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Date</label>
-                          <input type="date" name="expiration_date" value="{{$i->expiration_date}}" id="expiration_date"  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" required="">
+                          <label for="expiration_date" class="block mb-2 text-sm font-medium text-gray-900 ">Date</label>
+                          <input type="date" name="expiration_date" value="{{$i->expiration_date}}" id="expiration_date"  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required="">
                       </div>
                       <div class="m-1" >
-                          <label for="free_places" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Free Places</label>
-                          <input type="number" name="free_places" id="free_places" value="{{$i->free_places}}"  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" required="">
+                          <label for="free_places" class="block mb-2 text-sm font-medium text-gray-900 ">Free Places</label>
+                          <input type="number" name="free_places" id="free_places" value="{{$i->free_places}}"  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 " required="">
                       </div>
                       </div>
                    
                       <div class="m-1">
-                          <label for="description" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Description</label>
-                          <textarea name="description" id="description" row="1" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" required="">{{$i->description}}</textarea>
+                          <label for="description" class="block mb-2 text-sm font-medium text-gray-900">Description</label>
+                          <textarea name="description" id="description" row="1" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required="">{{$i->description}}</textarea>
                       </div>
                       <div class="m-1">
-                          <label for="img" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Foto</label>
-                          <input type="file" name="img" id="img" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" >
+                          <label for="img" class="block mb-2 text-sm font-medium text-gray-900 ">Photo</label>
+                          <input type="file" name="img" id="img" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" >
                       </div>
                   
-                      <img class="object-cover w-5 h-5 rounded-t-lg " src="{{ asset('storage/info/' . $link[2]) }}" alt="">
+                      <img class="object-cover w-5 h-5 rounded-t-lg " src="{{ $i->img }}" alt="">
   
-                        <button type="submit" class="w-full text-white bg-[#374151] hover:bg-[#374151] focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Save</button>
+                        <button type="submit" class="w-full text-white bg-[#374151] hover:bg-[#374151] focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Save</button>
                         
                     </form>
                 </div>

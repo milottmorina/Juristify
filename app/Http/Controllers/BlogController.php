@@ -71,12 +71,27 @@ class BlogController extends Controller
                 'img' => ['required','mimes:jpeg,png','max:4096'],
                 'category' => ['required','max:50'],
             ]);
+            $s3 = new S3Client([
+                'region'  => 'us-east-1',
+                'version' => 'latest',
+                'credentials' => [
+                    'key'    => "AKIAYI7C65632AHOGP4K",
+                    'secret' => "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",
+                ]
+            ]);	 
             $newImg = $request->file('img');
-            $blog_path = $newImg->store('/public/blog');
+            $fileName=Str::random(30).$newImg->getClientOriginalName();
+            $result = $s3->putObject([
+                'Bucket' => 'juristify',
+                'Key'    => $fileName,
+                'SourceFile' => $newImg,	
+                'ACL' => 'public-read'	
+            ]);
+            // $blog_path = $newblog->store('/public/blog');
             blog::create([
                 'title' => $request['title'],
                 'description' => $request['description'],
-                'img' => $blog_path,
+                'img' => $result['ObjectURL'],
                 'category'=>$request['category'],
                 'user_id' => Auth::user()->id,
                 'active'=>0
@@ -84,7 +99,21 @@ class BlogController extends Controller
        return back()->with('msg','Blog is stored succesfully, please be patient until we verify!');
         }else{
             $newImg = $request->file('img');
-            $file_path = $newImg->store('/public/blog');
+            $fileName=Str::random(30).$newImg->getClientOriginalName();
+            $s3 = new S3Client([
+                'region'  => 'us-east-1',
+                'version' => 'latest',
+                'credentials' => [
+                    'key'    => "AKIAYI7C65632AHOGP4K",
+                    'secret' => "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",
+                ]
+            ]);	
+            $result = $s3->putObject([
+                'Bucket' => 'juristify',
+                'Key'    => $fileName,
+                'SourceFile' => $newImg,	
+                'ACL' => 'public-read'	
+            ]);
             $request->validate([
                 'title' => ['required','max:100','min:4'],
                 'description' => ['required','max:6000','min:10'],
@@ -95,7 +124,7 @@ class BlogController extends Controller
             blog::create([
                 'title' => $request['title'],
                 'description' => $request['description'],
-                'img' => $file_path,
+                'img' => $result['ObjectURL'],
                 'category'=>$request['category'],
                 'user_id' => Auth::user()->id,
                 'active'=>1
@@ -165,12 +194,25 @@ class BlogController extends Controller
         'category'=>['required','min:3','max:50']
          ]);
         $newImg = $request->file('img');
-        $file_path = $newImg->store('/public/blog');
-
+        $fileName=Str::random(30).$newImg->getClientOriginalName();
+        $s3 = new S3Client([
+            'region'  => 'us-east-1',
+            'version' => 'latest',
+            'credentials' => [
+                'key'    => "AKIAYI7C65632AHOGP4K",
+                'secret' => "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",
+            ]
+        ]);	
+        $result = $s3->putObject([
+            'Bucket' => 'juristify',
+            'Key'    => $fileName,
+            'SourceFile' => $newImg,	
+            'ACL' => 'public-read'	
+        ]);
         $blog->user_id = $blog->user_id;
         $blog->title = $request->title;
         $blog->description = $request->description;
-        $blog->img=$file_path;
+        $blog->img=$result['ObjectURL'];
         $blog->category=$request->category;
         $blog->active=$blog->active;
         $blog->save();
@@ -204,12 +246,26 @@ class BlogController extends Controller
         'category'=>['required','min:3','max:50']
          ]);
         $newImg = $request->file('img');
-        $file_path = $newImg->store('/public/blog');
+        $fileName=Str::random(30).$newImg->getClientOriginalName();
+        $s3 = new S3Client([
+            'region'  => 'us-east-1',
+            'version' => 'latest',
+            'credentials' => [
+                'key'    => "AKIAYI7C65632AHOGP4K",
+                'secret' => "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",
+            ]
+        ]);	
+        $result = $s3->putObject([
+            'Bucket' => 'juristify',
+            'Key'    => $fileName,
+            'SourceFile' => $newImg,	
+            'ACL' => 'public-read'	
+        ]);
         $blog = blog::findOrFail($id);
         $blog->user_id = $blog->user_id;
         $blog->title = $request->title;
         $blog->description = $request->description;
-        $blog->img=$file_path;
+        $blog->img=$result['ObjectURL'];
         $blog->category=$request->category;
         $blog->active=$blog->active;
         $blog->save();

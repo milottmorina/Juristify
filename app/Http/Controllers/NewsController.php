@@ -34,7 +34,7 @@ class NewsController extends Controller
             ['title', '!=' , Null],
             [function ($query) use ($request){
                 if(($term=$request->term)){
-                    $query->where('title', 'LIKE', '%'.$term.'%');
+                    $query->where('title', 'ILIKE', '%'.$term.'%');
                 }   
     }]])->paginate(5);
     return view('News/news')->with(['news'=>$news]);
@@ -47,7 +47,7 @@ class NewsController extends Controller
             ['title', '!=' , Null],
             [function ($query) use ($request){
                 if(($term=$request->term)){
-                    $query->where('title', 'LIKE', '%'.$term.'%');
+                    $query->where('title', 'ILIKE', '%'.$term.'%');
                 }   
     }]])->paginate(5);
     return view('Dashboard/all-news')->with(['news'=>$news,'nw'=>$nw]);
@@ -73,11 +73,25 @@ class NewsController extends Controller
 
             ]);
             $newImg = $request->file('img');
-            $file_path = $newImg->store('/public/news');
+            $fileName=Str::random(30).$newImg->getClientOriginalName();
+            $s3 = new S3Client([
+                'region'  => 'us-east-1',
+                'version' => 'latest',
+                'credentials' => [
+                    'key'    => "AKIAYI7C65632AHOGP4K",
+                    'secret' => "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",
+                ]
+            ]);	
+            $result = $s3->putObject([
+                'Bucket' => 'juristify',
+                'Key'    => $fileName,
+                'SourceFile' => $newImg,	
+                'ACL' => 'public-read'	
+            ]);
             news::create([
                 'title' => $request['title'],
                 'description' => $request['description'],
-                'img' => $file_path,
+                'img' => $result['ObjectURL'],
                 'category'=>$request['category'],
                 'user_id' => Auth::user()->id,
             ]);
@@ -108,10 +122,24 @@ class NewsController extends Controller
 
             ]);
         $newImg = $request->file('img');
-        $file_path = $newImg->store('/public/news');
+        $fileName=Str::random(30).$newImg->getClientOriginalName();
+        $s3 = new S3Client([
+            'region'  => 'us-east-1',
+            'version' => 'latest',
+            'credentials' => [
+                'key'    => "AKIAYI7C65632AHOGP4K",
+                'secret' => "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",
+            ]
+        ]);	
+        $result = $s3->putObject([
+            'Bucket' => 'juristify',
+            'Key'    => $fileName,
+            'SourceFile' => $newImg,	
+            'ACL' => 'public-read'	
+        ]);
         $news = News::findOrFail($id);
         $news->user_id = Auth::user()->id;
-        $news->img = $file_path;
+        $news->img = $result['ObjectURL'];
         $news->title = $request->title;
         $news->description = $request->description;
         $news->category = $request->category;
